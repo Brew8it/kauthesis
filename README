@@ -24,7 +24,7 @@ This work consists of all files listed in manifest.txt.
 kauthesis is a bundle of LaTeX classes and packages. It aims to
 provide a LaTeX template for writing collection theses and reports at
 Karlstad University. The report class can also be used to write
-monographs. kauthesis implements the layout guidlines of Karlstad
+monographs. kauthesis implements the layout guidelines of Karlstad
 University Stduies.
 
 ----------------------------------------------------------------------
