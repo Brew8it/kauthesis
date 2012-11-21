@@ -1,0 +1,271 @@
+% \iffalse meta-comment
+%% kaupaper.dtx
+%% Copyright (c) 2011-2012 Stefan Berthold <stefan.berthold@kau.se>
+%
+% This file is part of the kauthesis bundle.
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%   http://www.latex-project.org/lppl.txt
+% and version 1.3 or later is part of all distributions of LaTeX
+% version 2005/12/01 or later.
+%
+% This work has the LPPL maintenance status `author-maintained'.
+% 
+% The Current Maintainer and author of this work is Stefan Berthold.
+%
+% This work consists of all files listed in manifest.txt.
+% \fi
+%
+% \iffalse
+%<*driver>
+\ProvidesFile{\jobname.dtx}
+%</driver>
+%<package>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
+%<package>\ProvidesPackage{kaupaper}
+%<*package>
+    [2011/05/06 v1.1 Karlstad University page layout for including papers as parts]
+%</package>
+%
+%<*driver>
+\documentclass[a4paper]{ltxdoc}
+\usepackage{\jobname}[2011/02/01]
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+\begin{document}
+  \DocInput{\jobname.dtx}
+  \PrintChanges
+  \PrintIndex
+\end{document}
+%</driver>
+% \fi
+%
+% \CheckSum{244}
+%
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+%
+%
+% \changes{v1.0}{2011/02/01}{SBe's licentiate version}
+% \changes{v1.1}{2011/05/06}{Initial public release}
+%
+% \GetFileInfo{\jobname.dtx}
+%
+% \DoNotIndex{\newcommand,\renewcommand,\newenvironment,\let}
+% 
+%
+% \title{The \textsf{\jobname} package\thanks{This document
+%   corresponds to \textsf{\jobname}~\fileversion, dated \filedate.}}
+% \author{Stefan Berthold \\ \texttt{stefan.berthold@kau.se}}
+%
+% \maketitle
+%
+% \section{Introduction}
+%
+% Fun.
+%
+% \section{Usage}
+%
+% Do not load the package without options. (TODO)
+%
+% \StopEventually{}
+%
+% \section{Implementation}
+%
+%    \begin{macrocode}
+\RequirePackage{xkeyval}
+
+\define@cmdkeys[kua]{paper}[kua@]{author,title,subtitle,reference,email,refstr,vanity,subdelimiter,label,summary,limitations,participation}
+\setkeys[kua]{paper}{refstr={Reprinted from}}
+
+\ProcessOptionsX[kua]<paper>
+
+\RequirePackage{kauparts}
+\RequirePackage{ifthen}
+\RequirePackage{tikz}
+
+\RequirePackage{ragged2e}
+\RequirePackage{hyphenat}
+
+\newcounter{kua@section}
+\newcounter{kua@equation}
+\newcounter{kua@figure}
+\newcounter{kua@table}
+
+\newcounter{kua@paper}
+
+\providecommand\thepaper{}
+\providecommand\thepapertitle{}
+
+\newcommand\kua@warning\relax
+\newcommand\kua@dowarn{\gdef\kua@warning{\@latex@warning@no@line{List data created from the kaupaper environment was outdated. Rerun to get the lists right}}}
+\AtEndDocument{\kua@warning}
+
+\newcommand\kua@listof[4]{%
+  \IfFileExists{\jobname.#1}%
+    {% check whether empty file
+      \newread\reader%
+      \openin\reader\jobname.#1%
+      \read\reader to \readmacro%
+      \ifeof\reader%
+        \textcolor{red}{\ldots{} will be available after the next \LaTeX{} run.}%
+        \@starttoc{#1}%
+        %\AtEndDocument{\@latex@warning@no@line{Rerun to get the list of #2 right}}%
+        \kua@dowarn%
+      \else% file not empty -> create list
+        #3\@starttoc{#1}#4%
+      \fi%
+    }%
+    {% file does not exist
+      \textcolor{red}{\ldots{} will be available after the next \LaTeX{} run.}%
+      \@starttoc{#1}%
+      %\AtEndDocument{\@latex@warning@no@line{Rerun to get the list of #2 right}}%
+      \kua@dowarn%
+    }%
+}
+%    \end{macrocode}
+% \begin{macro}{\listofpapers}
+%    \begin{macrocode}
+\newcommand\listofpapers{%
+  \section*{List of Appended Papers}%
+  \addcontentsline{toc}{section}{List of Appended Papers}%
+  \kua@listof{pap}{appended papers}{%
+    \begin{enumerate}%
+    \renewcommand\theenumi{\textbf{\Roman{enumi}}}%
+  }{\end{enumerate}}%
+  \subsection*{Comments on my Participation}
+  \kua@listof{pcp}{participation in appended papers}{}{}%
+}
+%    \end{macrocode}
+% \end{macro}
+%    \begin{macrocode}
+
+\newcommand\l@paper[2]{%
+  \item #1%
+}
+
+\newcommand\listofsummaries{%
+  \kua@listof{sum}{paper summaries}{}{}%
+}
+
+\newcommand\l@summary[2]{%
+  #1\par%
+}
+
+\newcommand\l@limit[2]{%
+  %\paragraph{Limitations.}
+  #1%
+}
+
+\newcommand\l@participation[2]{%
+  #1%
+}
+
+\newcommand\papercover{%
+  \begin{tikzpicture}[remember picture,overlay]%
+    \path (current page.center)%
+      node%
+        [ node distance=\baselineskip%
+        , text width=\textwidth%
+        , text centered%
+        ] (refstr) {\kua@refstr};%
+      \ifthenelse{\equal{\kua@subtitle}{}}{%
+        \node%
+          [ node distance=1.5\baselineskip%
+          , above=of refstr%
+          , text width=\textwidth%
+          , text centered%
+          , font=\LARGE\bfseries%
+          ] {\nohyphens{\kua@title}};%
+      }{%
+        \node%
+          [ node distance=1.5\baselineskip%
+          , above=of refstr%
+          , text width=\textwidth%
+          , text centered%
+          , font=\large\bfseries%
+          ] (sub) {\nohyphens{\kua@subtitle}};%
+        \node%
+          [ node distance=1pt%
+          , above=of sub%
+          , text width=\textwidth%
+          , text centered%
+          , font=\LARGE\bfseries%
+          ] {\nohyphens{\kua@title}};%
+      }%
+      \node%
+        [ node distance=\baselineskip%
+        , below=of refstr%
+        , text width=\textwidth%
+        , text centered%
+        , font=\large%
+        ] {\nohyphens{\kua@reference}}%
+    ;%
+  \end{tikzpicture}%
+}
+
+\newenvironment{kaupaper}[1][]{%
+  \setcounter{kua@section}{\value{section}}%
+  \setcounter{kua@equation}{\value{equation}}%
+  \setcounter{kua@figure}{\value{figure}}%
+  \setcounter{kua@table}{\value{table}}%
+  \setcounter{section}{0}%
+  \setcounter{equation}{0}%
+  \setcounter{figure}{0}%
+  \setcounter{table}{0}%
+  \setkeys[kua]{paper}{subtitle=,vanity=,subdelimiter={---},label=,summary={\string\textcolor{red}{Use the \string\texttt{summary} key in the \string\texttt{kaupaper} environment to add a summary.}},participation={\string\textcolor{red}{Use the \string\texttt{participation} key in the \string\texttt{kaupaper} environment to add a comment.}},limitations={},#1}%
+  \setcounter{kua@paper}{\value{kup@part}}\stepcounter{kua@paper}%
+  \ifthenelse{\equal{\kua@subtitle}{}}%
+    {\addcontentsline{pap}{paper}{\kua@author. \kua@title. In \kua@reference}%
+     \addcontentsline{toc}{part}{\textsc{Paper} \Roman{kua@paper}\\\kua@title}}%
+    {\addcontentsline{pap}{paper}{\kua@author. \kua@title\kua@subdelimiter\kua@subtitle. In \kua@reference}%
+     \addcontentsline{toc}{part}{\textsc{Paper} \Roman{kua@paper}\\\kua@title\kua@subdelimiter\kua@subtitle}}%
+  \addcontentsline{sum}{summary}{\string\subsection*{Paper~\Roman{kua@paper} -- \kua@title}\kua@summary}%
+  \ifthenelse{\equal{\kua@limitations}{}}{}{%
+    \addcontentsline{sum}{limit}{\kua@limitations}}%
+  \addcontentsline{pcp}{participation}{\string\paragraph{Paper~\Roman{kua@paper}}\kua@participation}%
+  \kaupart[tocentry=false,label=\kua@label,body=\papercover\kua@vanity]{Paper}%
+  \renewcommand*\thepaper{Paper \Roman{kua@paper}}%
+  \renewcommand*\thepapertitle{\kua@title}%
+  \renewcommand\maketitle{%
+    \thispagestyle{plain}%
+    \centering%
+      \Large\bfseries%
+      \vspace*{0.15\textheight}%
+      \kua@title\par%
+      \addvspace{1ex}%
+      \ifthenelse{\equal{\kua@subtitle}{}}{}{\large\kua@subtitle}%
+      \par\addvspace{\baselineskip}%
+      \normalsize%
+      \kua@author\\[0.25\baselineskip]%
+      \normalfont%
+      \kua@email%
+    \par\addvspace{2\baselineskip}\justifying%
+  }%
+}{%
+  \setcounter{section}{\value{kua@section}}%
+  \setcounter{equation}{\value{kua@equation}}%
+  \setcounter{figure}{\value{kua@figure}}%
+  \setcounter{table}{\value{kua@table}}%
+  \clearpage%
+}
+%    \end{macrocode}
+%
+% \Finale
+\endinput

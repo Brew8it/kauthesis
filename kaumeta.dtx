@@ -1,0 +1,131 @@
+% \iffalse meta-comment
+%% kaumeta.dtx
+%% Copyright (c) 2011-2012 Stefan Berthold <stefan.berthold@kau.se>
+%
+% This file is part of the kauthesis bundle.
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%   http://www.latex-project.org/lppl.txt
+% and version 1.3 or later is part of all distributions of LaTeX
+% version 2005/12/01 or later.
+%
+% This work has the LPPL maintenance status `author-maintained'.
+% 
+% The Current Maintainer and author of this work is Stefan Berthold.
+%
+% This work consists of all files listed in manifest.txt.
+% \fi
+%
+% \iffalse
+%<*driver>
+\ProvidesFile{\jobname.dtx}
+%</driver>
+%<package>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
+%<package>\ProvidesPackage{kaumeta}
+%<*package>
+    [2011/05/06 v1.1 Karlstad University alternative title page]
+%</package>
+%
+%<*driver>
+\documentclass[a4paper]{ltxdoc}
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+\begin{document}
+  \DocInput{\jobname.dtx}
+  \PrintChanges
+  \PrintIndex
+\end{document}
+%</driver>
+% \fi
+%
+% \CheckSum{29}
+%
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+%
+%
+% \changes{v1.0}{2011/02/01}{SBe's licentiate version}
+% \changes{v1.1}{2011/05/06}{Initial public release}
+%
+% \GetFileInfo{\jobname.dtx}
+%
+% \DoNotIndex{\newcommand,\renewcommand,\newenvironment,\let}
+% 
+%
+% \title{The \textsf{\jobname} package\thanks{This document
+%   corresponds to \textsf{\jobname}~\fileversion, dated \filedate.}}
+% \author{Stefan Berthold \\ \texttt{stefan.berthold@kau.se}}
+%
+% \maketitle
+%
+% \section{Introduction}
+%
+% The \textsf{\jobname} package defines three macros, |\subject|, |\institute|, and |\place|, for providing additional meta data about the document and it's author. This meta data can be used, e.\,g., on the title page of the document.
+%
+% \section{Usage}
+%
+% Load the package without options.
+%
+% \StopEventually{}
+%
+% \section{Implementation}
+%
+% No package options are accepted.
+%    \begin{macrocode}
+\ProcessOptions\relax
+%    \end{macrocode}
+%
+% \noindent Load dependencies.
+%    \begin{macrocode}
+\usepackage{ifthen}
+%    \end{macrocode}
+%
+% \begin{macro}{\subject}
+% The macro |\subject|\marg{subject} can be used to set the subject of the document. The last \meta{subject} set will be available in the macro \DescribeMacro{\@subject}|\@subject|.
+%    \begin{macrocode}
+\newcommand*\@subject{}
+\newcommand\subject[1]{\renewcommand*\@subject{#1}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\institute}
+% The macro |\institute|\oarg{short}\marg{institute} can be used to set the institute of the document's author. It is possible to provide a shorter version of the institue in the optional argument \meta{short}. If not explicitly set, the short version is the same as the long version \meta{institute}. The values are available in the macros \DescribeMacro{\@institute}|\@institute| and \DescribeMacro{\@shortinstitute}|\@shortinstitute|.
+%    \begin{macrocode}
+\newcommand*\@institute{}
+\newcommand*\@shortinstitute{}
+\newcommand\institute[2][]{%
+  \renewcommand*\@institute{#2}%
+  \ifthenelse{\equal{#1}{}}{%
+    \renewcommand*\@shortinstitute{#2}%
+  }{%
+    \renewcommand*\@shortinstitute{#1}%
+  }%
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\place}
+% The macro |\place|\marg{place} can be used to set the place of the document's author. The last \meta{place} set will be available in the macro \DescribeMacro{\@place}|\@place|.
+%    \begin{macrocode}
+\newcommand*\@place{}
+\newcommand\place[1]{\renewcommand*\@place{#1}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \Finale
+\endinput

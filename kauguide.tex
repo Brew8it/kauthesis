@@ -1,0 +1,326 @@
+%% kauguide.tex
+%% Copyright (c) 2011-2012 Stefan Berthold <stefan.berthold@kau.se>
+%
+% This file is part of the kauthesis bundle.
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%   http://www.latex-project.org/lppl.txt
+% and version 1.3 or later is part of all distributions of LaTeX
+% version 2005/12/01 or later.
+%
+% This work has the LPPL maintenance status `author-maintained'.
+% 
+% The Current Maintainer and author of this work is Stefan Berthold.
+%
+% This work consists of all files listed in manifest.txt.
+\documentclass[a4paper]{ltxguide}
+
+\usepackage{varioref}
+\usepackage{makeidx}
+\usepackage{alltt}
+\usepackage{flafter}
+\IfFileExists{tocbibind.sty}{\usepackage{tocbibind}}{}
+\IfFileExists{hyperref.sty}{\usepackage[bookmarksopen]{hyperref}}{}
+
+\usepackage[UKenglish]{babel}
+
+\title{How to Typeset Your Collection Thesis\\with the \textsf{kaucollection} Class}
+\author{Stefan Berthold\\\texttt{<stefan.berthold@kau.se>}}
+\date{\today}
+
+% Define some macros to help automate indexing.
+\makeindex
+{\catcode`\|=0 \catcode`\\=12
+ |gdef|bslash{\}}
+\newcommand{\defmacro}[1]{%                   % Define a macro.
+  \texttt{\bslash#1}%
+  \index{#1@\texttt{\string\bslash{}#1}}%
+}
+\newcommand{\usemacro}[1]{%                   % Use a macro.
+  \texttt{\bslash#1}%
+  \index{#1@\texttt{\string\bslash{}#1}}%
+}
+\newcommand{\indexmacro}[1]{%                 % Index a macro (no display).
+  \index{#1@\texttt{\string\bslash{}#1}}%
+}
+{\catcode`\|=12                               % Same as \indexmacro, but
+  \gdef\indexmacroBegin#1{%                   % for ranges of text
+    \index{#1@\texttt{\string\bslash{}#1}|(}%
+  }
+  \gdef\indexmacroEnd#1{%
+    \index{#1@\texttt{\string\bslash{}#1}|)}%
+  }
+}
+\newcommand{\defthing}[1]{%                   % Define a non-macro thing.
+  \texttt{#1}%
+  \index{#1@\texttt{#1}}%
+}
+\newcommand{\usething}[1]{%                   % Use a non-macro thing.
+  \texttt{#1}%
+  \index{#1@\texttt{#1}}%
+}
+\newcommand{\indexthing}[1]{%                 % Index a non-macro thing.
+  \index{#1@\texttt{#1}}%
+}
+{\catcode`\|=12                               % Same as \indexthing, but
+  \gdef\indexthingBegin#1{%                   % for ranges of text
+    \index{#1@\texttt{#1}|(}%
+  }
+  \gdef\indexthingEnd#1{%
+    \index{#1@\texttt{#1}|)}%
+  }
+}
+
+\begin{document}
+%\sloppy
+\maketitle
+
+\begin{abstract}
+  The class \textsf{kaucollection} defines \LaTeX{} defaults and macros which I found useful when I wrote my licentiate thesis. In addition, this documentation may serve you as a guide for fixing the logical structure and the final polishing of your thesis.
+\end{abstract}
+
+\tableofcontents
+
+\section{Introduction}
+
+%\subsection{Logical Structure}
+
+Your thesis will consist of a front matter containing general information such as the abstract and the list of appended papers, and a main matter starting with the first part, `introductory summary', and followed by additional parts for each appended paper. The front matter starts on page~iii, since the first two pages are reserved for bibliometric information of the publisher. The main matter starts with the cover page of the introductory summary on page~1.
+
+The text in the front matter should not refer to literature or references. This is not so much a technical limitation, but rather bad style to skip explanations and refer the reader of an abstract to literature instead. The introductory summary and each appended paper should have its own literature list.
+
+You can freely choose which contents will appear in your front matter and which in the main matter, but your supervisor will most likely propose a structure like that:
+\begin{itemize}
+  \item front matter
+    \begin{itemize}
+       \item abstract
+       \item acknowledgements
+       \item list of appended papers (with comments on your participation)
+       \item list of other publications
+       \item table of contents
+    \end{itemize}
+  \item main matter / introductory summary
+    \begin{itemize}
+       \item introduction
+       \item background and related work
+       \item research questions
+       \item research methods
+       \item contributions
+       \item summary of appended papers
+       \item conclusions and future work
+       \item references
+    \end{itemize}
+  \item main matter / appended papers
+\end{itemize}
+Most parts of the front matter and the introductory summary can be rather short. The introductory summary does not need to exceed 20 pages.
+
+\section{Usage}
+
+Load the class \textsf{kaucollection} without optional arguments.
+\begin{quote}\begin{verbatim}\documentclass{kaucollection}\end{verbatim}\end{quote}
+
+The class defines a number of useful defaults, e.\,g., the logical page size, margins, etc. Several packages are loaded along with the class, however, these defaults and thus the packages which are loaded automatically are limited to a minimum. You are yourself responsible for loading packages, e.\,g., for using \LaTeX's hyphenation algorithms, typeseting page headings and math material, etc.
+
+\subsection{Preamble \& Meta Data}
+
+\begin{decl}
+  \defmacro{title}\arg{title}\\
+  \defmacro{author}\arg{author}\\
+  \defmacro{institute}\oarg{short}\arg{institute}\\
+  \defmacro{subject}\arg{subject}\\
+  \defmacro{place}\arg{place}\\
+  \defmacro{date}\arg{month year}
+\end{decl}
+Most meta data can be set like in the standard \LaTeX{} classes. It is used throughout the thesis, e.\,g., for typesetting the title and abstract page and the acknowledgements. The short version of the institute \m{short} is used on the optional title page while the long version is used on the abstract page. If there is no short version of the institute, the long version is used on both pages.
+\begin{quote}\begin{verbatim}\institute{Department of Computer Science, Karlstad University}\end{verbatim}\end{quote}
+
+The \m{subject} is just used on the optional title page. It should be \emph{licentiate thesis} or \emph{dissertation}, respectively.
+\begin{quote}\begin{verbatim}\subject{licentiate thesis}\end{verbatim}\end{quote}
+
+The \m{place} and date \m{month year} are used at the end of the acknowledgements page and should only contain the name of the city and month and year, respectively.
+\begin{quote}\begin{verbatim}\place{Karlstad}
+\date{April 2011}\end{verbatim}\end{quote}
+
+\subsection{Page Headings}
+
+\begin{decl}
+  \defmacro{thepaper}\\
+  \defmacro{thepapertitle}
+\end{decl}
+
+The macro \usemacro{thepaper} contains the number of the current typeset paper. In the introductory summary, it contains the string ``Introductory Summary''. It should appear on the right side of even pages.
+
+The macro \usemacro{thepapertitle} contains the title of the currently typeset paper. In the introductory summary, it contains the title of your thesis. It should appear on the left side of odd pages.
+ 
+In combination with \textsf{scrpage2}, you can use the macros (in the preamble) as follows:
+\begin{quote}\begin{verbatim}\usepackage{scrpage2}
+\rehead{\thepaper}
+\lohead{\thepapertitle}\end{verbatim}\end{quote}
+ 
+\subsection{Title Page \& Front Matter}
+
+\begin{decl}
+  \defmacro{maketitle}
+\end{decl}
+
+Use this macro only in combination with the \textsl{kautitle} package. Title, author, and institute are repeated when you use the |abstract| environment. It is therefore recommended to skip \usemacro{maketitle} entirely.
+
+\begin{decl}
+  \defmacro{frontmatter}
+\end{decl}
+
+This macro adjusts the page number so that it begins with ``iii''. Use this macro after the optional \usemacro{maketitle} and before adding the \usething{abstract} environment.
+
+\begin{decl}
+  \defthing{abstract}\\
+  \defmacro{keywords}
+\end{decl}
+
+Use |\begin{abstract}| and |\end{abstract}| to place your abstract in between them. Within the \usething{abstract} environment, the macro \usemacro{keywords} is defined and can be used to add keywords to the end of your abstract, for instance:
+\begin{quote}\begin{verbatim}\begin{abstract}
+  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+  \keywords latin, dummy, text.
+\end{abstract}\end{verbatim}\end{quote}
+
+\begin{decl}
+  \defthing{acknowledgements}
+\end{decl}
+ 
+Use |\begin{acknowledgements}| and |\end{acknowledgements}| to typeset your acknowledgements. At the end of the acknowledgements, some space is left and a line with place, time, and your name is added automatically:
+\begin{quote}\begin{verbatim}\begin{acknowledgements}
+  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+\end{acknowledgements}\end{verbatim}\end{quote}
+ 
+\begin{decl}
+  \defmacro{listofpapers}
+\end{decl}
+
+Use \usemacro{listofpapers} to add the list of appended papers. The content will automatically be created when you append papers by means of the \usething{kaupaper} environment. The list should be followed by a (self-written) list of other publications, for instance:
+\begin{quote}\begin{verbatim}\listofpapers
+\subsection*{Other Publications}
+\begin{itemize}
+  \item \textbf{<your name>}. <type of publication, date>.
+\end{itemize}\end{verbatim}\end{quote}
+
+\begin{decl}
+  \defmacro{tableofcontents}
+\end{decl}
+
+Use \usemacro{tableofcontents} to add the table of contents after the list of papers. The list of papers will appear in the table of contents. Other front matter sections, e.\,g., the abstract and acknowledgements, are not included.
+ 
+\subsection{Introductory Summary}
+
+\begin{decl}
+  \defmacro{mainmatter}\oarg{aux material}
+\end{decl}
+ 
+Use \usemacro{mainmatter} for resetting the page counter and creating the cover page for the introductory summary. The optional argument \m{aux material} can be used to add auxiliary material to the cover page, e.\,g., a quote (see \usemacro{vanityquote}).
+ 
+\begin{decl}
+  \defmacro{vanityquote}\arg{poem}\arg{reference}
+\end{decl}
+
+Use \usemacro{vanityquote} to place \m{poem} and \m{reference} in the lower right corner of the page. This macro makes most sense in the optional argument of \usemacro{mainmatter} and in the \usething{kaupaper} environment, for instance:
+\begin{quote}\begin{verbatim}\mainmatter[\vanityquote{%
+  Mit Worten l\"a\ss t sich trefflich streiten.}{%
+  Mephistopheles\\--- Faust. Der Trag\"odie erster Teil. (1808)\\
+  Johann Wolfgang von Goethe}%
+]%\end{verbatim}\end{quote}
+Paradoxically, you have to switch off the package \textsf{microtype} in order to let \usemacro{vanityquote} do its job and create accurate typographic results. Fortunately, \textsf{microtype} allows switching off its functionality within user-defined scopes. You should do that in \usemacro{vanityquote}.
+ 
+\begin{decl}
+  \defthing{researchquestions}\\
+  \defthing{contributions}
+\end{decl}
+
+Use |\begin{researchquestions}| and |\end{researchquestions}| to enumerate your research questions. Within the environment, the macro \usemacro{item}\oarg{question} is redefined so that \m{question} can be used to formulate the question, followed by a brief explanation after the argument, e.\,g.:
+\begin{quote}\begin{verbatim}\section{Research Questions}
+\begin{researchquestions}
+  \item[Why?] A good reason for ``why?'' being important.
+\end{researchquestions}\end{verbatim}\end{quote}
+ 
+The \usething{contributions} environment is quite similar to the \usething{researchquestions} environment.
+\begin{quote}\begin{verbatim}\section{Contributions}
+\begin{contributions}
+  \item[Brief description.] What makes this contribution novel?
+\end{contributions}\end{verbatim}\end{quote}
+ 
+\begin{decl}
+  \defmacro{listofsummaries}
+\end{decl}
+
+Use \usemacro{listofsummaries} to create a list of summaries of your appended papers. The content will automatically be created when you append papers by means of the \usething{kaupaper} environment. Note that \usemacro{listofsummaries} does not create a section headline, you have to do that yourself, e.\,g.:
+\begin{quote}\begin{verbatim}\section{Summary of Appended Papers}
+\listofsummaries\end{verbatim}\end{quote}
+
+\subsection{Append Papers}
+
+\begin{decl}
+  \defthing{kaupaper}\\
+  \defthing{abstract}
+\end{decl}
+
+Use |\begin{kaupaper}|\oarg{meta data} and |\end{kaupaper}| to add a paper to your collection thesis. The environment accepts an optional argument \m{meta data} which helps you typesetting the meta data of the paper such as author, title, etc. The data is later also used, e.\,g., for typesetting the list of appended papers.
+ 
+All values in \m{meta data} have to be strings and can be used in the form |[key1=value1, key2=value2]|. The keys are summarised in the following list:
+\begin{description}
+  \item[author] The authors' names.
+  \item[title] The paper's title.
+  \item[reference] The reference string including type, place, and year.
+  \item[email] The authors' e-mail addresses.
+  \item[summary] Summary of the paper, used for |\listofsummaries|.
+  \item[limitations] Second paragraph in |\listofsummaries|.%TODO
+  \item[participation] Comments on your participation, used for |\listofsummaries|.
+  \item[label] The paper's label, just like in |\label|.
+  \item[vanity] Auxiliary material on the cover page. Use it, for instance, in combination with |\vanityquote|.
+\end{description}
+
+Use |\begin{abstract}| and |\end{abstract}| to typeset the abstract of the appended paper. This should be the first thing after |\begin{kaupaper}|, since the cover page and the title page of the paper are already typeset by then.
+
+\section{Customization}
+
+Some common layout tasks are intentionally not dealt with in the \textsf{kaucollection} class. It is up to you to decide which option suits your thesis best and to load additional packages appropriately.
+
+\subsection{Page Headings}
+
+The class \textsf{kaucollection} does not determine the way you typeset your page headings, including page numbers and running titles, so you have to create them yourself. Your options include the \textsf{fancyhdr} package or \textsf{scrpage2}, I prefer the latter. Common heading styles can be generated with either package, but keep in mind that less is often more when you play with fancy typeface switches and magnificent rulers under your headings.
+
+\subsection{Multiple Bibliographies}
+
+You will need independent bibliographies for your introductory summary and for each paper you append. Options for this task include the packages \textsf{chapterbib} and \textsf{datatool}. In both cases, a separate AUX file will be created for each bibliography that is needed. When using the package \textsf{chapterbib}, it is necessary to distribute your \LaTeX{} source code over several input files, accordingly. The package \textsf{datatool}, on the other hand, allows to keep all \LaTeX{} source code in one file.
+
+\subsection{Hyphenation}
+ 
+The package \textsf{babel} provides hyphenation patterns for many languages, use them! When part of your text is written in a different language than the rest, make sure that you switch the language accordingly, e.\,g., by using the macro |\foreignlanguage| of \textsf{babel}.
+
+\section{Polishing the Thesis}
+
+Use the modifications proposed in this section for improving the electronic and the printout appearance of your thesis.
+
+%\usepackage{cite} % TODO
+\subsection{Micro Typography}
+
+There is a lot of typographic advice which is hard to repeat here. Fortunately, the package \textsf{microtype} solves most of the faux pas that are to avoid. Use this package with care, in most cases it will improve the quality of your thesis, e.\,g., by reducing the number of overfull and underfull boxes. However, the compilation of your thesis will take considerably more time and, in some cases, the package might even create new error messages. Fortunately, you can ignore these errors quite often without consequences affecting the quality of the thesis. Use the package option |[activate=false]| when you just need a preview of your thesis.
+
+\subsection{Alpha Channel in the Acrobat Reader}
+
+If you plan an electronic publication, consider adding the line
+\begin{quote}\begin{verbatim}\pdfpageattr{/Group <</S /Transparency /I true /CS /DeviceRGB>>}\end{verbatim}\end{quote}
+to the preamble of your thesis. This will deal with a bug in the Adobe Acrobat Reader which affects the representation of the alpha channel (transparency layer), e.\,g., in font anti-aliasing. Neither the bug nor the fix affect the thesis' print out quality.
+
+\subsection{Crop Marks}
+
+The class adjusts the logical paper dimensions so that they correspond to the S5 book format of Karlstad University Studies. You can use the result for electronic publishing and preview printouts. However, the final printing process includes centering your logical S5 pages on a physical paper format which is slightly bigger, e.\,g., A4, and cut off the margins.
+
+Finding the correct crop frame for the cutting not always easy, since printing and cutting is not necessarily done in the same machine. A way to make sure that the final print corresponds to the electronic version in each detail is to enlarge the PDF pages to A4 and add crop marks as support for readjusting the machines.
+
+Use the package \textsf{pgfcropmarks} to change the paper format and add the crop marks.
+However, here is a word of warning about \textsf{pgfcropmarks}: \LaTeX{} will not write any files when this package is loaded. As a consequence, the table of contents will not be updated and neither are all the other lists and indexes updated. Thus, you should \emph{only} use this package when creating the \emph{camera-ready} version and comment it out otherwise!
+
+\printindex
+
+\end{document}
+% vim: ft=tex:sts=2:sw=2:et:nu:linebreak

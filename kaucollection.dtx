@@ -1,0 +1,206 @@
+% \iffalse meta-comment
+%% kaucollection.dtx
+%% Copyright (c) 2011-2012 Stefan Berthold <stefan.berthold@kau.se>
+%
+% This file is part of the kauthesis bundle.
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%   http://www.latex-project.org/lppl.txt
+% and version 1.3 or later is part of all distributions of LaTeX
+% version 2005/12/01 or later.
+%
+% This work has the LPPL maintenance status `author-maintained'.
+% 
+% The Current Maintainer and author of this work is Stefan Berthold.
+%
+% This work consists of all files listed in manifest.txt.
+% \fi
+%
+% \iffalse
+%<*driver>
+\ProvidesFile{\jobname.dtx}
+%</driver>
+%<class>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
+%<class>\ProvidesClass{kaucollection}
+%<*class>
+    [2011/05/06 v1.1 Karlstad University collection thesis layout]
+%</class>
+%
+%<*driver>
+\documentclass[a4paper]{ltxdoc}
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+\begin{document}
+  \DocInput{\jobname.dtx}
+\end{document}
+%</driver>
+% \fi
+%
+% \CheckSum{91}
+%
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+%
+%
+% \changes{v1.0}{2011/02/01}{SBe's licentiate version}
+% \changes{v1.1}{2011/05/06}{Initial public release}
+%
+% \GetFileInfo{\jobname.dtx}
+%
+% \DoNotIndex{\newcommand,\newenvironment}
+%
+% \title{The \textsf{\jobname} class\thanks{This document
+%   corresponds to \textsf{\jobname}~\fileversion, dated \filedate.}}
+% \author{Stefan Berthold \\ \texttt{stefan.berthold@kau.se}}
+%
+% \maketitle
+%
+% \section{Introduction}
+%
+% The \textsf{\jobname} class provides \LaTeX{} defaults and macros which you might find useful during this process.
+%
+% \section{Usage}
+%
+% Load the class without options.
+%
+% \StopEventually{\PrintChanges\PrintIndex}
+%
+% \section{Implementation}
+%
+% No class options are accepted.
+%    \begin{macrocode}
+\ProcessOptions\relax
+%    \end{macrocode}
+%
+% \noindent For simplicity, we'll derive everything from the standard |article| class.
+%    \begin{macrocode}
+\LoadClass{article}
+%    \end{macrocode}
+%
+% \noindent Load dependencies.
+%    \begin{macrocode}
+\RequirePackage{kauclear}
+\RequirePackage{kaustudies}
+\RequirePackage{kaumeta}
+\RequirePackage{kaupaper}
+\RequirePackage{kauenvironments}
+\RequirePackage{tikz}
+%    \end{macrocode}
+%
+% \begin{macro}{\kuk@maketitle}
+% Preserve the previous definition of |\maketitle|.
+%    \begin{macrocode}
+\AtBeginDocument{\let\kuk@maketitle\maketitle}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\maketitle}
+% Make sure that the title page has a white backside.
+%    \begin{macrocode}
+\renewcommand\maketitle{%
+  \kuk@maketitle%
+  \cleardoublepage%
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% Make sure that the table of contents starts on an odd page.
+%    \begin{macrocode}
+\let\kuk@tableofcontents\tableofcontents
+\renewcommand\tableofcontents{%
+  \cleardoublepage%
+  \kuk@tableofcontents%
+}
+%    \end{macrocode}
+%
+% Preserve the old abstract environment for later usage in the appended papers.
+%    \begin{macrocode}
+\let\kuk@abstract\abstract%
+\let\kuk@endabstract\endabstract%
+%    \end{macrocode}
+%
+% \begin{macro}{\frontmatter}
+% Start the frontmatter, beginning with page iii and redefining the abstract environment so that it generates an own section.
+%    \begin{macrocode}
+\newcommand*\frontmatter{%
+  \clearpage%
+  \setcounter{page}{3}%
+  \renewcommand\thepage{\roman{page}}%
+  \renewenvironment{abstract}{%
+    \newcommand\keywords{\paragraph{Keywords:}}%
+    \cleardoublepage%
+    \section*{\@title}%
+    \textsc{\@author}\par%
+    \noindent\textit{\@institute}%
+    \section*{Abstract}%
+    %\addcontentsline{toc}{section}{Abstract}%
+  }{%
+    \cleardoublepage%
+  }%
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{environment}{acknowledgements}
+% Acknowledgements section.
+%    \begin{macrocode}
+\newenvironment{acknowledgements}{%
+  \cleardoublepage%
+  \section*{Acknowledgements}%
+  %\addcontentsline{toc}{section}{Acknowledgements}%
+}{%
+  \par\bigskip\bigskip\bigskip\noindent\@place, \@date\hfill \@author%
+  \cleardoublepage%
+}
+%    \end{macrocode}
+% \end{environment}
+%
+% \begin{macro}{\mainmatter}
+% Start the mainmatter with the part `Introductory Summary' on page~1.
+%    \begin{macrocode}
+\newcommand\mainmatter[1][]{%
+  \cleardoublepage%
+  \renewenvironment{abstract}{\kuk@abstract}{\kuk@endabstract}
+  \setcounter{page}{1}%
+  \renewcommand\thepage{\arabic{page}}%
+  \kaupart*[body={#1}]{Introductory Summary}%
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\vanityquote}
+% Typeset quotes on cover pages.
+%    \begin{macrocode}
+\newcommand\vanityquote[2]{%
+  \begin{tikzpicture}[remember picture,overlay]%
+    \path (current page.south east) +(-3,3.5)%
+      node%
+        [ anchor=south east%
+        , font=\large%
+        , text width=25em%
+        ] {\raggedleft``#1\rlap{''}%
+           \normalfont\par\medskip\itshape #2\par};%
+  \end{tikzpicture}%
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \Finale
+\endinput

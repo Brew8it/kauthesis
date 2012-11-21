@@ -1,0 +1,131 @@
+% \iffalse meta-comment
+%% kauenvironments.dtx
+%% Copyright (c) 2011-2012 Stefan Berthold <stefan.berthold@kau.se>
+%
+% This file is part of the kauthesis bundle.
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%   http://www.latex-project.org/lppl.txt
+% and version 1.3 or later is part of all distributions of LaTeX
+% version 2005/12/01 or later.
+%
+% This work has the LPPL maintenance status `author-maintained'.
+% 
+% The Current Maintainer and author of this work is Stefan Berthold.
+%
+% This work consists of all files listed in manifest.txt.
+% \fi
+%
+% \iffalse
+%<*driver>
+\ProvidesFile{\jobname.dtx}
+%</driver>
+%<package>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
+%<package>\ProvidesPackage{kauenvironments}
+%<*package>
+    [2011/05/06 v1.1 useful environments and lists]
+%</package>
+%
+%<*driver>
+\documentclass[a4paper]{ltxdoc}
+\usepackage{\jobname}[2011/02/01]
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+\begin{document}
+  \DocInput{\jobname.dtx}
+  \PrintChanges
+  \PrintIndex
+\end{document}
+%</driver>
+% \fi
+%
+% \CheckSum{32}
+%
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+%
+%
+% \changes{v1.0}{2011/02/01}{SBe's licentiate version}
+% \changes{v1.1}{2011/05/06}{Initial public release}
+%
+% \GetFileInfo{\jobname.dtx}
+%
+% \DoNotIndex{\newcommand,\renewcommand,\newenvironment,\let}
+% 
+%
+% \title{The \textsf{\jobname} package\thanks{This document
+%   corresponds to \textsf{\jobname}~\fileversion, dated \filedate.}}
+% \author{Stefan Berthold \\ \texttt{stefan.berthold@kau.se}}
+%
+% \maketitle
+%
+% \section{Introduction}
+%
+% This package defines the environments |researchquestions| and |contributions|.
+%
+% \section{Usage}
+%
+% Load the package without options.
+%
+% \StopEventually{}
+%
+% \section{Implementation}
+%
+% No package options are accepted.
+%    \begin{macrocode}
+\ProcessOptions\relax
+%    \end{macrocode}
+%
+% \noindent Load dependencies.
+%    \begin{macrocode}
+\RequirePackage{xspace}
+\RequirePackage{xcolor}
+%    \end{macrocode}
+%
+% \begin{environment}{researchquestions}
+% The environment is an enumeration derived from |enumerate|. The macro |\item|\oarg{question} is redefined so that the argument \meta{question} can be used to formulate the research question. It will be emphasised over the remaining text following the |\item|\oarg{question} macro.
+%    \begin{macrocode}
+\newenvironment{researchquestions}%
+  {\begin{enumerate}%
+    \let\kue@item\item%
+    \renewcommand\item[1][Research question]%
+      {\kue@item\emph{##1}\nopagebreak\par}%
+  }%
+  {\end{enumerate}}%
+%    \end{macrocode}
+% \end{environment}
+%
+% \begin{environment}{contributions}
+% The environment is an enumeration derived from |enumerate|. The macro |\item|\oarg{contrib} is redefined so that the argument \meta{contrib} can be used to formulate the contribution. It will be emphasised over the remaining text following the |\item|\oarg{contrib} macro.
+%    \begin{macrocode}
+\newenvironment{contributions}%
+  {\begin{enumerate}%
+    \let\kue@item\item%
+    \renewcommand\item[1][%
+      \textcolor{red}{\emph{write your contribution between brackets 
+        as optional argument of \texttt{\string\item}.}}]%
+      {\kue@item\emph{##1}\xspace}%
+  }%
+  {\end{enumerate}}%
+%    \end{macrocode}
+% \end{environment}
+%
+% \Finale
+\endinput

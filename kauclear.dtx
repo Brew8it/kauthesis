@@ -1,0 +1,142 @@
+% \iffalse meta-comment
+%% kauclear.dtx
+%% Copyright (c) 2011-2012 Stefan Berthold <stefan.berthold@kau.se>
+%
+% This file is part of the kauthesis bundle.
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%   http://www.latex-project.org/lppl.txt
+% and version 1.3 or later is part of all distributions of LaTeX
+% version 2005/12/01 or later.
+%
+% This work has the LPPL maintenance status `author-maintained'.
+% 
+% The Current Maintainer and author of this work is Stefan Berthold.
+%
+% This work consists of all files listed in manifest.txt.
+% \fi
+%
+% \iffalse
+%<*driver>
+\ProvidesFile{\jobname.dtx}
+%</driver>
+%<package>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
+%<package>\ProvidesPackage{kauclear}
+%<*package>
+    [2011/05/06 v1.1 left pages with page style empty after calling cleardoublepage]
+%</package>
+%
+%<*driver>
+\documentclass[a4paper]{ltxdoc}
+\usepackage{\jobname}[2011/02/01]
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+\begin{document}
+  \DocInput{\jobname.dtx}
+  \PrintChanges
+  \PrintIndex
+\end{document}
+%</driver>
+% \fi
+%
+% \CheckSum{25}
+%
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+%
+%
+% \changes{v1.0}{2011/02/01}{SBe's licentiate version}
+% \changes{v1.1}{2011/05/06}{Initial public release}
+%
+% \GetFileInfo{\jobname.dtx}
+%
+% \DoNotIndex{\newcommand,\renewcommand,\newenvironment,\let}
+% 
+%
+% \title{The \textsf{\jobname} package\thanks{This document
+%   corresponds to \textsf{\jobname}~\fileversion, dated \filedate.}}
+% \author{Stefan Berthold \\ \texttt{stefan.berthold@kau.se}}
+%
+% \maketitle
+%
+% \section{Introduction}
+%
+% This package replaces the macro |\cleardoublepage| so that empty odd pages do not contain a page number. It also redefines the macro |\pagestyle| so that it stores the page style for restoring it after temporarily switching to another one.
+%
+% \section{Usage}
+%
+% Load the package without options. The macro \DescribeMacro{\cleardoublepage}|\cleardoublepage| will be replaced automatically and the original macro will be available as \DescribeMacro{\cleardoublepage@orig}|\cleardoublepage@orig|.
+%
+% \StopEventually{}
+%
+% \section{Implementation}
+%
+%    \begin{macrocode}
+\ProcessOptions\relax
+%    \end{macrocode}
+%
+% \begin{macro}{\kuc@currentpagestyle}
+% Store the current page style in the macro |\kuc@currentpagestyle|.
+%    \begin{macrocode}
+\newcommand\kuc@currentpagestyle{plain}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\pagestyle}
+% Store the new page style in |\kuc@currentpagestyle|, if the page style is changed.
+%    \begin{macrocode}
+\let\pagestyle@orig\pagestyle
+\renewcommand\pagestyle[1]{%
+  \renewcommand\kuc@currentpagestyle{#1}%
+  \pagestyle@orig{#1}%
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\kuc@restorepagestyle}
+% Restore the current page style, e.\,g., when the page style was changed temporarily.
+%    \begin{macrocode}
+\newcommand\kuc@restorepagestyle{%
+  \pagestyle@orig{\kuc@currentpagestyle}%
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\cleardoubpage@orig}
+% Preserve the original definition of the macro |\cleardoublepage| in |\cleardoublepage@orig|.
+%    \begin{macrocode}
+\let\cleardoubpage@orig\cleardoublepage
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\cleardoublepage}
+% Redefine the macro |\cleardoublepage| so that it temporarily switches to the page style |empty|.
+%    \begin{macrocode}
+\renewcommand\cleardoublepage{%
+  \clearpage%
+  \pagestyle@orig{empty}%
+  \cleardoubpage@orig%
+  \kuc@restorepagestyle%
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \Finale
+\endinput

@@ -1,0 +1,102 @@
+%%
+%% This is file `kauparts.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% kauparts.dtx  (with options: `package')
+%% 
+%% This is a generated file.
+%% 
+%% Copyright (c) 2011-2012 Stefan Berthold <stefan.berthold@kau.se>
+%% 
+%% This file is part of the kauthesis bundle.
+%% 
+%% This work may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License, either version 1.3
+%% of this license or (at your option) any later version.
+%% The latest version of this license is in
+%%   http://www.latex-project.org/lppl.txt
+%% and version 1.3 or later is part of all distributions of LaTeX
+%% version 2005/12/01 or later.
+%% 
+%% This work has the LPPL maintenance status `author-maintained'.
+%% 
+%% The Current Maintainer and author of this work is Stefan Berthold.
+%% 
+%% This work consists of all files listed in manifest.txt.
+%% 
+%% kauparts.dtx
+%% Copyright (c) 2011-2012 Stefan Berthold <stefan.berthold@kau.se>
+\NeedsTeXFormat{LaTeX2e}[1999/12/01]
+\ProvidesPackage{kauparts}
+    [2011/06/05 v1.1 Karlstad University page layout for parts]
+\RequirePackage{xkeyval}
+
+\define@cmdkeys[kup]{pkg}[kup@]{vshift,vstep}
+\setkeys[kup]{pkg}{vshift=2,vstep=0.8}
+
+\ProcessOptionsX[kup]<pkg>
+
+\RequirePackage{calc}
+\RequirePackage{ifthen}
+\RequirePackage{suffix}
+\RequirePackage{tikz}
+\usetikzlibrary{positioning}
+
+\define@cmdkeys[kup]{part}[kup@]{body,label}
+\define@boolkeys[kup]{part}[kup@]{tocentry}
+
+\newcounter{kup@part}
+\newcounter{kup@vertical}
+\setcounter{kup@vertical}{0}
+
+\newcommand\kup@partheadline[2]{%
+  \path[node distance=1ex] (current page.north east) +(3pt,\kup@vshift+\kup@vstep*\arabic{kup@vertical}) %
+    node%
+      [ anchor=north east%
+      , minimum width=2cm+3pt%
+      %, minimum height=7mm%
+      %, draw=black%
+      %, fill=black%
+      , left color=white%
+      , right color=black%
+      , text=white%
+      , font=\LARGE\bfseries%
+      ] (bar) {#1}%
+    node[base left=of bar,font=\LARGE\bfseries] {#2};%
+}
+\newcommand\kaupart[2][]{%
+  \cleardoublepage%
+  \thispagestyle{plain}%
+  \stepcounter{kup@part}%
+  \setkeys[kup]{part}{body=\relax,label=,tocentry=true,#1}%
+  \ifkup@tocentry%
+  \addcontentsline{toc}{part}{\numberline{\Roman{kup@part}}\textsc{#2}}%
+  \fi%
+  \renewcommand\@currentlabel{\Roman{kup@part}}%
+  \ifthenelse{\equal{\kup@label}{}}{}{\label{\kup@label}}%
+  \begin{tikzpicture}[remember picture,overlay,yscale=-1]%
+    \kup@partheadline{\Roman{kup@part}}{#2}%
+  \end{tikzpicture}%
+  \kup@body
+  \stepcounter{kup@vertical}%
+  \cleardoublepage%
+}
+\WithSuffix\newcommand\kaupart*[2][]{%
+  \cleardoublepage%
+  \thispagestyle{plain}%
+  \setkeys[kup]{part}{body=\relax,tocentry=true,#1}%
+  \ifkup@tocentry%
+    \addcontentsline{toc}{part}{\textsc{#2}}%
+  \fi%
+  \begin{tikzpicture}[remember picture,overlay,yscale=-1]%
+    \kup@partheadline{\vphantom{X}}{#2}%
+  \end{tikzpicture}%
+  \kup@body
+  \stepcounter{kup@vertical}%
+  \cleardoublepage%
+}
+\endinput
+%%
+%% End of file `kauparts.sty'.

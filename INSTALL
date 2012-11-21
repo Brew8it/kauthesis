@@ -1,0 +1,65 @@
+#! /bin/bash
+
+# INSTALL
+# 
+# 1. Run the file kau.ins through LaTeX.
+# 2. Run the files *.dtx through LaTeX.
+# 3. Create the index by calling for each DTX file
+#     $ makeindex -s gind.ist -o <FILE>.ind <FILE>.idx
+# 4. Create the change history by calling for each DTX file
+#     $ makeindex -s gglo.ist -o <FILE>.gls <FILE>.glo
+# 5. Run the files *.dtx through LaTeX again.
+# 6. Move the *.sty and *.pdf files to your local $TEXMF
+#
+# -OR-
+#
+# Just run this INSTALL file through /bin/bash.
+
+latex kauthesis.ins || exit 1
+rm -f kauthesis.log
+
+for FILE in *.dtx
+do
+  BASENAME=`basename $FILE .dtx`
+  pdflatex $FILE || exit 1
+  makeindex -s gglo.ist -o $BASENAME.gls $BASENAME.glo || exit 1
+  makeindex -s gind.ist -o $BASENAME.ind $BASENAME.idx || exit 1
+  pdflatex $FILE || exit 1
+  rm -f $BASENAME.aux \
+        $BASENAME.glo \
+        $BASENAME.gls \
+        $BASENAME.idx \
+        $BASENAME.ilg \
+        $BASENAME.ind \
+        $BASENAME.log || exit 1
+done
+
+pdflatex kauguide.tex || exit 1
+makeindex -o kauguide.ind kauguide.idx || exit 1
+pdflatex kauguide.tex || exit 1
+rm -f kauguide.aux kauguide.ind kauguide.idx kauguide.ilg kauguide.log kauguide.out kauguide.toc
+
+PACKAGE=kau
+TEXMF=`kpsexpand -n latex '$TEXMFHOME'`
+LATEXDIR=$TEXMF/tex/latex/$PACKAGE
+LATEXDOC=$TEXMF/doc/latex/$PACKAGE
+
+if [[ -e $LATEXDIR ]]
+then
+  echo Warning: Moving the class and style files to $LATEXDIR failed, since the directory already exists. Move the files to another location in your TEXMF path.
+  exit 1
+else
+  if [[ -e $LATEXDOC ]]
+  then
+    echo Warning: Moving the documentation to $LATEXDOC failed, since the directory already exists. Move the files to another location in your TEXMF path.
+    exit 1
+  fi
+fi
+
+mkdir -p $LATEXDIR || exit 1
+mkdir -p $LATEXDOC || exit 1
+
+mv *.sty *.cls  $LATEXDIR || exit 1
+mv *.pdf        $LATEXDOC || exit 1
+
+# vim: sw=2:sts=2:et:nu
