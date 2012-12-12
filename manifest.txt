@@ -8,6 +8,7 @@ kauthesis.ins
 kauclear.dtx
 kaucollection.dtx
 kauenvironments.dtx
+kaumasters.dtx
 kaumeta.dtx
 kaupaper.dtx
 kauparts.dtx
@@ -16,6 +17,7 @@ kaustudies.dtx
 kautitle.dtx
 
 kaucollection.cls
+kaumasters.cls
 kaureport.cls
 
 kauclear.sty
@@ -32,6 +34,7 @@ kauclear.pdf
 kaucollection.pdf
 kauenvironments.pdf
 kauguide.pdf
+kaumasters.pdf
 kaumeta.pdf
 kaupaper.pdf
 kauparts.pdf

@@ -32,9 +32,9 @@
 \ProvidesClass{kaureport}
     [2011/05/06 v1.1 Karlstad University report layout]
 \ProcessOptions\relax
-\LoadClass{article}
+\LoadClass[a4paper]{article}
 \RequirePackage[urw-garamond]{mathdesign}
-\RequirePackage[twoside]{typearea}
+\RequirePackage[paper=a4,pagesize,twoside=semi]{typearea}
 \RequirePackage{kauclear}
 \RequirePackage{kaumeta}
 \AtBeginDocument{\let\kur@maketitle\maketitle}
@@ -51,10 +51,12 @@
   \clearpage%
   \setcounter{page}{3}%
   \renewcommand\thepage{\roman{page}}%
-  \renewenvironment{abstract}{%
+  \newcommand\makeworkingtitle{%
     \section*{\@title}%
     \textsc{\@author}\par%
     \noindent\textit{\@institute}%
+  }%
+  \renewenvironment{abstract}{%
     \section*{Abstract}%
     %\addcontentsline{toc}{section}{Abstract}%
   }{%

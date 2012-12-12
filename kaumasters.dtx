@@ -40,7 +40,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{46}
+% \CheckSum{48}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -90,13 +90,13 @@
 %
 % \noindent For simplicity, we'll derive everything from the standard |article| class.
 %    \begin{macrocode}
-\LoadClass{article}
+\LoadClass[a4paper]{article}
 %    \end{macrocode}
 %
 % \noindent Load dependencies.
 %    \begin{macrocode}
 \RequirePackage[urw-garamond]{mathdesign}
-\RequirePackage[twoside]{typearea}
+\RequirePackage[paper=a4,pagesize,twoside=semi]{typearea}
 \RequirePackage{kauclear}
 \RequirePackage{kaumeta}
 %    \end{macrocode}
@@ -134,10 +134,12 @@
   \clearpage%
   \setcounter{page}{3}%
   \renewcommand\thepage{\roman{page}}%
-  \renewenvironment{abstract}{%
+  \newcommand\makeworkingtitle{%
     \section*{\@title}%
     \textsc{\@author}\par%
     \noindent\textit{\@institute}%
+  }%
+  \renewenvironment{abstract}{%
     \section*{Abstract}%
     %\addcontentsline{toc}{section}{Abstract}%
   }{%
