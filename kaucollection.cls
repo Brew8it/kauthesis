@@ -30,8 +30,9 @@
 %% Copyright (c) 2011-2012 Stefan Berthold <stefan.berthold@kau.se>
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesClass{kaucollection}
-    [2011/05/06 v1.1 Karlstad University collection thesis layout]
+    [2012/12/14 v1.2 Karlstad University collection thesis layout]
 \ProcessOptions\relax
+%%
 \LoadClass{article}
 \RequirePackage{kauclear}
 \RequirePackage{kaustudies}
@@ -39,48 +40,54 @@
 \RequirePackage{kaupaper}
 \RequirePackage{kauenvironments}
 \RequirePackage{tikz}
-\AtBeginDocument{\let\kuk@maketitle\maketitle}
+\RequirePackage{babel}
+\AtBeginDocument{\let\kaucol@maketitle\maketitle}
 \renewcommand\maketitle{%
-  \kuk@maketitle%
+  \kaucol@maketitle%
   \cleardoublepage%
 }
-\let\kuk@tableofcontents\tableofcontents
-\renewcommand\tableofcontents{%
-  \cleardoublepage%
-  \kuk@tableofcontents%
-}
-\let\kuk@abstract\abstract%
-\let\kuk@endabstract\endabstract%
+\newcommand*\keywordname{\iflanguage{swedish}{Nyckelord}{Keywords}}
+\let\kaucol@abstract\abstract%
+\let\kaucol@endabstract\endabstract%
 \newcommand*\frontmatter{%
   \clearpage%
   \setcounter{page}{3}%
   \renewcommand\thepage{\roman{page}}%
   \renewenvironment{abstract}{%
-    \newcommand\keywords{\paragraph{Keywords:}}%
+    \newcommand\keywords{\paragraph{\keywordname:}}%
     \cleardoublepage%
     \section*{\@title}%
     \textsc{\@author}\par%
     \noindent\textit{\@institute}%
-    \section*{Abstract}%
-    %\addcontentsline{toc}{section}{Abstract}%
+    \section*{\abstractname}%
   }{%
     \cleardoublepage%
   }%
 }
+\newcommand*\acknowledgementname{%
+  \iflanguage{swedish}{Tacks\"agelser}{Acknowledgements}%
+}
 \newenvironment{acknowledgements}{%
   \cleardoublepage%
-  \section*{Acknowledgements}%
-  %\addcontentsline{toc}{section}{Acknowledgements}%
+  \section*{\acknowledgementname}%
 }{%
   \par\bigskip\bigskip\bigskip\noindent\@place, \@date\hfill \@author%
   \cleardoublepage%
 }
+\let\kaucol@tableofcontents\tableofcontents
+\renewcommand\tableofcontents{%
+  \cleardoublepage%
+  \kaucol@tableofcontents%
+}
+\newcommand*\introname{%
+  \iflanguage{swedish}{Inledande sammanfattning}{Introductory Summary}%
+}
 \newcommand\mainmatter[1][]{%
   \cleardoublepage%
-  \renewenvironment{abstract}{\kuk@abstract}{\kuk@endabstract}
+  \renewenvironment{abstract}{\kaucol@abstract}{\kaucol@endabstract}
   \setcounter{page}{1}%
   \renewcommand\thepage{\arabic{page}}%
-  \kaupart*[body={#1}]{Introductory Summary}%
+  \kaupart*[body={#1}]{\introname}%
 }
 \newcommand\vanityquote[2]{%
   \begin{tikzpicture}[remember picture,overlay]%

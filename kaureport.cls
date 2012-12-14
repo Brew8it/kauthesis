@@ -30,7 +30,7 @@
 %% Copyright (c) 2011-2012 Stefan Berthold <stefan.berthold@kau.se>
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesClass{kaureport}
-    [2011/05/06 v1.1 Karlstad University report layout]
+    [2012/12/14 v1.2 Karlstad University report layout]
 \ProcessOptions\relax
 \LoadClass{article}
 \RequirePackage{kauclear}
@@ -38,31 +38,33 @@
 \RequirePackage{kaumeta}
 \RequirePackage{kauparts}
 \RequirePackage{kauenvironments}
-\AtBeginDocument{\let\kur@maketitle\maketitle}
+\AtBeginDocument{\let\kaurep@maketitle\maketitle}
 \renewcommand\maketitle{%
-  \kur@maketitle%
+  \kaurep@maketitle%
   \cleardoublepage%
 }
-\let\kur@tableofcontents\tableofcontents
-\renewcommand\tableofcontents{%
-  \cleardoublepage%
-  \kur@tableofcontents%
-}
+\newcommand*\keywordname{\iflanguage{swedish}{Nyckelord}{Keywords}}
+\let\kaurep@abstract\abstract%
+\let\kaurep@endabstract\endabstract%
 \newcommand*\frontmatter{%
   \clearpage%
   \setcounter{page}{3}%
   \renewcommand\thepage{\roman{page}}%
   \renewenvironment{abstract}{%
-    \newcommand\keywords{\paragraph{Keywords:}}%
+    \newcommand\keywords{\paragraph{\keywordname:}}%
     \cleardoublepage%
     \section*{\@title}%
     \textsc{\@author}\par%
     \noindent\textit{\@institute}%
-    \section*{Abstract}%
-    %\addcontentsline{toc}{section}{Abstract}%
+    \section*{\abstractname}%
   }{%
     \cleardoublepage%
   }%
+}
+\let\kaurep@tableofcontents\tableofcontents
+\renewcommand\tableofcontents{%
+  \cleardoublepage%
+  \kaurep@tableofcontents%
 }
 \newcommand\mainmatter[1][]{%
   \cleardoublepage%

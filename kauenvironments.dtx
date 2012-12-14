@@ -82,13 +82,13 @@
 %
 % \section{Usage}
 %
-% Load the package without options.
+% Find the documentation of this package in \texttt{guide.pdf}.
 %
 % \StopEventually{}
 %
 % \section{Implementation}
 %
-% No package options are accepted.
+% No package options are parsed.
 %    \begin{macrocode}
 \ProcessOptions\relax
 %    \end{macrocode}
@@ -100,7 +100,7 @@
 %    \end{macrocode}
 %
 % \begin{environment}{researchquestions}
-% The environment is an enumeration derived from |enumerate|. The macro |\item|\oarg{question} is redefined so that the argument \meta{question} can be used to formulate the research question. It will be emphasised over the remaining text following the |\item|\oarg{question} macro.
+% The environment is an enumeration derived from |enumerate|. The argument of |\item|\oarg{question} is used to formulate the research question.
 %    \begin{macrocode}
 \newenvironment{researchquestions}%
   {\begin{enumerate}%
@@ -113,7 +113,7 @@
 % \end{environment}
 %
 % \begin{environment}{contributions}
-% The environment is an enumeration derived from |enumerate|. The macro |\item|\oarg{contrib} is redefined so that the argument \meta{contrib} can be used to formulate the contribution. It will be emphasised over the remaining text following the |\item|\oarg{contrib} macro.
+% The environment is an enumeration derived from |enumerate|. The argument of |\item|\oarg{contrib} is used to formulate the contribution.
 %    \begin{macrocode}
 \newenvironment{contributions}%
   {\begin{enumerate}%

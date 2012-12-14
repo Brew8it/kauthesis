@@ -9,6 +9,7 @@ kauclear.dtx
 kaucollection.dtx
 kauenvironments.dtx
 kaumasters.dtx
+kaumeeting.dtx
 kaumeta.dtx
 kaupaper.dtx
 kauparts.dtx
@@ -18,6 +19,7 @@ kautitle.dtx
 
 kaucollection.cls
 kaumasters.cls
+kaumeeting.cls
 kaureport.cls
 
 kauclear.sty
@@ -29,12 +31,15 @@ kaustudies.sty
 kautitle.sty
 
 kauguide.tex
+kaumasterstemplate.tex
+kaumeetingtemplate.tex
 
 kauclear.pdf
 kaucollection.pdf
 kauenvironments.pdf
 kauguide.pdf
 kaumasters.pdf
+kaumeeting.pdf
 kaumeta.pdf
 kaupaper.pdf
 kauparts.pdf

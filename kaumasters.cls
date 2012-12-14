@@ -26,42 +26,37 @@
 %% 
 %% This work consists of all files listed in manifest.txt.
 %% 
-%% kaureport.dtx
+%% kaumasters.dtx
 %% Copyright (c) 2011-2012 Stefan Berthold <stefan.berthold@kau.se>
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
-\ProvidesClass{kaureport}
-    [2011/05/06 v1.1 Karlstad University report layout]
+\ProvidesClass{kaumasters}
+    [2012/12/14 v1.1 Karlstad University master's thesis layout]
 \ProcessOptions\relax
-\LoadClass[a4paper]{article}
+\LoadClass{article}
 \RequirePackage[urw-garamond]{mathdesign}
 \RequirePackage[paper=a4,pagesize,twoside=semi]{typearea}
 \RequirePackage{kauclear}
 \RequirePackage{kaumeta}
-\AtBeginDocument{\let\kur@maketitle\maketitle}
-\renewcommand\maketitle{%
-  \kur@maketitle%
-  \cleardoublepage%
-}
-\let\kur@tableofcontents\tableofcontents
-\renewcommand\tableofcontents{%
-  \cleardoublepage%
-  \kur@tableofcontents%
-}
-\newcommand*\frontmatter{%
-  \clearpage%
-  \setcounter{page}{3}%
-  \renewcommand\thepage{\roman{page}}%
-  \newcommand\makeworkingtitle{%
+\let\kaumas@maketitle\maketitle
+  \renewcommand\maketitle{%
     \section*{\@title}%
     \textsc{\@author}\par%
     \noindent\textit{\@institute}%
   }%
+\newcommand*\frontmatter{%
+  \setcounter{page}{3}%
+  \renewcommand\thepage{\roman{page}}%
   \renewenvironment{abstract}{%
-    \section*{Abstract}%
-    %\addcontentsline{toc}{section}{Abstract}%
+    \section*{\abstractname}%
+    %\addcontentsline{toc}{section}{\abstractname}%
   }{%
     \cleardoublepage%
   }%
+}
+\let\kaumas@tableofcontents\tableofcontents
+\renewcommand\tableofcontents{%
+  \cleardoublepage%
+  \kaumas@tableofcontents%
 }
 \newcommand\mainmatter[1][]{%
   \cleardoublepage%

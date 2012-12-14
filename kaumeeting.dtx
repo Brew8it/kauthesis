@@ -1,0 +1,278 @@
+% \iffalse meta-comment
+%% kaumasters.dtx
+%% Copyright (c) 2011-2012 Stefan Berthold <stefan.berthold@kau.se>
+%
+% This file is part of the kauthesis bundle.
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%   http://www.latex-project.org/lppl.txt
+% and version 1.3 or later is part of all distributions of LaTeX
+% version 2005/12/01 or later.
+%
+% This work has the LPPL maintenance status `author-maintained'.
+% 
+% The Current Maintainer and author of this work is Stefan Berthold.
+%
+% This work consists of all files listed in manifest.txt.
+% \fi
+%
+% \iffalse
+%<*driver>
+\ProvidesFile{\jobname.dtx}
+%</driver>
+%<class>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
+%<class>\ProvidesClass{kaumeeting}
+%<*class>
+    [2011/11/18 v1.0 Karlstad University meeting record]
+%</class>
+%
+%<*driver>
+\documentclass[a4paper]{ltxdoc}
+\usepackage{url}
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+\begin{document}
+  \DocInput{\jobname.dtx}
+\end{document}
+%</driver>
+% \fi
+%
+% \CheckSum{92}
+%
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+%
+%
+% \changes{v1.0}{2012/12/14}{Initial public release}
+%
+% \GetFileInfo{\jobname.dtx}
+%
+% \DoNotIndex{\newcommand,\newenvironment}
+%
+% \StopEventually{\PrintChanges\PrintIndex}
+%
+% \title{The \textsf{\jobname} class\thanks{This document
+%   corresponds to \textsf{\jobname}~\fileversion, dated \filedate.}}
+% \author{Stefan Berthold \\ \texttt{stefan.berthold@kau.se}}
+%
+% \maketitle
+%
+% \section{Introduction}
+%
+% The \textsf{\jobname} class is part of the kauthesis package. The class provides macros for writing meeting records. The latest version can be obtained from
+% \begin{quote}
+%   \texttt{http://github.com/ZjMNZHgG5jMXw/kauthesis}\quad.
+% \end{quote}
+%
+% \noindent
+% This class requires the {\small URW}~Garamond font. The latest version can be obtained from
+% \begin{quote}
+%   \texttt{http://www.ctan.org/pkg/urw-garamond}\quad.
+% \end{quote}
+%
+% \noindent
+% This class also requires the logo of Karlstad Univerity. The latest version can be obtained from
+% \begin{quote}
+%   \texttt{http://www.kau.se/om-universitetet/pressinformation/ladda-hem\-logotyp}\quad.
+% \end{quote}
+%
+% \section{Usage}
+% \iffalse
+%<*template>
+% \fi
+%
+% The following example can be found in \texttt{kaumeetingtemplate.tex}.
+%
+% \noindent
+% After loading the class, complete the meta data with |\metadata|\marg{data}.
+%    \begin{macrocode}
+\documentclass{kaumeeting}
+\metadata%
+%    \end{macrocode}
+% The subject of the meeting, e.\,g., a course name.
+%    \begin{macrocode}
+  { meeting={}
+%    \end{macrocode}
+% The person who is writing the protocol.
+%    \begin{macrocode}
+  , protocol={}
+%    \end{macrocode}
+% The place of the meeting.
+%    \begin{macrocode}
+  , place={}
+%    \end{macrocode}
+% The calendar date of the meeting.
+%    \begin{macrocode}
+  , date={}
+%    \end{macrocode}
+% The time when the meeting began.
+%    \begin{macrocode}
+  , start={}
+%    \end{macrocode}
+% The time when the meeting was over.
+%    \begin{macrocode}
+  , end={}
+%    \end{macrocode}
+% The persons who attended the meeting.
+%    \begin{macrocode}
+  , participants={}
+%    \end{macrocode}
+% Persons excused from the meeting.
+%    \begin{macrocode}
+  , excused=none
+%    \end{macrocode}
+% Persons missing from the meeting without excuse.
+%    \begin{macrocode}
+  , missing={}
+%    \end{macrocode}
+% The distribution list of the meeting records.
+%    \begin{macrocode}
+  , distribution={}
+%    \end{macrocode}
+% The faculty and department names.
+%    \begin{macrocode}
+  , faculty={Faculty of Health, Science and Technology}%
+  , department={Department of Mathematics and Computer Science}%
+%    \end{macrocode}
+% The name (or location) of Karlstad University's logo.
+%    \begin{macrocode}
+  , logofile={kau-logo-tryck}
+  }
+%    \end{macrocode}
+% The macro |\maketitle| creates the record header from the meta data.
+%    \begin{macrocode}
+\begin{document}
+\maketitle
+%    \end{macrocode}
+% After |\maketitle|, content can be added like in a \LaTeX{} \textsf{article}.
+%    \begin{macrocode}
+\end{document}
+%    \end{macrocode}
+% \iffalse
+%</template>
+% \fi
+%
+% \section{Implementation}
+% \iffalse
+%<*class>
+% \fi\setcounter{CodelineNo}{0}
+%
+% \subsection{Class options and dependencies}
+%
+% Class options are neither parsed nor passed to the underlying \textsf{article} class.
+%    \begin{macrocode}
+\ProcessOptions\relax
+%    \end{macrocode}
+%
+% \noindent \textsf{\jobname} derives all macros from the standard \textsf{article} class.
+%    \begin{macrocode}
+\LoadClass{article}
+%    \end{macrocode}
+%
+% \noindent Garamond is chosen as default font.
+%    \begin{macrocode}
+\RequirePackage[urw-garamond]{mathdesign}
+%    \end{macrocode}
+% \noindent A4 is set as the default page layout.
+%    \begin{macrocode}
+\RequirePackage[paper=a4,pagesize]{typearea}
+%    \end{macrocode}
+%    \begin{macrocode}
+\RequirePackage{xkeyval}
+\RequirePackage{graphicx}
+\RequirePackage{tikz}
+\RequirePackage{tabularx}
+\RequirePackage{ragged2e}
+\RequirePackage{xifthen}
+%    \end{macrocode}
+%
+% \subsection{Meta data}
+%
+% \begin{macro}{\metadata}
+%    \begin{macrocode}
+\define@cmdkeys[kaumet]{general}[kaumet@]%
+  { meeting, protocol, place%
+  , date, start, end%
+  , participants, excused, missing%
+  , distribution%
+  , faculty, department%
+  , logofile%
+  }
+\newcommand\metadata[1]{\setkeys[kaumet]{general}{#1}}
+\setkeys[kaumet]{general}%
+  { meeting=, protocol=, place=%
+  , date=\today, start=, end=%
+  , participants=, excused=, missing=%
+  , distribution=%
+  , faculty={Faculty of Health, Science and Technology}%
+  , department={Department of Mathematics and Computer Science}%
+  , logofile={kau-logo-tryck}
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Title page}
+%
+% \begin{macro}{\kaumet@maketitle}
+% The definition of |\maketitle| in the \textsf{article} class creates a title without creating a separate page. \textsf{\jobname} redefines the macro and preserves the original definition in |\kaumas@maketitle|.
+%    \begin{macrocode}
+\let\kaumet@maketitle\maketitle
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\maketitle}
+%    \begin{macrocode}
+\renewcommand\maketitle{
+  \thispagestyle{empty}
+  \begin{tikzpicture}[overlay,remember picture]
+    % top
+    \path (current page.north)
+      node[below=5mm, text centered, text width=\textwidth] (top)
+      {\includegraphics[width=33mm]{\kaumet@logofile}\\[5mm]%
+      \kaumet@faculty\\%
+      \kaumet@department}
+    ;
+  \end{tikzpicture}
+  \vspace{1.5cm}\\
+  \mbox{}\hfill\kaumet@date\\
+  \centering \Large\scshape Meeting Record\\
+  \justifying\normalfont\bigskip\small\noindent
+  \begin{tabularx}{\textwidth}{@{}>{\bfseries\vphantom{Xy}}rX}
+    subject & \kaumet@meeting\\
+    place & \kaumet@place\\
+    start & \kaumet@start\\
+    end & \kaumet@end\\
+    participants & \kaumet@participants\\
+    recording & \kaumet@protocol\\
+    excused & \kaumet@excused\\
+    missing & \kaumet@missing\\
+    distribution & \kaumet@distribution
+  \end{tabularx}\smallskip
+  \justifying\normalfont\normalsize
+}
+%    \end{macrocode}
+% \end{macro}
+% \iffalse
+%</class>
+% \fi
+%
+% \Finale
+\endinput
+

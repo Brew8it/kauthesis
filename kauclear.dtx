@@ -78,29 +78,31 @@
 %
 % \section{Introduction}
 %
-% This package replaces the macro |\cleardoublepage| so that empty odd pages do not contain a page number. It also redefines the macro |\pagestyle| so that it stores the page style for restoring it after temporarily switching to another one.
+% This package replaces the macro |\cleardoublepage|. Empty pages with odd page numbers will not print the page number. Also, the macro |\pagestyle| is redefined. The new behaviour is to stores the page style for being able to restore it later on.
 %
 % \section{Usage}
 %
-% Load the package without options. The macro \DescribeMacro{\cleardoublepage}|\cleardoublepage| will be replaced automatically and the original macro will be available as \DescribeMacro{\cleardoublepage@orig}|\cleardoublepage@orig|.
+% Find the documentation of this class in \texttt{kauguide.pdf}.
 %
 % \StopEventually{}
 %
 % \section{Implementation}
+%
+% No options are parsed.
 %
 %    \begin{macrocode}
 \ProcessOptions\relax
 %    \end{macrocode}
 %
 % \begin{macro}{\kuc@currentpagestyle}
-% Store the current page style in the macro |\kuc@currentpagestyle|.
+% The page style is stored in |\kuc@currentpagestyle|. Default: |plain|
 %    \begin{macrocode}
 \newcommand\kuc@currentpagestyle{plain}
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\pagestyle}
-% Store the new page style in |\kuc@currentpagestyle|, if the page style is changed.
+% The macro |\pagestyle| is redefined to update the page style in |\kuc@currentpagestyle|.
 %    \begin{macrocode}
 \let\pagestyle@orig\pagestyle
 \renewcommand\pagestyle[1]{%
@@ -111,7 +113,7 @@
 % \end{macro}
 %
 % \begin{macro}{\kuc@restorepagestyle}
-% Restore the current page style, e.\,g., when the page style was changed temporarily.
+% The page style can be restored with |\kuc@restorepagestyle| after (temporarily) switching to another one using |\pagestyle@orig|.
 %    \begin{macrocode}
 \newcommand\kuc@restorepagestyle{%
   \pagestyle@orig{\kuc@currentpagestyle}%
@@ -120,14 +122,14 @@
 % \end{macro}
 %
 % \begin{macro}{\cleardoubpage@orig}
-% Preserve the original definition of the macro |\cleardoublepage| in |\cleardoublepage@orig|.
+% The previous definition of |\cleardoublepage| is preserved in |\cleardoublepage@orig|.
 %    \begin{macrocode}
 \let\cleardoubpage@orig\cleardoublepage
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\cleardoublepage}
-% Redefine the macro |\cleardoublepage| so that it temporarily switches to the page style |empty|.
+% The macro |\cleardoublepage| is redefined. The new definition switches temporarily to the page style |empty|.
 %    \begin{macrocode}
 \renewcommand\cleardoublepage{%
   \clearpage%

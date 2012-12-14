@@ -34,10 +34,16 @@ do
         $BASENAME.log || exit 1
 done
 
-pdflatex kauguide.tex || exit 1
-makeindex -o kauguide.ind kauguide.idx || exit 1
-pdflatex kauguide.tex || exit 1
-rm -f kauguide.aux kauguide.ind kauguide.idx kauguide.ilg kauguide.log kauguide.out kauguide.toc
+for FILE in kauguide
+do
+  pdflatex $FILE.tex || exit 1
+  if [[ -f $FILE.idx ]]
+  then makeindex -o $FILE.ind $FILE.idx || exit 1
+  fi
+  pdflatex $FILE.tex || exit 1
+  pdflatex $FILE.tex || exit 1
+  rm -f $FILE.aux $FILE.ind $FILE.idx $FILE.ilg $FILE.log $FILE.out $FILE.toc
+done
 
 PACKAGE=kau
 TEXMF=`kpsexpand -n latex '$TEXMFHOME'`
