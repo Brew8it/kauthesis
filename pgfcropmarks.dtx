@@ -1,0 +1,166 @@
+% \iffalse meta-comment
+%% pgfcropmarks.dtx
+%% Copyright (c) 2011-2012 Stefan Berthold <stefan.berthold@kau.se>
+%
+% This file is part of the kauthesis bundle.
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%   http://www.latex-project.org/lppl.txt
+% and version 1.3 or later is part of all distributions of LaTeX
+% version 2005/12/01 or later.
+%
+% This work has the LPPL maintenance status `author-maintained'.
+% 
+% The Current Maintainer and author of this work is Stefan Berthold.
+%
+% This work consists of all files listed in manifest.txt.
+% \fi
+%
+% \iffalse
+%<*driver>
+\ProvidesFile{\jobname.dtx}
+%</driver>
+%<package>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
+%<package>\ProvidesPackage{pgfcropmarks}
+%<*package>
+    [2011/02/01 v1.0 crop marks using PGFpages]
+%</package>
+%
+%<*driver>
+\documentclass[a4paper]{ltxdoc}
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+\begin{document}
+  \DocInput{\jobname.dtx}
+  \PrintChanges
+  \PrintIndex
+\end{document}
+%</driver>
+% \fi
+%
+% \CheckSum{96}
+%
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+%
+%
+% \changes{v1.0}{2011/02/01}{SBe's licentiate version}
+%
+% \GetFileInfo{\jobname.dtx}
+%
+% \DoNotIndex{\newcommand,\renewcommand,\newenvironment,\let}
+% 
+% \StopEventually{}
+%
+% \title{The \textsf{\jobname} package\thanks{This document
+%   corresponds to \textsf{\jobname}~\fileversion, dated \filedate.}}
+% \author{Stefan Berthold \\ \texttt{stefan.berthold@kau.se}}
+%
+% \maketitle
+%
+% \section{Introduction}
+%
+% The package \textsf{\jobname} draws crop marks on A4~paper. This is supposed to be the last step after creating all tables, indices, and glosseries. When the package is loaded, \LaTeX{} will not create or update any auxiliary files.
+%
+% \section{Implementation}
+%
+% No options are parsed.
+%
+%    \begin{macrocode}
+\ProcessOptions\relax
+\RequirePackage{pgfpages}%
+%    \end{macrocode}
+%
+% \noindent No files are created or updated.
+%    \begin{macrocode}
+\nofiles%
+%    \end{macrocode}
+%
+% \noindent Boolean, true on odd pages.
+%    \begin{macrocode}
+\newif\if@kus@isodd%
+\@kus@isoddtrue%
+%    \end{macrocode}
+%
+% \begin{macro}{\cropmarklen}
+% The length of the crop mark lines.
+%    \begin{macrocode}
+\newlength{\cropmarklen}\setlength{\cropmarklen}{40pt}%
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\cropmarksep}
+% The space between cropmark and paper edge.
+%    \begin{macrocode}
+\newlength{\cropmarksep}\setlength{\cropmarksep}{15pt}%
+%    \end{macrocode}
+% \end{macro}
+%
+% \noindent The cropmark page layout.
+%    \begin{macrocode}
+\pgfpagesdeclarelayout{cropmarks}%
+{%
+}%
+{%
+  \pgfpagesphysicalpageoptions%
+  {%
+    logical pages=1,%
+    physical height=297mm,%
+    physical width=210mm%
+  }%
+  \pgfpageslogicalpageoptions{1}%
+  {%
+    border code=%
+      \if@kus@isodd
+        \global\@kus@isoddfalse
+        \pgfsetlinewidth{0.6pt}%
+        \pgfusepath{discard}%
+        \pgfmoveto{\pgfpoint{-\cropmarksep}{0pt}}%
+          \pgflineto{\pgfpoint{-\cropmarklen}{0pt}}%
+        \pgfmoveto{\pgfpoint{0pt}{-\cropmarksep}}%
+          \pgflineto{\pgfpoint{0pt}{-\cropmarklen}}%
+        \pgfmoveto{\pgfpoint{\paperwidth+\cropmarksep}{0pt}}%
+          \pgflineto{\pgfpoint{\paperwidth+\cropmarklen}{0pt}}%
+        \pgfmoveto{\pgfpoint{\paperwidth}{-\cropmarksep}}%
+          \pgflineto{\pgfpoint{\paperwidth}{-\cropmarklen}}%
+        \pgfmoveto{\pgfpoint{-\cropmarksep}{\paperheight}}%
+          \pgflineto{\pgfpoint{-\cropmarklen}{\paperheight}}%
+        \pgfmoveto{\pgfpoint{0pt}{\paperheight+\cropmarksep}}%
+          \pgflineto{\pgfpoint{0pt}{\paperheight+\cropmarklen}}%
+        \pgfmoveto{\pgfpoint{\paperwidth}{\paperheight+\cropmarksep}}%
+          \pgflineto{\pgfpoint{\paperwidth}{\paperheight+\cropmarklen}}%
+        \pgfmoveto{\pgfpoint{\paperwidth+\cropmarksep}{\paperheight}}%
+          \pgflineto{\pgfpoint{\paperwidth+\cropmarklen}{\paperheight}}%
+        \pgfusepath{stroke}%
+      \else
+        \global\@kus@isoddtrue
+      \fi,%
+    center=\pgfpoint{.5\pgfphysicalwidth}{.5\pgfphysicalheight}%
+  }%
+}%
+%    \end{macrocode}
+%
+% \noindent Activate the cropmark page layout.
+%    \begin{macrocode}
+\pgfpagesuselayout{cropmarks}%
+%    \end{macrocode}
+%
+% \Finale
+\endinput

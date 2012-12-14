@@ -16,6 +16,7 @@ kauparts.dtx
 kaureport.dtx
 kaustudies.dtx
 kautitle.dtx
+pgfcropmarks.dtx
 
 kaucollection.cls
 kaumasters.cls
@@ -29,6 +30,7 @@ kaupaper.sty
 kauparts.sty
 kaustudies.sty
 kautitle.sty
+pgfcropmarks.sty
 
 kauguide.tex
 kaumasterstemplate.tex
@@ -46,3 +48,4 @@ kauparts.pdf
 kaureport.pdf
 kaustudies.pdf
 kautitle.pdf
+pgfcropmarks.pdf
