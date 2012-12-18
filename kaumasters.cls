@@ -4,7 +4,7 @@
 %%
 %% The original source files were:
 %%
-%% kaumasters.dtx  (with options: `class')
+%% kauthesis.dtx  (with options: `masters')
 %% 
 %% This is a generated file.
 %% 
@@ -26,42 +26,59 @@
 %% 
 %% This work consists of all files listed in manifest.txt.
 %% 
-%% kaumasters.dtx
+%% kauthesis.dtx
 %% Copyright (c) 2011-2012 Stefan Berthold <stefan.berthold@kau.se>
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesClass{kaumasters}
-    [2012/12/14 v1.1 Karlstad University master's thesis layout]
+    [2012/12/15 v1.3 Karlstad University thesis layout]
 \ProcessOptions\relax
 \LoadClass{article}
-\RequirePackage[urw-garamond]{mathdesign}
-\RequirePackage[paper=a4,pagesize,twoside=semi]{typearea}
 \RequirePackage{kauclear}
 \RequirePackage{kaumeta}
-\let\kaumas@maketitle\maketitle
-  \renewcommand\maketitle{%
-    \section*{\@title}%
-    \textsc{\@author}\par%
-    \noindent\textit{\@institute}%
-  }%
+\RequirePackage{babel}
+\RequirePackage[urw-garamond]{mathdesign}
+\RequirePackage[paper=a4,pagesize,twoside=semi]{typearea}
+\let\kauths@maketitle\maketitle
+\renewcommand\maketitle{%
+  \PackageWarning{maketitle does not serve any purpose in this class.
+    The abstract environment reproduces the title instead.}%
+}
+\let\kauths@abstract\abstract%
+\let\kauths@endabstract\endabstract%
 \newcommand*\frontmatter{%
+  \clearpage%
   \setcounter{page}{3}%
   \renewcommand\thepage{\roman{page}}%
   \renewenvironment{abstract}{%
+    \cleardoublepage%
+    \section*{\@title}%
+    \textsc{\@author}\par%
+    \noindent\textit{\@institute}%
     \section*{\abstractname}%
-    %\addcontentsline{toc}{section}{\abstractname}%
   }{%
     \cleardoublepage%
   }%
 }
-\let\kaumas@tableofcontents\tableofcontents
+\newcommand*\acknowledgementname{%
+  \iflanguage{swedish}{Tacks\"agelser}{Acknowledgements}%
+}
+\newenvironment{acknowledgements}{%
+  \cleardoublepage%
+  \section*{\acknowledgementname}%
+}{%
+  \par\bigskip\bigskip\bigskip\noindent\@place, \@date\hfill \@author%
+  \cleardoublepage%
+}
+\let\kauths@tableofcontents\tableofcontents
 \renewcommand\tableofcontents{%
   \cleardoublepage%
-  \kaumas@tableofcontents%
+  \kauths@tableofcontents%
 }
 \newcommand\mainmatter[1][]{%
   \cleardoublepage%
-  \pagenumbering{arabic}%
+  \renewenvironment{abstract}{\kauths@abstract}{\kauths@endabstract}
   \setcounter{page}{1}%
+  \pagenumbering{arabic}%
 }
 \endinput
 %%

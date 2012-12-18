@@ -1,5 +1,5 @@
 % \iffalse meta-comment
-%% kaucollection.dtx
+%% kauthesis.dtx
 %% Copyright (c) 2011-2012 Stefan Berthold <stefan.berthold@kau.se>
 %
 % This file is part of the kauthesis bundle.
@@ -23,11 +23,13 @@
 %<*driver>
 \ProvidesFile{\jobname.dtx}
 %</driver>
-%<class>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
-%<class>\ProvidesClass{kaucollection}
-%<*class>
-    [2012/12/14 v1.2 Karlstad University collection thesis layout]
-%</class>
+%<collection|report|masters>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
+%<collection>\ProvidesClass{kaucollection}
+%<report>\ProvidesClass{kaureport}
+%<masters>\ProvidesClass{kaumasters}
+%<*collection|report|masters>
+    [2012/12/15 v1.3 Karlstad University thesis layout]
+%</collection|report|masters>
 %
 %<*driver>
 \documentclass[a4paper]{ltxdoc}
@@ -40,7 +42,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{104}
+% \CheckSum{118}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -62,6 +64,7 @@
 % \changes{v1.0}{2011/02/01}{SBe's licentiate version}
 % \changes{v1.1}{2011/05/06}{Initial public release}
 % \changes{v1.2}{2012/12/14}{Support for babel.sty,\\Documentation added}
+% \changes{v1.3}{2012/12/15}{Merged the classes' dtx files}
 %
 % \GetFileInfo{\jobname.dtx}
 %
@@ -69,7 +72,7 @@
 %
 % \StopEventually{\PrintChanges\PrintIndex}
 %
-% \title{The \textsf{\jobname} class\thanks{This document
+% \title{The \textsf{\jobname} package\thanks{This document
 %   corresponds to \textsf{\jobname}~\fileversion, dated \filedate.}}
 % \author{Stefan Berthold \\ \texttt{stefan.berthold@kau.se}}
 %
@@ -77,81 +80,159 @@
 %
 % \section{Introduction}
 %
-% The \textsf{\jobname} class is part of the kauthesis package. The class provides macros for writing a collection thesis. The latest version can be obtained from
+% The \textsf{\jobname} package provides \LaTeX{} classes for master's theses (\textsf{kaumasters} class), collection theses (\textsf{kaucollection} class), and monographs (\textsf{kaureport} class). The latest version can be obtained from
 % \begin{quote}
 %   \texttt{http://github.com/ZjMNZHgG5jMXw/kauthesis}\quad.
 % \end{quote}
-% The user's manual is found in \texttt{kauguide.pdf}.
+% The user's manual is found in \texttt{kauguide.pdf}. This file provides the source code documentation to all three classes.
+%
+% \section{Usage}
+%
+% \subsection{Master's thesis}
+% \iffalse
+%<*masterstemplate>
+% \fi
+%
+% This template can be found in \texttt{kaumasterstemplate.tex}.
+%
+% \noindent
+% The \textsf{kaumasters} class is quite similar to \LaTeX's \textsf{article} class. After loading the class, title, author, and institute have to be declared.
+%    \begin{macrocode}
+\documentclass{kaumasters}
+\title{The great thesis}
+\author{Donald Duck}
+\institute{Department of Mathematics and Computer Science}
+%    \end{macrocode}
+% The thesis starts with the front matter |\frontmatter|. It will (re)print the title. The macro |\maketitle| does not exist, since the title will be created by Karlstad University Studies.
+%    \begin{macrocode}
+\begin{document}
+\frontmatter
+%    \end{macrocode}
+% The two madatory inhabitants of the front matter are the abstract (|abstract| environment) and the |\tableofcontents|.
+%    \begin{macrocode}
+\begin{abstract}
+  This thesis describes the mathematical and computer science
+  background of Duckburg.
+\end{abstract}
+\tableofcontents
+%    \end{macrocode}
+% The main matter starts with |\mainmatter| for adjusting the page numbering and the content in the main matter is your work. Any macro or environment known from \LaTeX's article class can be used here.
+%    \begin{macrocode}
+\mainmatter
+\section{Duck Tales}
+quack.
+\end{document}
+%    \end{macrocode}
+% \iffalse
+%</masterstemplate>
+% \fi
 %
 % \section{Implementation}
+% \setcounter{CodelineNo}{0}
+% \iffalse
+%<*collection|report|masters>
+% \fi
 %
 % \subsection{Class options and dependencies}
 %
-% Class options are neither parsed nor passed to the underlying \textsf{article} class.
+% Class options are neither parsed nor passed to the underlying \textsf{article} class. All macros are derived from the standard \textsf{article} class.
 %    \begin{macrocode}
 \ProcessOptions\relax
-%    \end{macrocode}
-%%
-% \noindent \textsf{\jobname} derives all macros from the standard \textsf{article} class.
-%    \begin{macrocode}
 \LoadClass{article}
 %    \end{macrocode}
 %
-% \noindent and from the packages:
-% \textsf{kauclear} provides page style switches in |\cleardoublepage|,
-% \textsf{kaustudies} sets the page dimension to the format required by Karlstad University Studies,
+% \noindent \textsf{kauclear} provides page style switches in |\cleardoublepage|,
 % \textsf{kaumeta} defines the macros relevant for creating title information, e.\,g., |\institute|,
-% \textsf{kaupaper} defines the macros for appending papers to the collection thesis,
-% \textsf{kauenvironments} defines environments such as |researchquestions| and |contributions|,
-% \textsf{tikz} allows to place content material with absolute coordinates (required by |\vanityquote|), and
 % \textsf{babel} allows the author, for instance, to choose the language used in section headlines.
 %    \begin{macrocode}
 \RequirePackage{kauclear}
-\RequirePackage{kaustudies}
 \RequirePackage{kaumeta}
-\RequirePackage{kaupaper}
-\RequirePackage{kauenvironments}
-\RequirePackage{tikz}
 \RequirePackage{babel}
 %    \end{macrocode}
+% \iffalse
+%<*collection|report>
+% \fi
+% \textsf{kaustudies} sets the page dimension to the format required by Karlstad University Studies,
+% \textsf{kauenvironments} defines environments such as |researchquestions| and |contributions|.
+%    \begin{macrocode}
+\RequirePackage{kaustudies}
+\RequirePackage{kauenvironments}
+%    \end{macrocode}
+% \iffalse
+%</collection|report>
+%<*collection>
+% \fi
+% \textsf{kaupaper} defines the macros for appending papers to the collection thesis,
+% \textsf{tikz} allows to place content material with absolute coordinates (required by |\vanityquote|).
+%    \begin{macrocode}
+\RequirePackage{kaupaper}
+\RequirePackage{tikz}
+%    \end{macrocode}
+% \iffalse
+%</collection>
+%<*report>
+% \fi
+% \textsf{kauparts} defines |\kaupart|, a replacement for |\part|.
+%    \begin{macrocode}
+\RequirePackage{kauparts}
+%    \end{macrocode}
+% \iffalse
+%</report>
+%<*masters>
+% \fi
+% Garamond becomes the default font on A4 page layout.
+%    \begin{macrocode}
+\RequirePackage[urw-garamond]{mathdesign}
+\RequirePackage[paper=a4,pagesize,twoside=semi]{typearea}
+%    \end{macrocode}
+% \iffalse
+%</masters>
+% \fi
+%
 %
 % \subsection{Title page}
 %
-% Karlstad University Studies will create the title page for the thesis, thus, creating an own title page is not necessary. The macro |\maketitle| creates a title page which by no means makes an attempt to simulate the official design. It can be used to create a working title during the process of writing up the thesis.
+% Karlstad University Studies will create the title page for the thesis, thus, creating an own title page is not necessary.
 %
-% \begin{macro}{\kaucol@maketitle}
-% The definition of |\maketitle| in the \textsf{article} class creates a title without creating a separate page. \textsf{jobname} redefines the macro and preserves the original definition in |\kaucol@maketitle|.
+% \begin{macro}{\kauths@maketitle}
+% The definition of |\maketitle| in the \textsf{article} class creates a title without creating a separate page. The original definition is preserved in |\kauths@maketitle|.
 %    \begin{macrocode}
-\AtBeginDocument{\let\kaucol@maketitle\maketitle}
+\let\kauths@maketitle\maketitle
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\maketitle}
-% The redefined |\maketitle| creates a trailing blank page.
+% |\maketitle| does not serve any purpose. When invoked, it produces a warning, refering the user to the |abstract| environment.
 %    \begin{macrocode}
 \renewcommand\maketitle{%
-  \kaucol@maketitle%
-  \cleardoublepage%
+  \PackageWarning{maketitle does not serve any purpose in this class.
+    The abstract environment reproduces the title instead.}%
 }
 %    \end{macrocode}
 % \end{macro}
 %
 % \subsection{Front matter}
 %
-% The front matter starts after the title on page~iii. It contains the abstract of the collection thesis, defines the keywords, followed by an optional acknowledgements section and the table of contents. 
+% The front matter starts after the title on page~iii. It contains the abstract of the thesis, followed by an optional acknowledgements section and the table of contents. In collection theses and reports, the keywords are defined in the front matter.
 %
 % \begin{macro}{\keywordname}
 % The abstract is followed by the list of keywords. By default, the list is introduced by the word ``Keywords'' (and ``Nyckelord'' if the default language is set to Swedish). The list introduction can be changed to any other language by redefining the macro |\keywordname|.
+% \iffalse
+%<*collection|report>
+% \fi
 %    \begin{macrocode}
 \newcommand*\keywordname{\iflanguage{swedish}{Nyckelord}{Keywords}}
 %    \end{macrocode}
+% \iffalse
+%</collection|report>
+% \fi
 % \end{macro}
 %
-% \begin{macro}{\kaucol@abstract}
-% The |abstract| environment of the \textsf{article} class provides a perfect layout for article abstracts. It will be used for the abstracts of appended papers and preserved in the macro |\kaucol@abstract|.
+% \begin{macro}{\kauths@abstract}
+% The |abstract| environment of the \textsf{article} class provides a perfect layout for article abstracts in collection theses. It will be used for the abstracts of appended papers and preserved in the macro |\kauths@abstract|.
 %    \begin{macrocode}
-\let\kaucol@abstract\abstract%
-\let\kaucol@endabstract\endabstract%
+\let\kauths@abstract\abstract%
+\let\kauths@endabstract\endabstract%
 %    \end{macrocode}
 % \end{macro}
 %
@@ -171,12 +252,18 @@
 %    \begin{macrocode}
   \renewenvironment{abstract}{%
 %    \end{macrocode}
+% \iffalse
+%<*collection|report>
+% \fi
 % \begin{macro}{\keywords}
-% The last line of the abstract is supposed to be a list of keywords preceeded by |\keywords|.
+% The abstract's last line in collection theses and reports is supposed to be a list of keywords preceeded by |\keywords|.
 %    \begin{macrocode}
     \newcommand\keywords{\paragraph{\keywordname:}}%
 %    \end{macrocode}
 % \end{macro}
+% \iffalse
+%</collection|report>
+% \fi
 % The abstract starts by repeating the title, author, and the institue.
 %    \begin{macrocode}
     \cleardoublepage%
@@ -220,10 +307,10 @@
 %    \end{macrocode}
 % \end{environment}
 %
-% \begin{macro}{\kaucol@tableofcontents}
+% \begin{macro}{\kauths@tableofcontents}
 % The |\tableofcontents| definition from the \textsf{article} class is preserved. It is not reused in this class.
 %    \begin{macrocode}
-\let\kaucol@tableofcontents\tableofcontents
+\let\kauths@tableofcontents\tableofcontents
 %    \end{macrocode}
 % \end{macro}
 %
@@ -232,15 +319,18 @@
 %    \begin{macrocode}
 \renewcommand\tableofcontents{%
   \cleardoublepage%
-  \kaucol@tableofcontents%
+  \kauths@tableofcontents%
 }
 %    \end{macrocode}
 % \end{macro}
 %
 % \subsection{Main matter}
 %
-% The main matter is started with |\mainmatter|. The macro resets the page counter to page~1 and immediately creates the part Introductory Summary.
+% The main matter is started with |\mainmatter|. The macro resets the page counter to page~1 and, for collection theses, it immediately creates the part Introductory Summary.
 %
+% \iffalse
+%<*collection>
+% \fi
 % \begin{macro}{\introname}
 % The name of the Introductory Summary (``Inledande sammanfattning'' in Swedish) can be changed to any other language by redefining the macro |\introname|.
 %    \begin{macrocode}
@@ -249,6 +339,9 @@
 }
 %    \end{macrocode}
 % \end{macro}
+% \iffalse
+%</collection>
+% \fi
 %
 % \begin{macro}{\mainmatter}
 % The optional argument of |\mainmatter|\oarg{body material} can be used to get access to the part's title page, e.\,g., for adding a quote with |\vanityquote|.
@@ -258,22 +351,33 @@
 %    \end{macrocode}
 % The original definition of the |abstract| environment is restored.
 %    \begin{macrocode}
-  \renewenvironment{abstract}{\kaucol@abstract}{\kaucol@endabstract}
+  \renewenvironment{abstract}{\kauths@abstract}{\kauths@endabstract}
 %    \end{macrocode}
 % The page counter is set to page~1.
 %    \begin{macrocode}
   \setcounter{page}{1}%
-  \renewcommand\thepage{\arabic{page}}%
+  \pagenumbering{arabic}%
 %    \end{macrocode}
+% \iffalse
+%<*collection>
+% \fi
 % The Introductory Summary title page is created with |\introname| and \meta{body material}.
 %    \begin{macrocode}
   \kaupart*[body={#1}]{\introname}%
+%    \end{macrocode}
+% \iffalse
+%</collection>
+% \fi
+%    \begin{macrocode}
 }
 %    \end{macrocode}
 % \end{macro}
 %
+% \iffalse
+%<*collection|report>
+% \fi
 % \begin{macro}{\vanityquote}
-% The macro |\vanityquote|\marg{quote}\marg{reference} can be used to add quotes to the cover pages of parts, e.\,g., in \meta{body material} of |\mainmatter|.
+% The macro |\vanityquote|\marg{quote}\marg{reference} can be used in collection theses and reports to add quotes to the cover pages of parts, e.\,g., in \meta{body material} of |\mainmatter|.
 % The first argument, \meta{quote}, is the quote and the second, \meta{reference}, is the reference to the person which is quoted.
 %    \begin{macrocode}
 \newcommand\vanityquote[2]{%
@@ -298,6 +402,23 @@
 }
 %    \end{macrocode}
 % \end{macro}
+% \iffalse
+%</collection|report>
+% \fi
+%
+% \iffalse
+%<*report>
+% \fi
+% \begin{macro}{\part}
+% In the \textsf{kaureport} class, the |\part|\marg{headline} is replaced by |\kaupart|.
+%    \begin{macrocode}
+\let\part\kaupart
+%    \end{macrocode}
+% \end{macro}
+% \iffalse
+%</report>
+%</collection|report|masters>
+% \fi
 %
 % \Finale
 \endinput

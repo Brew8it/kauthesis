@@ -4,7 +4,7 @@
 %%
 %% The original source files were:
 %%
-%% kaucollection.dtx  (with options: `class')
+%% kauthesis.dtx  (with options: `collection')
 %% 
 %% This is a generated file.
 %% 
@@ -26,29 +26,28 @@
 %% 
 %% This work consists of all files listed in manifest.txt.
 %% 
-%% kaucollection.dtx
+%% kauthesis.dtx
 %% Copyright (c) 2011-2012 Stefan Berthold <stefan.berthold@kau.se>
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesClass{kaucollection}
-    [2012/12/14 v1.2 Karlstad University collection thesis layout]
+    [2012/12/15 v1.3 Karlstad University thesis layout]
 \ProcessOptions\relax
-%%
 \LoadClass{article}
 \RequirePackage{kauclear}
-\RequirePackage{kaustudies}
 \RequirePackage{kaumeta}
-\RequirePackage{kaupaper}
-\RequirePackage{kauenvironments}
-\RequirePackage{tikz}
 \RequirePackage{babel}
-\AtBeginDocument{\let\kaucol@maketitle\maketitle}
+\RequirePackage{kaustudies}
+\RequirePackage{kauenvironments}
+\RequirePackage{kaupaper}
+\RequirePackage{tikz}
+\let\kauths@maketitle\maketitle
 \renewcommand\maketitle{%
-  \kaucol@maketitle%
-  \cleardoublepage%
+  \PackageWarning{maketitle does not serve any purpose in this class.
+    The abstract environment reproduces the title instead.}%
 }
 \newcommand*\keywordname{\iflanguage{swedish}{Nyckelord}{Keywords}}
-\let\kaucol@abstract\abstract%
-\let\kaucol@endabstract\endabstract%
+\let\kauths@abstract\abstract%
+\let\kauths@endabstract\endabstract%
 \newcommand*\frontmatter{%
   \clearpage%
   \setcounter{page}{3}%
@@ -74,19 +73,19 @@
   \par\bigskip\bigskip\bigskip\noindent\@place, \@date\hfill \@author%
   \cleardoublepage%
 }
-\let\kaucol@tableofcontents\tableofcontents
+\let\kauths@tableofcontents\tableofcontents
 \renewcommand\tableofcontents{%
   \cleardoublepage%
-  \kaucol@tableofcontents%
+  \kauths@tableofcontents%
 }
 \newcommand*\introname{%
   \iflanguage{swedish}{Inledande sammanfattning}{Introductory Summary}%
 }
 \newcommand\mainmatter[1][]{%
   \cleardoublepage%
-  \renewenvironment{abstract}{\kaucol@abstract}{\kaucol@endabstract}
+  \renewenvironment{abstract}{\kauths@abstract}{\kauths@endabstract}
   \setcounter{page}{1}%
-  \renewcommand\thepage{\arabic{page}}%
+  \pagenumbering{arabic}%
   \kaupart*[body={#1}]{\introname}%
 }
 \newcommand\vanityquote[2]{%
