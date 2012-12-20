@@ -42,7 +42,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{118}
+% \CheckSum{132}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -65,6 +65,7 @@
 % \changes{v1.1}{2011/05/06}{Initial public release}
 % \changes{v1.2}{2012/12/14}{Support for babel.sty,\\Documentation added}
 % \changes{v1.3}{2012/12/15}{Merged the classes' dtx files}
+% \changes{v1.4}{2012/12/20}{Fixed babel.sty support}
 %
 % \GetFileInfo{\jobname.dtx}
 %
@@ -89,31 +90,33 @@
 % \section{Usage}
 %
 % \subsection{Master's thesis}
-% \iffalse
-%<*masterstemplate>
-% \fi
 %
 % This template can be found in \texttt{kaumasterstemplate.tex}.
 %
 % \noindent
 % The \textsf{kaumasters} class is quite similar to \LaTeX's \textsf{article} class. After loading the class, title, author, and institute have to be declared.
 %    \begin{macrocode}
+%<*masterstemplate>
 \documentclass{kaumasters}
 \title{The great thesis}
 \author{Donald Duck}
 \institute{Department of Mathematics and Computer Science}
+\place{Duckburg}
 %    \end{macrocode}
 % The thesis starts with the front matter |\frontmatter|. It will (re)print the title. The macro |\maketitle| does not exist, since the title will be created by Karlstad University Studies.
 %    \begin{macrocode}
 \begin{document}
 \frontmatter
 %    \end{macrocode}
-% The two madatory inhabitants of the front matter are the abstract (|abstract| environment) and the |\tableofcontents|.
+% The two madatory inhabitants of the front matter are the abstract (|abstract| environment) and the |\tableofcontents|. If you like to write acknowledgements, put it between the abstract and the table of contents.
 %    \begin{macrocode}
 \begin{abstract}
   This thesis describes the mathematical and computer science
   background of Duckburg.
 \end{abstract}
+\begin{acknowledgements}
+  Thanks.
+\end{acknowledgements}
 \tableofcontents
 %    \end{macrocode}
 % The main matter starts with |\mainmatter| for adjusting the page numbering and the content in the main matter is your work. Any macro or environment known from \LaTeX's article class can be used here.
@@ -122,73 +125,102 @@
 \section{Duck Tales}
 quack.
 \end{document}
-%    \end{macrocode}
-% \iffalse
 %</masterstemplate>
-% \fi
+%    \end{macrocode}
 %
 % \section{Implementation}
-% \setcounter{CodelineNo}{0}
-% \iffalse
-%<*collection|report|masters>
-% \fi
 %
 % \subsection{Class options and dependencies}
 %
 % Class options are neither parsed nor passed to the underlying \textsf{article} class. All macros are derived from the standard \textsf{article} class.
 %    \begin{macrocode}
+%<*collection|report|masters>
 \ProcessOptions\relax
 \LoadClass{article}
 %    \end{macrocode}
 %
 % \noindent \textsf{kauclear} provides page style switches in |\cleardoublepage|,
-% \textsf{kaumeta} defines the macros relevant for creating title information, e.\,g., |\institute|,
-% \textsf{babel} allows the author, for instance, to choose the language used in section headlines.
+% \textsf{kaumeta} defines the macros relevant for creating title information, e.\,g., |\institute|.
 %    \begin{macrocode}
 \RequirePackage{kauclear}
 \RequirePackage{kaumeta}
-\RequirePackage{babel}
 %    \end{macrocode}
-% \iffalse
-%<*collection|report>
-% \fi
 % \textsf{kaustudies} sets the page dimension to the format required by Karlstad University Studies,
-% \textsf{kauenvironments} defines environments such as |researchquestions| and |contributions|.
-%    \begin{macrocode}
-\RequirePackage{kaustudies}
-\RequirePackage{kauenvironments}
-%    \end{macrocode}
-% \iffalse
-%</collection|report>
-%<*collection>
-% \fi
-% \textsf{kaupaper} defines the macros for appending papers to the collection thesis,
+% \textsf{kauenvironments} defines environments such as |researchquestions| and |contributions|,
 % \textsf{tikz} allows to place content material with absolute coordinates (required by |\vanityquote|).
 %    \begin{macrocode}
-\RequirePackage{kaupaper}
+%<*collection|report>
+\RequirePackage{kaustudies}
+\RequirePackage{kauenvironments}
 \RequirePackage{tikz}
+%</collection|report>
 %    \end{macrocode}
-% \iffalse
+% \textsf{kaupaper} defines the macros for appending papers to the collection thesis.
+%    \begin{macrocode}
+%<*collection>
+\RequirePackage{kaupaper}
 %</collection>
-%<*report>
-% \fi
+%    \end{macrocode}
 % \textsf{kauparts} defines |\kaupart|, a replacement for |\part|.
 %    \begin{macrocode}
+%<*report>
 \RequirePackage{kauparts}
-%    \end{macrocode}
-% \iffalse
 %</report>
-%<*masters>
-% \fi
+%    \end{macrocode}
 % Garamond becomes the default font on A4 page layout.
 %    \begin{macrocode}
+%<*masters>
 \RequirePackage[urw-garamond]{mathdesign}
 \RequirePackage[paper=a4,pagesize,twoside=semi]{typearea}
-%    \end{macrocode}
-% \iffalse
 %</masters>
-% \fi
+%    \end{macrocode}
 %
+% \subsection{Language support}
+%
+% \begin{macro}{\acknowledgementname}
+% By default, the |acknowledgements| environment will create an unnumbered section with the title ``Acknowledgements'' (or ``Tacks\"agelser'', if Swedish is chosen as default language). The section headline can be changed to any other language by redefining the macro |\acknowledgementname|.
+%    \begin{macrocode}
+\AtBeginDocument{%
+  \@ifpackageloaded{babel}%
+    {\newcommand*\acknowledgementname{%
+      \iflanguage{swedish}{Tacks\"agelser}{Acknowledgements}}%
+    }%
+    {\newcommand*\acknowledgementname{Acknowledgements}}%
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\keywordname}
+% The abstract of collection theses and reports is followed by the list of keywords. By default, the list is introduced by the word ``Keywords'' (and ``Nyckelord'' if the default language is set to Swedish). The list introduction can be changed to any other language by redefining the macro |\keywordname|.
+%    \begin{macrocode}
+%<*collection|report>
+\AtBeginDocument{%
+  \@ifpackageloaded{babel}%
+    {\newcommand*\keywordname{%
+      \iflanguage{swedish}{Nyckelord}{Keywords}}%
+    }%
+    {\newcommand*\keywordname{Keywords}}%
+}
+%</collection|report>
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\introname}
+% In collection thesis, the main matter starts automatically with an Introductory Summary. The name of the Introductory Summary (``Inledande sammanfattning'' in Swedish) can be changed to any other language by redefining the macro |\introname|.
+%    \begin{macrocode}
+%<*collection>
+\AtBeginDocument{%
+  \@ifpackageloaded{babel}%
+    {\newcommand*\introname{%
+      \iflanguage{swedish}%
+        {Inledande sammanfattning}%
+        {Introductory Summary}}%
+    }%
+    {\newcommand*\introname{Introductory Summary}}%
+}
+%</collection>
+%    \end{macrocode}
+% \end{macro}
 %
 % \subsection{Title page}
 %
@@ -215,19 +247,6 @@ quack.
 %
 % The front matter starts after the title on page~iii. It contains the abstract of the thesis, followed by an optional acknowledgements section and the table of contents. In collection theses and reports, the keywords are defined in the front matter.
 %
-% \begin{macro}{\keywordname}
-% The abstract is followed by the list of keywords. By default, the list is introduced by the word ``Keywords'' (and ``Nyckelord'' if the default language is set to Swedish). The list introduction can be changed to any other language by redefining the macro |\keywordname|.
-% \iffalse
-%<*collection|report>
-% \fi
-%    \begin{macrocode}
-\newcommand*\keywordname{\iflanguage{swedish}{Nyckelord}{Keywords}}
-%    \end{macrocode}
-% \iffalse
-%</collection|report>
-% \fi
-% \end{macro}
-%
 % \begin{macro}{\kauths@abstract}
 % The |abstract| environment of the \textsf{article} class provides a perfect layout for article abstracts in collection theses. It will be used for the abstracts of appended papers and preserved in the macro |\kauths@abstract|.
 %    \begin{macrocode}
@@ -252,18 +271,14 @@ quack.
 %    \begin{macrocode}
   \renewenvironment{abstract}{%
 %    \end{macrocode}
-% \iffalse
-%<*collection|report>
-% \fi
 % \begin{macro}{\keywords}
 % The abstract's last line in collection theses and reports is supposed to be a list of keywords preceeded by |\keywords|.
 %    \begin{macrocode}
+%<*collection|report>
     \newcommand\keywords{\paragraph{\keywordname:}}%
+%</collection|report>
 %    \end{macrocode}
 % \end{macro}
-% \iffalse
-%</collection|report>
-% \fi
 % The abstract starts by repeating the title, author, and the institue.
 %    \begin{macrocode}
     \cleardoublepage%
@@ -280,15 +295,6 @@ quack.
 }
 %    \end{macrocode}
 % \end{environment}
-% \end{macro}
-%
-% \begin{macro}{\acknowledgementname}
-% By default, the |acknowledgements| environment will create an unnumbered section with the title ``Acknowledgements'' (or ``Tacks\"agelser'', if Swedish is chosen as default language). The section headline can be changed to any other language by redefining the macro |\acknowledgementname|.
-%    \begin{macrocode}
-\newcommand*\acknowledgementname{%
-  \iflanguage{swedish}{Tacks\"agelser}{Acknowledgements}%
-}
-%    \end{macrocode}
 % \end{macro}
 %
 % \begin{environment}{acknowledgements}
@@ -328,21 +334,6 @@ quack.
 %
 % The main matter is started with |\mainmatter|. The macro resets the page counter to page~1 and, for collection theses, it immediately creates the part Introductory Summary.
 %
-% \iffalse
-%<*collection>
-% \fi
-% \begin{macro}{\introname}
-% The name of the Introductory Summary (``Inledande sammanfattning'' in Swedish) can be changed to any other language by redefining the macro |\introname|.
-%    \begin{macrocode}
-\newcommand*\introname{%
-  \iflanguage{swedish}{Inledande sammanfattning}{Introductory Summary}%
-}
-%    \end{macrocode}
-% \end{macro}
-% \iffalse
-%</collection>
-% \fi
-%
 % \begin{macro}{\mainmatter}
 % The optional argument of |\mainmatter|\oarg{body material} can be used to get access to the part's title page, e.\,g., for adding a quote with |\vanityquote|.
 %    \begin{macrocode}
@@ -358,28 +349,20 @@ quack.
   \setcounter{page}{1}%
   \pagenumbering{arabic}%
 %    \end{macrocode}
-% \iffalse
-%<*collection>
-% \fi
 % The Introductory Summary title page is created with |\introname| and \meta{body material}.
 %    \begin{macrocode}
+%<*collection>
   \kaupart*[body={#1}]{\introname}%
-%    \end{macrocode}
-% \iffalse
 %</collection>
-% \fi
-%    \begin{macrocode}
 }
 %    \end{macrocode}
 % \end{macro}
 %
-% \iffalse
-%<*collection|report>
-% \fi
 % \begin{macro}{\vanityquote}
 % The macro |\vanityquote|\marg{quote}\marg{reference} can be used in collection theses and reports to add quotes to the cover pages of parts, e.\,g., in \meta{body material} of |\mainmatter|.
 % The first argument, \meta{quote}, is the quote and the second, \meta{reference}, is the reference to the person which is quoted.
 %    \begin{macrocode}
+%<*collection|report>
 \newcommand\vanityquote[2]{%
 %    \end{macrocode}
 % The quote is placed relative to the borders of the page. TikZ is doing the actual placing.
@@ -400,25 +383,19 @@ quack.
            \normalfont\par\medskip\itshape #2\par};%
   \end{tikzpicture}%
 }
+%</collection|report>
 %    \end{macrocode}
 % \end{macro}
-% \iffalse
-%</collection|report>
-% \fi
 %
-% \iffalse
-%<*report>
-% \fi
 % \begin{macro}{\part}
 % In the \textsf{kaureport} class, the |\part|\marg{headline} is replaced by |\kaupart|.
 %    \begin{macrocode}
+%<*report>
 \let\part\kaupart
-%    \end{macrocode}
-% \end{macro}
-% \iffalse
 %</report>
 %</collection|report|masters>
-% \fi
+%    \end{macrocode}
+% \end{macro}
 %
 % \Finale
 \endinput

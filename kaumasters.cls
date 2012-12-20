@@ -35,9 +35,15 @@
 \LoadClass{article}
 \RequirePackage{kauclear}
 \RequirePackage{kaumeta}
-\RequirePackage{babel}
 \RequirePackage[urw-garamond]{mathdesign}
 \RequirePackage[paper=a4,pagesize,twoside=semi]{typearea}
+\AtBeginDocument{%
+  \@ifpackageloaded{babel}%
+    {\newcommand*\acknowledgementname{%
+      \iflanguage{swedish}{Tacks\"agelser}{Acknowledgements}}%
+    }%
+    {\newcommand*\acknowledgementname{Acknowledgements}}%
+}
 \let\kauths@maketitle\maketitle
 \renewcommand\maketitle{%
   \PackageWarning{maketitle does not serve any purpose in this class.
@@ -58,9 +64,6 @@
   }{%
     \cleardoublepage%
   }%
-}
-\newcommand*\acknowledgementname{%
-  \iflanguage{swedish}{Tacks\"agelser}{Acknowledgements}%
 }
 \newenvironment{acknowledgements}{%
   \cleardoublepage%

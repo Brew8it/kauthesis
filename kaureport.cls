@@ -35,16 +35,29 @@
 \LoadClass{article}
 \RequirePackage{kauclear}
 \RequirePackage{kaumeta}
-\RequirePackage{babel}
 \RequirePackage{kaustudies}
 \RequirePackage{kauenvironments}
+\RequirePackage{tikz}
 \RequirePackage{kauparts}
+\AtBeginDocument{%
+  \@ifpackageloaded{babel}%
+    {\newcommand*\acknowledgementname{%
+      \iflanguage{swedish}{Tacks\"agelser}{Acknowledgements}}%
+    }%
+    {\newcommand*\acknowledgementname{Acknowledgements}}%
+}
+\AtBeginDocument{%
+  \@ifpackageloaded{babel}%
+    {\newcommand*\keywordname{%
+      \iflanguage{swedish}{Nyckelord}{Keywords}}%
+    }%
+    {\newcommand*\keywordname{Keywords}}%
+}
 \let\kauths@maketitle\maketitle
 \renewcommand\maketitle{%
   \PackageWarning{maketitle does not serve any purpose in this class.
     The abstract environment reproduces the title instead.}%
 }
-\newcommand*\keywordname{\iflanguage{swedish}{Nyckelord}{Keywords}}
 \let\kauths@abstract\abstract%
 \let\kauths@endabstract\endabstract%
 \newcommand*\frontmatter{%
@@ -61,9 +74,6 @@
   }{%
     \cleardoublepage%
   }%
-}
-\newcommand*\acknowledgementname{%
-  \iflanguage{swedish}{Tacks\"agelser}{Acknowledgements}%
 }
 \newenvironment{acknowledgements}{%
   \cleardoublepage%
