@@ -93,38 +93,34 @@
 % \subsection{Master's thesis}
 %
 % This template can be found in \texttt{kaumasterstemplate.tex}.
-%
-% \noindent
 % The \textsf{kaumasters} class is quite similar to \LaTeX's \textsf{article} class. After loading the class, title, author, and institute have to be declared.
 %    \begin{macrocode}
 %<*masterstemplate>
 \documentclass{kaumasters}
-\title{The great thesis}
-\author{Donald Duck}
+\title{Title}
+\author{Author}
 \institute{Department of Mathematics and Computer Science}
-\place{Duckburg}
+\place{Place}
 %    \end{macrocode}
 % The thesis starts with the front matter |\frontmatter|. It will (re)print the title. The macro |\maketitle| does not exist, since the title will be created by Karlstad University Studies.
 %    \begin{macrocode}
 \begin{document}
 \frontmatter
 %    \end{macrocode}
-% The two madatory inhabitants of the front matter are the abstract (|abstract| environment) and the |\tableofcontents|. If you like to write acknowledgements, put it between the abstract and the table of contents.
+% The two mandatory inhabitants of the front matter are the abstract (|abstract| environment) and the |\tableofcontents|. If you like to write acknowledgements, put it between the abstract and the table of contents.
 %    \begin{macrocode}
 \begin{abstract}
-  This thesis describes the mathematical and computer science
-  background of Duckburg.
+  Abstract.
 \end{abstract}
 \begin{acknowledgements}
   Thanks.
 \end{acknowledgements}
 \tableofcontents
 %    \end{macrocode}
-% The main matter starts with |\mainmatter| for adjusting the page numbering and the content in the main matter is your work. Any macro or environment known from \LaTeX's article class can be used here.
+% The main matter starts with |\mainmatter| for adjusting the page numbering. The content in the main matter is your work. Any macro or environment known from \LaTeX's \textsf{article} class can be used here.
 %    \begin{macrocode}
 \mainmatter
-\section{Duck Tales}
-quack.
+\section{Introduction}
 \end{document}
 %</masterstemplate>
 %    \end{macrocode}
@@ -132,18 +128,22 @@ quack.
 % \subsection{Report}
 %
 % This template can be found in \texttt{kaureporttemplate.tex}.
+% Like the master's thesis class, the report class is derived from the \LaTeX{} \textsf{article} class.
 %
 %    \begin{macrocode}
 %<*reporttemplate>
 \documentclass{kaureport}
 %    \end{macrocode}
-% TODO
+% After loading the class, title, author, and institute have to be declared.
 %    \begin{macrocode}
 \title{Title}
 \author{Author}
-\institute{Department}
+\institute{Department of Mathematics and Computer Science}
 \place{Place}
 \begin{document}
+%    \end{macrocode}
+% The two mandatory inhabitants of the front matter are the abstract (|abstract| environment) and the |\tableofcontents|. If you like to write acknowledgements, put it between the abstract and the table of contents.
+%    \begin{macrocode}
 \frontmatter
 \begin{abstract}
   Brief abstract.
@@ -153,6 +153,9 @@ quack.
   Thanks.
 \end{acknowledgements}
 \tableofcontents
+%    \end{macrocode}
+% The main matter starts with |\mainmatter| for adjusting the page numbering. The content in the main matter is your work. Any macro or environment known from \LaTeX's \textsf{article} class can be used here.
+%    \begin{macrocode}
 \mainmatter
 \part{Introduction}
 \section{Related work}
@@ -164,23 +167,30 @@ quack.
 % \subsection{Collection thesis}
 %
 % This template can be found in \texttt{kaucollectiontemplate.tex}.
+% Like the master's thesis class, the report class is derived from the \LaTeX{} \textsf{article} class.
 %
 %    \begin{macrocode}
 %<*collectiontemplate>
 \documentclass{kaucollection}
 %    \end{macrocode}
-% TODO
+% Page headings and can be created using the \textsf{scrheadings} packages.
 %    \begin{macrocode}
 \usepackage{scrpage2}
 \pagestyle{scrheadings}
 \renewcommand*\headfont{\normalfont\small}
 \rehead{\thepaper}
 \lohead{\thepapertitle}
+%    \end{macrocode}
+% After loading the class, title, author, and institute have to be declared.
+%    \begin{macrocode}
 \title{Title}
 \author{Author}
-\institute{Department}
+\institute{Department of Mathematics and Computer Science}
 \place{Place}
 \begin{document}
+%    \end{macrocode}
+% The two mandatory inhabitants of the front matter are the abstract (|abstract| environment) and the |\tableofcontents|. If you like to write acknowledgements, put it between the abstract and the table of contents.
+%    \begin{macrocode}
 \frontmatter
 \begin{abstract}
   Brief abstract.
@@ -190,12 +200,24 @@ quack.
   Thanks.
 \end{acknowledgements}
 \tableofcontents
+%    \end{macrocode}
+% The table of contents is followed by the list of papers.
+%    \begin{macrocode}
 \listofpapers
+%    \end{macrocode}
+% The main matter starts with |\mainmatter| for adjusting the page numbering.
+%    \begin{macrocode}
 \mainmatter
 \section{Introduction}
+%    \end{macrocode}
+% Create a list of summaries of all appended papers with |\listofsummaries|.
+%    \begin{macrocode}
 \section{Summary of Appended Papers}
 \listofsummaries
 \section{Conclusions and Future Work}
+%    \end{macrocode}
+% Append papers, each in an own |kaupaper| environment.
+%    \begin{macrocode}
 \begin{kaupaper}[ author=Author
                 , title=Paper Title
                 , reference=reference text.
@@ -204,6 +226,9 @@ quack.
                 , participation=I am the main author.
                 , label=paper:shorttitle
                 ]
+%    \end{macrocode}
+% Appended papers may have their own titles and abstracts.
+%    \begin{macrocode}
   \maketitle
   \begin{abstract}
     Paper abstract.
