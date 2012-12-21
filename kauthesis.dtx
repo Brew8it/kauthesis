@@ -42,7 +42,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{132}
+% \CheckSum{167}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -66,6 +66,7 @@
 % \changes{v1.2}{2012/12/14}{Support for babel.sty,\\Documentation added}
 % \changes{v1.3}{2012/12/15}{Merged the classes' dtx files}
 % \changes{v1.4}{2012/12/20}{Fixed babel.sty support}
+% \changes{v1.5}{2012/12/20}{Added templates for kaucollection and kaureport}
 %
 % \GetFileInfo{\jobname.dtx}
 %
@@ -126,6 +127,59 @@
 quack.
 \end{document}
 %</masterstemplate>
+%    \end{macrocode}
+%
+% \subsection{Collection thesis}
+%
+% This template can be found in \texttt{kaucollectiontemplate.tex}.
+%
+%    \begin{macrocode}
+%<*collectiontemplate>
+\documentclass{kaucollection}
+%    \end{macrocode}
+% TODO
+%    \begin{macrocode}
+\usepackage{scrpage2}
+\pagestyle{scrheadings}
+\renewcommand*\headfont{\normalfont\small}
+\rehead{\thepaper}
+\lohead{\thepapertitle}
+\title{Title}
+\author{Author}
+\institute{Department}
+\place{Place}
+\begin{document}
+\frontmatter
+\begin{abstract}
+  Brief abstract.
+  \keywords keywords
+\end{abstract}
+\begin{acknowledgements}
+  Thanks.
+\end{acknowledgements}
+\tableofcontents
+\listofpapers
+\mainmatter
+\section{Introduction}
+\section{Summary of Appended Papers}
+\listofsummaries
+\section{Conclusions and Future Work}
+\begin{kaupaper}[ author=Author
+                , title=Paper Title
+                , reference=reference text.
+                , email=author@kau.se
+                , summary=Abstract in the intro.
+                , participation=I am the main author.
+                , label=paper:shorttitle
+                ]
+  \maketitle
+  \begin{abstract}
+    Paper abstract.
+  \end{abstract}
+  Paper content.
+\end{kaupaper}
+\end{document}
+%</collectiontemplate>
 %    \end{macrocode}
 %
 % \section{Implementation}
