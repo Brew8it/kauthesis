@@ -31,8 +31,10 @@ kautitle.sty
 pgfcropmarks.sty
 
 kauguide.tex
+kaucollectiontemplate.tex
 kaumasterstemplate.tex
 kaumeetingtemplate.tex
+kaureporttemplate.tex
 
 kauclear.pdf
 kauenvironments.pdf
