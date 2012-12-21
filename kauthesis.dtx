@@ -42,7 +42,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{167}
+% \CheckSum{185}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -127,6 +127,38 @@
 quack.
 \end{document}
 %</masterstemplate>
+%    \end{macrocode}
+%
+% \subsection{Report}
+%
+% This template can be found in \texttt{kaureporttemplate.tex}.
+%
+%    \begin{macrocode}
+%<*reporttemplate>
+\documentclass{kaureport}
+%    \end{macrocode}
+% TODO
+%    \begin{macrocode}
+\title{Title}
+\author{Author}
+\institute{Department}
+\place{Place}
+\begin{document}
+\frontmatter
+\begin{abstract}
+  Brief abstract.
+  \keywords keywords
+\end{abstract}
+\begin{acknowledgements}
+  Thanks.
+\end{acknowledgements}
+\tableofcontents
+\mainmatter
+\part{Introduction}
+\section{Related work}
+\part{Conclusions and Future Work}
+\end{document}
+%</reporttemplate>
 %    \end{macrocode}
 %
 % \subsection{Collection thesis}
