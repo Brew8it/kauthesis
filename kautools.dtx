@@ -49,7 +49,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{567}
+% \CheckSum{600}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -493,7 +493,7 @@
 \RequirePackage{xkeyval}
 
 \define@cmdkeys[kua]{paper}[kua@]{author,title,subtitle,reference,email,refstr,vanity,subdelimiter,label,summary,limitations,participation}
-\setkeys[kua]{paper}{refstr={Reprinted from}}
+\setkeys[kua]{paper}{refstr=\reprintedname}
 
 \ProcessOptionsX[kua]<paper>
 
@@ -503,6 +503,24 @@
 
 \RequirePackage{ragged2e}
 \RequirePackage{hyphenat}
+
+\AtBeginDocument{%
+  \@ifpackageloaded{babel}%
+    {\newcommand*\reprintedname{%
+      \iflanguage{swedish}{Ursprungligen publicertad i}{Reprinted from}}%
+     \newcommand*\appendedpapersname{%
+      \iflanguage{swedish}{Bifogade publiceringar}{List of Appended Papers}}%
+     \newcommand*\participationname{%
+      \iflanguage{swedish}{Kommentarer p\aa{} min medverka}{Comments on my Participation}}%
+     \newcommand*\papername{%
+      \iflanguage{swedish}{Publicering}{Paper}}%
+    }%
+    {\newcommand*\reprintedname{Reprinted from}%
+     \newcommand*\appendedpapersname{List of Appended Papers}%
+     \newcommand*\participationname{Comments on my Participation}%
+     \newcommand*\papername{Paper}%
+    }%
+}
 
 \newcounter{kua@section}
 \newcounter{kua@equation}
@@ -544,13 +562,13 @@
 % \begin{macro}{\listofpapers}
 %    \begin{macrocode}
 \newcommand\listofpapers{%
-  \section*{List of Appended Papers}%
-  \addcontentsline{toc}{section}{List of Appended Papers}%
+  \section*{\appendedpapersname}%
+  \addcontentsline{toc}{section}{\appendedpapersname}%
   \kua@listof{pap}{appended papers}{%
     \begin{enumerate}%
     \renewcommand\theenumi{\textbf{\Roman{enumi}}}%
   }{\end{enumerate}}%
-  \subsection*{Comments on my Participation}
+  \subsection*{\participationname}
   \kua@listof{pcp}{participation in appended papers}{}{}%
 }
 %    \end{macrocode}
@@ -634,15 +652,15 @@
   \setcounter{kua@paper}{\value{kup@part}}\stepcounter{kua@paper}%
   \ifthenelse{\equal{\kua@subtitle}{}}%
     {\addcontentsline{pap}{paper}{\kua@author. \kua@title. In \kua@reference}%
-     \addcontentsline{toc}{part}{\textsc{Paper} \Roman{kua@paper}\\\kua@title}}%
+     \addcontentsline{toc}{part}{\textsc{\papername} \Roman{kua@paper}\\\kua@title}}%
     {\addcontentsline{pap}{paper}{\kua@author. \kua@title\kua@subdelimiter\kua@subtitle. In \kua@reference}%
-     \addcontentsline{toc}{part}{\textsc{Paper} \Roman{kua@paper}\\\kua@title\kua@subdelimiter\kua@subtitle}}%
-  \addcontentsline{sum}{summary}{\string\subsection*{Paper~\Roman{kua@paper} -- \kua@title}\kua@summary}%
+     \addcontentsline{toc}{part}{\textsc{\papername} \Roman{kua@paper}\\\kua@title\kua@subdelimiter\kua@subtitle}}%
+  \addcontentsline{sum}{summary}{\string\subsection*{\papername~\Roman{kua@paper} -- \kua@title}\kua@summary}%
   \ifthenelse{\equal{\kua@limitations}{}}{}{%
     \addcontentsline{sum}{limit}{\kua@limitations}}%
-  \addcontentsline{pcp}{participation}{\string\paragraph{Paper~\Roman{kua@paper}}\kua@participation}%
-  \kaupart[tocentry=false,label=\kua@label,body=\papercover\kua@vanity]{Paper}%
-  \renewcommand*\thepaper{Paper \Roman{kua@paper}}%
+  \addcontentsline{pcp}{participation}{\string\paragraph{\papername~\Roman{kua@paper}}\kua@participation}%
+  \kaupart[tocentry=false,label=\kua@label,body=\papercover\kua@vanity]{\papername}%
+  \renewcommand*\thepaper{\papername~\Roman{kua@paper}}%
   \renewcommand*\thepapertitle{\kua@title}%
   \renewcommand\maketitle{%
     \thispagestyle{plain}%
