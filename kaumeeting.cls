@@ -26,7 +26,7 @@
 %% 
 %% This work consists of all files listed in manifest.txt.
 %% 
-%% kaumasters.dtx
+%% kaumeeting.dtx
 %% Copyright (c) 2011-2012 Stefan Berthold <stefan.berthold@kau.se>
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesClass{kaumeeting}

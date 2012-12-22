@@ -5,16 +5,9 @@ manifest.txt
 
 kauthesis.ins
 
-kauclear.dtx
-kauenvironments.dtx
 kaumeeting.dtx
-kaumeta.dtx
-kaupaper.dtx
-kauparts.dtx
-kaustudies.dtx
 kauthesis.dtx
-kautitle.dtx
-pgfcropmarks.dtx
+kautools.dtx
 
 kaucollection.cls
 kaumasters.cls
@@ -30,19 +23,13 @@ kaustudies.sty
 kautitle.sty
 pgfcropmarks.sty
 
-kauguide.tex
 kaucollectiontemplate.tex
+kauguide.tex
 kaumasterstemplate.tex
 kaumeetingtemplate.tex
 kaureporttemplate.tex
 
-kauclear.pdf
-kauenvironments.pdf
 kauguide.pdf
 kaumeeting.pdf
-kaumeta.pdf
-kaupaper.pdf
-kauparts.pdf
-kaustudies.pdf
-kautitle.pdf
-pgfcropmarks.pdf
+kauthesis.pdf
+kautools.pdf
