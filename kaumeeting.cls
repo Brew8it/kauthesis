@@ -40,7 +40,6 @@
 \RequirePackage{tikz}
 \RequirePackage{tabularx}
 \RequirePackage{ragged2e}
-\RequirePackage{xifthen}
 \define@cmdkeys[kaumet]{general}[kaumet@]%
   { meeting, protocol, place%
   , date, start, end%
