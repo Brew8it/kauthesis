@@ -65,7 +65,7 @@
     % top
     \path (current page.north)
       node[below=5mm, text centered, text width=\textwidth] (top)
-      {\includegraphics[width=33mm]{\kaumet@logofile}\\[5mm]%
+      {\includegraphics[width=33mm]{\kaumet@logofile}\\[3mm]%
       \kaumet@faculty\\%
       \kaumet@department}
     ;
