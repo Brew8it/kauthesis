@@ -30,7 +30,7 @@
 %% Copyright (c) 2011-2012 Stefan Berthold <stefan.berthold@kau.se>
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesPackage{kaumeta}
-    [2012/12/20 v1.5 Karlstad University kautools bundle]
+    [2013/04/16 v1.7 Karlstad University kautools bundle]
 \ProcessOptions\relax
 \usepackage{ifthen}
 \newcommand*\@subject{}
@@ -47,6 +47,10 @@
 }
 \newcommand*\@place{}
 \newcommand\place[1]{\renewcommand*\@place{#1}}
+\newcommand\@supervisor{}
+\newcommand\supervisor[1]{\renewcommand*\@supervisor{#1}}
+\newcommand\@examiner{}
+\newcommand\examiner[1]{\renewcommand*\@examiner{#1}}
 \endinput
 %%
 %% End of file `kaumeta.sty'.

@@ -28,7 +28,7 @@
 %<report>\ProvidesClass{kaureport}
 %<masters>\ProvidesClass{kaumasters}
 %<*collection|report|masters>
-    [2012/12/15 v1.3 Karlstad University thesis layout]
+    [2012/04/16 v1.7 Karlstad University thesis layout]
 %</collection|report|masters>
 %
 %<*driver>
@@ -42,7 +42,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{185}
+% \CheckSum{286}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -68,6 +68,7 @@
 % \changes{v1.4}{2012/12/20}{Fixed babel.sty support}
 % \changes{v1.5}{2012/12/20}{Added templates for kaucollection and kaureport}
 % \changes{v1.6}{2012/12/22}{Merged the styles' dtx files}
+% \changes{v1.7}{2013/04/12}{Added approval page to kaumasters}
 %
 % \GetFileInfo{\jobname.dtx}
 %
@@ -100,6 +101,8 @@
 \documentclass{kaumasters}
 \title{Title}
 \author{Author}
+\supervisor{Super}
+\examiner{Exam}
 \institute{Department of Mathematics and Computer Science}
 \place{Place}
 %    \end{macrocode}
@@ -113,6 +116,9 @@
 \begin{abstract}
   Abstract.
 \end{abstract}
+\begin{approval}%
+  \signer{Author}
+\end{approval}
 \begin{acknowledgements}
   Thanks.
 \end{acknowledgements}
@@ -334,6 +340,97 @@
 %    \end{macrocode}
 % \end{macro}
 %
+% \medskip
+% \noindent A master's thesis needs to be approved by the supervisor and the examiner.
+%    \begin{macrocode}
+%<*masters>
+%    \end{macrocode}
+% \begin{macro}{\approvalname}
+% This macro contains the word ``approved''.
+%    \begin{macrocode}
+\AtBeginDocument{%
+  \@ifpackageloaded{babel}%
+    {\newcommand*\approvalname{%
+      \iflanguage{swedish}%
+        {Godk\"and}%
+        {Approved}}%
+    }%
+    {\newcommand*\approvalname{Approved}}%
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\examinationname}
+% This macro contains the name of the examination.
+%    \begin{macrocode}
+\AtBeginDocument{%
+  \@ifpackageloaded{babel}%
+    {\newcommand*\examinationname{%
+      \iflanguage{swedish}%
+        {magisterexamen}%
+        {Master's degree}}%
+    }%
+    {\newcommand*\examinationname{Master's degree}}%
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\approvaltext}
+% The approval text.
+%    \begin{macrocode}
+\AtBeginDocument{%
+  \@ifpackageloaded{babel}%
+    {\newcommand*\approvaltext{%
+      \iflanguage{swedish}%
+        {Denna uppsats \"ar skriven som en del av det arbete som kr\"avs %
+          f\"or att erh\aa lla en \examinationname{} i datavetenskap. Allt %
+          material i denna rapport, vilket inte \"ar mitt eget, har blivit %
+          tydligt identifierat och inget material \"ar inkluderat som %
+          tidigare anv\"ants f\"or erh\aa llande av annan examen.}%
+        {This thesis is submitted in partial fulfillment of the %
+          requirements for the \examinationname{} in Computer Science. %
+          All material in this thesis which is not my own work has been %
+          identified and no material is included for which a degree has %
+          previously been conferred.}}%
+    }%
+    {\newcommand*\approvaltext{This thesis is submitted in partial %
+      fulfillment of the requirements for the \examinationname{} in %
+      Computer Science. All material in this thesis which is not my own %
+      work has been identified and no material is included for which a %
+      degree has previously been conferred.}}%
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\supervisorname}
+% This macro contains the word ``supervisor''.
+%    \begin{macrocode}
+\AtBeginDocument{%
+  \@ifpackageloaded{babel}%
+    {\newcommand*\supervisorname{%
+      \iflanguage{swedish}%
+        {Handledare}%
+        {Supervisor}}%
+    }%
+    {\newcommand*\supervisorname{Supervisor}}%
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\examinername}
+% This macro contains the word ``examiner''.
+%    \begin{macrocode}
+\AtBeginDocument{%
+  \@ifpackageloaded{babel}%
+    {\newcommand*\examinername{%
+      \iflanguage{swedish}%
+        {Examinator}%
+        {Examiner}}%
+    }%
+    {\newcommand*\examinername{Examiner}}%
+}
+%    \end{macrocode}
+% \end{macro}
+%    \begin{macrocode}
+%</masters>
+%    \end{macrocode}
+%
 % \subsection{Title page}
 %
 % Karlstad University Studies will create the title page for the thesis, thus, creating an own title page is not necessary.
@@ -408,6 +505,27 @@
 %    \end{macrocode}
 % \end{environment}
 % \end{macro}
+%
+% \begin{environment}{approval}
+% The |approval| environment creates an approval page in Master's theses.
+%    \begin{macrocode}
+%<*masters>
+\newenvironment{approval}{%
+  \cleardoublepage%
+  \newcommand\sig{\makebox[7cm]{\hrulefill}\\}%
+  \newcommand\signer[1]{\begin{quote}\sig ##1\end{quote}\mbox{}\bigskip\\\mbox{}\bigskip}%
+  \noindent\approvaltext\\\mbox{}\bigskip%
+}{%
+  \mbox{}\\\bigskip%
+  \approvalname,\\\mbox{}\bigskip%
+  \begin{quote}%
+    \sig\supervisorname: \@supervisor\\\mbox{}\bigskip\\%
+    \sig\examinername: \@examiner
+  \end{quote}%
+}
+%</masters>
+%    \end{macrocode}
+% \end{environment}
 %
 % \begin{environment}{acknowledgements}
 % The environment |acknowledgements| creates an unnumbered section.

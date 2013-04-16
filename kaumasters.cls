@@ -30,7 +30,7 @@
 %% Copyright (c) 2011-2012 Stefan Berthold <stefan.berthold@kau.se>
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesClass{kaumasters}
-    [2012/12/15 v1.3 Karlstad University thesis layout]
+    [2012/04/16 v1.7 Karlstad University thesis layout]
 \ProcessOptions\relax
 \LoadClass{article}
 \RequirePackage{kauclear}
@@ -43,6 +43,63 @@
       \iflanguage{swedish}{Tacks\"agelser}{Acknowledgements}}%
     }%
     {\newcommand*\acknowledgementname{Acknowledgements}}%
+}
+\AtBeginDocument{%
+  \@ifpackageloaded{babel}%
+    {\newcommand*\approvalname{%
+      \iflanguage{swedish}%
+        {Godk\"and}%
+        {Approved}}%
+    }%
+    {\newcommand*\approvalname{Approved}}%
+}
+\AtBeginDocument{%
+  \@ifpackageloaded{babel}%
+    {\newcommand*\examinationname{%
+      \iflanguage{swedish}%
+        {magisterexamen}%
+        {Master's degree}}%
+    }%
+    {\newcommand*\examinationname{Master's degree}}%
+}
+\AtBeginDocument{%
+  \@ifpackageloaded{babel}%
+    {\newcommand*\approvaltext{%
+      \iflanguage{swedish}%
+        {Denna uppsats \"ar skriven som en del av det arbete som kr\"avs %
+          f\"or att erh\aa lla en \examinationname{} i datavetenskap. Allt %
+          material i denna rapport, vilket inte \"ar mitt eget, har blivit %
+          tydligt identifierat och inget material \"ar inkluderat som %
+          tidigare anv\"ants f\"or erh\aa llande av annan examen.}%
+        {This thesis is submitted in partial fulfillment of the %
+          requirements for the \examinationname{} in Computer Science. %
+          All material in this thesis which is not my own work has been %
+          identified and no material is included for which a degree has %
+          previously been conferred.}}%
+    }%
+    {\newcommand*\approvaltext{This thesis is submitted in partial %
+      fulfillment of the requirements for the \examinationname{} in %
+      Computer Science. All material in this thesis which is not my own %
+      work has been identified and no material is included for which a %
+      degree has previously been conferred.}}%
+}
+\AtBeginDocument{%
+  \@ifpackageloaded{babel}%
+    {\newcommand*\supervisorname{%
+      \iflanguage{swedish}%
+        {Handledare}%
+        {Supervisor}}%
+    }%
+    {\newcommand*\supervisorname{Supervisor}}%
+}
+\AtBeginDocument{%
+  \@ifpackageloaded{babel}%
+    {\newcommand*\examinername{%
+      \iflanguage{swedish}%
+        {Examinator}%
+        {Examiner}}%
+    }%
+    {\newcommand*\examinername{Examiner}}%
 }
 \let\kauths@maketitle\maketitle
 \renewcommand\maketitle{%
@@ -64,6 +121,19 @@
   }{%
     \cleardoublepage%
   }%
+}
+\newenvironment{approval}{%
+  \cleardoublepage%
+  \newcommand\sig{\makebox[7cm]{\hrulefill}\\}%
+  \newcommand\signer[1]{\begin{quote}\sig ##1\end{quote}\mbox{}\bigskip\\\mbox{}\bigskip}%
+  \noindent\approvaltext\\\mbox{}\bigskip%
+}{%
+  \mbox{}\\\bigskip%
+  \approvalname,\\\mbox{}\bigskip%
+  \begin{quote}%
+    \sig\supervisorname: \@supervisor\\\mbox{}\bigskip\\%
+    \sig\examinername: \@examiner
+  \end{quote}%
 }
 \newenvironment{acknowledgements}{%
   \cleardoublepage%

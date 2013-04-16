@@ -30,7 +30,7 @@
 %% Copyright (c) 2011-2012 Stefan Berthold <stefan.berthold@kau.se>
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesClass{kaucollection}
-    [2012/12/15 v1.3 Karlstad University thesis layout]
+    [2012/04/16 v1.7 Karlstad University thesis layout]
 \ProcessOptions\relax
 \LoadClass{article}
 \RequirePackage{kauclear}
