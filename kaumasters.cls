@@ -8,7 +8,7 @@
 %% 
 %% This is a generated file.
 %% 
-%% Copyright (c) 2011-2012 Stefan Berthold <stefan.berthold@kau.se>
+%% Copyright (c) 2011-2013 Stefan Berthold <stefan.berthold@kau.se>
 %% 
 %% This file is part of the kauthesis bundle.
 %% 
@@ -30,13 +30,14 @@
 %% Copyright (c) 2011-2012 Stefan Berthold <stefan.berthold@kau.se>
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesClass{kaumasters}
-    [2012/04/16 v1.7 Karlstad University thesis layout]
+    [2012/04/18 v1.8 Karlstad University thesis layout]
 \ProcessOptions\relax
 \LoadClass{article}
 \RequirePackage{kauclear}
 \RequirePackage{kaumeta}
 \RequirePackage[urw-garamond]{mathdesign}
 \RequirePackage[paper=a4,pagesize,twoside=semi]{typearea}
+\RequirePackage{kaulist}
 \AtBeginDocument{%
   \@ifpackageloaded{babel}%
     {\newcommand*\acknowledgementname{%
@@ -115,20 +116,20 @@
   \renewenvironment{abstract}{%
     \cleardoublepage%
     \section*{\@title}%
-    \textsc{\@author}\par%
+    \textsc{\prettylist{\@author}}\par%
     \noindent\textit{\@institute}%
     \section*{\abstractname}%
   }{%
     \cleardoublepage%
   }%
 }
-\newenvironment{approval}{%
+\newcommand\approvalpage{%
   \cleardoublepage%
   \newcommand\sig{\makebox[7cm]{\hrulefill}\\}%
-  \newcommand\signer[1]{\begin{quote}\sig ##1\end{quote}\mbox{}\bigskip\\\mbox{}\bigskip}%
+  \newcommand\signer[1]{\begin{quote}\sig ##1\end{quote}\mbox{}}%
   \noindent\approvaltext\\\mbox{}\bigskip%
-}{%
-  \mbox{}\\\bigskip%
+  \foreach \x in \@author {\signer{\x}}%
+  \\\mbox{}\bigskip\\\mbox{}\bigskip%
   \approvalname,\\\mbox{}\bigskip%
   \begin{quote}%
     \sig\supervisorname: \@supervisor\\\mbox{}\bigskip\\%

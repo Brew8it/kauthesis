@@ -28,7 +28,7 @@
 %<report>\ProvidesClass{kaureport}
 %<masters>\ProvidesClass{kaumasters}
 %<*collection|report|masters>
-    [2012/04/16 v1.7 Karlstad University thesis layout]
+    [2012/04/18 v1.8 Karlstad University thesis layout]
 %</collection|report|masters>
 %
 %<*driver>
@@ -42,7 +42,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{286}
+% \CheckSum{294}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -69,6 +69,7 @@
 % \changes{v1.5}{2012/12/20}{Added templates for kaucollection and kaureport}
 % \changes{v1.6}{2012/12/22}{Merged the styles' dtx files}
 % \changes{v1.7}{2013/04/12}{Added approval page to kaumasters}
+% \changes{v1.8}{2013/04/18}{Improved author's signatures on the approval page of kaumasters}
 %
 % \GetFileInfo{\jobname.dtx}
 %
@@ -95,7 +96,7 @@
 % \subsection{Master's thesis}
 %
 % This template can be found in \texttt{kaumasterstemplate.tex}.
-% The \textsf{kaumasters} class is quite similar to \LaTeX's \textsf{article} class. After loading the class, title, author, and institute have to be declared.
+% The \textsf{kaumasters} class is quite similar to \LaTeX's \textsf{article} class. After loading the class, title, author, and institute have to be declared. Different authors in author lists can be separated by commata (``,''). The formatting will be done by \LaTeX.
 %    \begin{macrocode}
 %<*masterstemplate>
 \documentclass{kaumasters}
@@ -116,9 +117,7 @@
 \begin{abstract}
   Abstract.
 \end{abstract}
-\begin{approval}%
-  \signer{Author}
-\end{approval}
+\approvalpage%
 \begin{acknowledgements}
   Thanks.
 \end{acknowledgements}
@@ -290,6 +289,7 @@
 %<*masters>
 \RequirePackage[urw-garamond]{mathdesign}
 \RequirePackage[paper=a4,pagesize,twoside=semi]{typearea}
+\RequirePackage{kaulist}
 %</masters>
 %    \end{macrocode}
 %
@@ -492,7 +492,12 @@
 %    \begin{macrocode}
     \cleardoublepage%
     \section*{\@title}%
+%<*collection|report>
     \textsc{\@author}\par%
+%</collection|report>
+%<*masters>
+    \textsc{\prettylist{\@author}}\par%
+%</masters>
     \noindent\textit{\@institute}%
     \section*{\abstractname}%
   }{%
@@ -506,17 +511,17 @@
 % \end{environment}
 % \end{macro}
 %
-% \begin{environment}{approval}
-% The |approval| environment creates an approval page in Master's theses.
+% \begin{macro}{\approvalpage}
+% The macro |\approvalpage| creates an approval page for Master's theses.
 %    \begin{macrocode}
 %<*masters>
-\newenvironment{approval}{%
+\newcommand\approvalpage{%
   \cleardoublepage%
   \newcommand\sig{\makebox[7cm]{\hrulefill}\\}%
-  \newcommand\signer[1]{\begin{quote}\sig ##1\end{quote}\mbox{}\bigskip\\\mbox{}\bigskip}%
+  \newcommand\signer[1]{\begin{quote}\sig ##1\end{quote}\mbox{}}%
   \noindent\approvaltext\\\mbox{}\bigskip%
-}{%
-  \mbox{}\\\bigskip%
+  \foreach \x in \@author {\signer{\x}}%
+  \\\mbox{}\bigskip\\\mbox{}\bigskip%
   \approvalname,\\\mbox{}\bigskip%
   \begin{quote}%
     \sig\supervisorname: \@supervisor\\\mbox{}\bigskip\\%
@@ -525,7 +530,7 @@
 }
 %</masters>
 %    \end{macrocode}
-% \end{environment}
+% \end{macro}
 %
 % \begin{environment}{acknowledgements}
 % The environment |acknowledgements| creates an unnumbered section.

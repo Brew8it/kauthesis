@@ -8,7 +8,7 @@
 %% 
 %% This is a generated file.
 %% 
-%% Copyright (c) 2011-2012 Stefan Berthold <stefan.berthold@kau.se>
+%% Copyright (c) 2011-2013 Stefan Berthold <stefan.berthold@kau.se>
 %% 
 %% This file is part of the kauthesis bundle.
 %% 

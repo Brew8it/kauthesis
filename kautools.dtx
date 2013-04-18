@@ -23,18 +23,19 @@
 %<*driver>
 \ProvidesFile{\jobname.dtx}
 %</driver>
-%<title|meta|clear|environments|parts|paper|studies|crop>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
+%<title|meta|list|clear|environments|parts|paper|studies|crop>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<title>\ProvidesPackage{kautitle}
 %<meta>\ProvidesPackage{kaumeta}
+%<list>\ProvidesPackage{kaulist}
 %<clear>\ProvidesPackage{kauclear}
 %<environments>\ProvidesPackage{kauenvironments}
 %<parts>\ProvidesPackage{kauparts}
 %<paper>\ProvidesPackage{kaupaper}
 %<studies>\ProvidesPackage{kaustudies}
 %<crop>\ProvidesPackage{pgfcropmarks}
-%<*title|meta|clear|environments|parts|paper|studies|crop>
-    [2013/04/16 v1.7 Karlstad University kautools bundle]
-%</title|meta|clear|environments|parts|paper|studies|crop>
+%<*title|meta|list|clear|environments|parts|paper|studies|crop>
+    [2013/04/18 v1.8 Karlstad University kautools bundle]
+%</title|meta|list|clear|environments|parts|paper|studies|crop>
 %
 %<*driver>
 \documentclass[a4paper]{ltxdoc}
@@ -49,7 +50,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{612}
+% \CheckSum{662}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -76,6 +77,7 @@
 % \changes{v1.5}{2012/12/20}{Added templates for kaucollection and kaureport}
 % \changes{v1.6}{2012/12/22}{Merged the styles' dtx files}
 % \changes{v1.7}{2013/04/16}{Added macros for supervisor and examiner in kaumeta}
+% \changes{v1.8}{2013/04/18}{Added macros pretty printing lists in kaulist}
 %
 % \GetFileInfo{\jobname.dtx}
 %
@@ -119,6 +121,10 @@
 % \subsection{The \textsf{kaumeta} package}
 %
 % The \textsf{kaumeta} package defines three macros, |\subject|, |\institute|, and |\place|, for providing additional meta data about the document and it's author. This meta data can be used, e.\,g., on the title page of the document.
+%
+% \subsection{The \textsf{kaulist} package}
+%
+% The \textsf{kaulist} package defines pretty printing macros for lists. For instance, a list ``1,2,3'' is transformed to ``1, 2, and 3''.
 %
 % \subsection{The \textsf{kauclear} package}
 %
@@ -317,6 +323,83 @@
 \newcommand\@examiner{}
 \newcommand\examiner[1]{\renewcommand*\@examiner{#1}}
 %</meta>
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{The \textsf{kaulist} package}
+%
+% No options are parsed.
+%
+%    \begin{macrocode}
+%<*list>
+\ProcessOptions\relax
+%    \end{macrocode}
+%
+% For |\prettylist|, the packages \textsf{pgffor}, \textsf{pgfmath}, and \textsf{pgfkeys} are required.
+%
+%    \begin{macrocode}
+\RequirePackage{pgffor}
+\RequirePackage{pgfmath}
+\RequirePackage{pgfkeys}
+%    \end{macrocode}
+%
+% \begin{macro}{\commasign}
+% defines a comma (``,''), if one is to be used before ``and''.
+%    \begin{macrocode}
+\AtBeginDocument{%
+  \@ifpackageloaded{babel}
+    {\newcommand*\commasign{\iflanguage{swedish}{}{,}}}%
+    {\newcommand*\commasign{,}}%
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\andname}
+% definses the word used as ``and''.
+%    \begin{macrocode}
+\AtBeginDocument{%
+  \@ifpackageloaded{babel}
+    {\newcommand*\andname{\iflanguage{swedish}{och}{and}}}%
+    {\newcommand*\andname{and}}%
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\prettylist}
+% \marg{list} transformes a comma separated list into a list in natural language.
+%    \begin{macrocode}
+\newcommand\prettylist[1]{%
+%    \end{macrocode}
+% The number of list elements is stored in |\num|.
+%    \begin{macrocode}
+  \foreach[count=\xi] \x in #1 {}%
+  \let\num=\xi%
+%    \end{macrocode}
+% The first element is just printed without any changes.
+%    \begin{macrocode}
+  \foreach[count=\xi] \x in #1 {%
+    \ifnum \xi=1%
+      \x%
+%    \end{macrocode}
+% The last element is printed with preceding |\commasign|, if there are more than two elements in the list, and otherwise without.
+%    \begin{macrocode}
+    \else%
+      \ifnum \xi=\num%
+        \ifnum \num=2%
+          {} \andname{} \x%
+        \else%
+          \commasign{} \andname{} \x%
+        \fi%
+%    \end{macrocode}
+% Elements in between the first and the last one are printed with a preceding hard-coded comma sign (not |\commasign|).
+%    \begin{macrocode}
+      \else%
+        , \x%
+      \fi%
+    \fi%
+  }%
+}%
+%</list>
 %    \end{macrocode}
 % \end{macro}
 %

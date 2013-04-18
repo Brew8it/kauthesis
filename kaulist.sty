@@ -1,10 +1,10 @@
 %%
-%% This is file `kaumeta.sty',
+%% This is file `kaulist.sty',
 %% generated with the docstrip utility.
 %%
 %% The original source files were:
 %%
-%% kautools.dtx  (with options: `meta')
+%% kautools.dtx  (with options: `list')
 %% 
 %% This is a generated file.
 %% 
@@ -29,28 +29,41 @@
 %% kautools.dtx
 %% Copyright (c) 2011-2012 Stefan Berthold <stefan.berthold@kau.se>
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
-\ProvidesPackage{kaumeta}
+\ProvidesPackage{kaulist}
     [2013/04/18 v1.8 Karlstad University kautools bundle]
 \ProcessOptions\relax
-\usepackage{ifthen}
-\newcommand*\@subject{}
-\newcommand\subject[1]{\renewcommand*\@subject{#1}}
-\newcommand*\@institute{}
-\newcommand*\@shortinstitute{}
-\newcommand\institute[2][]{%
-  \renewcommand*\@institute{#2}%
-  \ifthenelse{\equal{#1}{}}{%
-    \renewcommand*\@shortinstitute{#2}%
-  }{%
-    \renewcommand*\@shortinstitute{#1}%
-  }%
+\RequirePackage{pgffor}
+\RequirePackage{pgfmath}
+\RequirePackage{pgfkeys}
+\AtBeginDocument{%
+  \@ifpackageloaded{babel}
+    {\newcommand*\commasign{\iflanguage{swedish}{}{,}}}%
+    {\newcommand*\commasign{,}}%
 }
-\newcommand*\@place{}
-\newcommand\place[1]{\renewcommand*\@place{#1}}
-\newcommand\@supervisor{}
-\newcommand\supervisor[1]{\renewcommand*\@supervisor{#1}}
-\newcommand\@examiner{}
-\newcommand\examiner[1]{\renewcommand*\@examiner{#1}}
+\AtBeginDocument{%
+  \@ifpackageloaded{babel}
+    {\newcommand*\andname{\iflanguage{swedish}{och}{and}}}%
+    {\newcommand*\andname{and}}%
+}
+\newcommand\prettylist[1]{%
+  \foreach[count=\xi] \x in #1 {}%
+  \let\num=\xi%
+  \foreach[count=\xi] \x in #1 {%
+    \ifnum \xi=1%
+      \x%
+    \else%
+      \ifnum \xi=\num%
+        \ifnum \num=2%
+          {} \andname{} \x%
+        \else%
+          \commasign{} \andname{} \x%
+        \fi%
+      \else%
+        , \x%
+      \fi%
+    \fi%
+  }%
+}%
 \endinput
 %%
-%% End of file `kaumeta.sty'.
+%% End of file `kaulist.sty'.

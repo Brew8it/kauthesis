@@ -8,7 +8,7 @@
 %% 
 %% This is a generated file.
 %% 
-%% Copyright (c) 2011-2012 Stefan Berthold <stefan.berthold@kau.se>
+%% Copyright (c) 2011-2013 Stefan Berthold <stefan.berthold@kau.se>
 %% 
 %% This file is part of the kauthesis bundle.
 %% 
@@ -30,7 +30,7 @@
 %% Copyright (c) 2011-2012 Stefan Berthold <stefan.berthold@kau.se>
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesClass{kaucollection}
-    [2012/04/16 v1.7 Karlstad University thesis layout]
+    [2012/04/18 v1.8 Karlstad University thesis layout]
 \ProcessOptions\relax
 \LoadClass{article}
 \RequirePackage{kauclear}
