@@ -42,7 +42,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{294}
+% \CheckSum{291}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -140,7 +140,7 @@
 %<*reporttemplate>
 \documentclass{kaureport}
 %    \end{macrocode}
-% After loading the class, title, author, and institute have to be declared.
+% After loading the class, title, author, and institute have to be declared. Different authors in author lists can be separated by commata (``,''). The formatting will be done by \LaTeX.
 %    \begin{macrocode}
 \title{Title}
 \author{Author}
@@ -187,7 +187,7 @@
 \rehead{\thepaper}
 \lohead{\thepapertitle}
 %    \end{macrocode}
-% After loading the class, title, author, and institute have to be declared.
+% After loading the class, title, author, and institute have to be declared. Different authors in author lists can be separated by commata (``,''). The formatting will be done by \LaTeX.
 %    \begin{macrocode}
 \title{Title}
 \author{Author}
@@ -269,6 +269,7 @@
 %<*collection|report>
 \RequirePackage{kaustudies}
 \RequirePackage{kauenvironments}
+\RequirePackage{kaulist}
 \RequirePackage{tikz}
 %</collection|report>
 %    \end{macrocode}
@@ -289,7 +290,6 @@
 %<*masters>
 \RequirePackage[urw-garamond]{mathdesign}
 \RequirePackage[paper=a4,pagesize,twoside=semi]{typearea}
-\RequirePackage{kaulist}
 %</masters>
 %    \end{macrocode}
 %
@@ -492,12 +492,7 @@
 %    \begin{macrocode}
     \cleardoublepage%
     \section*{\@title}%
-%<*collection|report>
-    \textsc{\@author}\par%
-%</collection|report>
-%<*masters>
     \textsc{\prettylist{\@author}}\par%
-%</masters>
     \noindent\textit{\@institute}%
     \section*{\abstractname}%
   }{%

@@ -37,7 +37,6 @@
 \RequirePackage{kaumeta}
 \RequirePackage[urw-garamond]{mathdesign}
 \RequirePackage[paper=a4,pagesize,twoside=semi]{typearea}
-\RequirePackage{kaulist}
 \AtBeginDocument{%
   \@ifpackageloaded{babel}%
     {\newcommand*\acknowledgementname{%

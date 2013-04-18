@@ -37,6 +37,7 @@
 \RequirePackage{kaumeta}
 \RequirePackage{kaustudies}
 \RequirePackage{kauenvironments}
+\RequirePackage{kaulist}
 \RequirePackage{tikz}
 \RequirePackage{kauparts}
 \AtBeginDocument{%
@@ -68,7 +69,7 @@
     \newcommand\keywords{\paragraph{\keywordname:}}%
     \cleardoublepage%
     \section*{\@title}%
-    \textsc{\@author}\par%
+    \textsc{\prettylist{\@author}}\par%
     \noindent\textit{\@institute}%
     \section*{\abstractname}%
   }{%
