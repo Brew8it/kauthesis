@@ -35,9 +35,9 @@
 \LoadClass{article}
 \RequirePackage{kauclear}
 \RequirePackage{kaumeta}
+\RequirePackage{kaulist}
 \RequirePackage{kaustudies}
 \RequirePackage{kauenvironments}
-\RequirePackage{kaulist}
 \RequirePackage{tikz}
 \RequirePackage{kauparts}
 \AtBeginDocument{%

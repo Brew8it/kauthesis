@@ -35,6 +35,7 @@
 \LoadClass{article}
 \RequirePackage{kauclear}
 \RequirePackage{kaumeta}
+\RequirePackage{kaulist}
 \RequirePackage[urw-garamond]{mathdesign}
 \RequirePackage[paper=a4,pagesize,twoside=semi]{typearea}
 \AtBeginDocument{%
