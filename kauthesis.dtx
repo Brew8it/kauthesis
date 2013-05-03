@@ -42,7 +42,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{292}
+% \CheckSum{293}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -116,6 +116,7 @@
 %    \begin{macrocode}
 \begin{abstract}
   Abstract.
+  \keywords keywords
 \end{abstract}
 \approvalpage%
 \begin{acknowledgements}
@@ -309,9 +310,8 @@
 % \end{macro}
 %
 % \begin{macro}{\keywordname}
-% The abstract of collection theses and reports is followed by the list of keywords. By default, the list is introduced by the word ``Keywords'' (and ``Nyckelord'' if the default language is set to Swedish). The list introduction can be changed to any other language by redefining the macro |\keywordname|.
+% The abstract is followed by the list of keywords. By default, the list is introduced by the word ``Keywords'' (and ``Nyckelord'' if the default language is set to Swedish). The list introduction can be changed to any other language by redefining the macro |\keywordname|.
 %    \begin{macrocode}
-%<*collection|report>
 \AtBeginDocument{%
   \@ifpackageloaded{babel}%
     {\newcommand*\keywordname{%
@@ -319,7 +319,6 @@
     }%
     {\newcommand*\keywordname{Keywords}}%
 }
-%</collection|report>
 %    \end{macrocode}
 % \end{macro}
 %
@@ -483,9 +482,7 @@
 % \begin{macro}{\keywords}
 % The abstract's last line in collection theses and reports is supposed to be a list of keywords preceeded by |\keywords|.
 %    \begin{macrocode}
-%<*collection|report>
     \newcommand\keywords{\paragraph{\keywordname:}}%
-%</collection|report>
 %    \end{macrocode}
 % \end{macro}
 % The abstract starts by repeating the title, author, and the institue.

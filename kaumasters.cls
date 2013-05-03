@@ -47,6 +47,13 @@
 }
 \AtBeginDocument{%
   \@ifpackageloaded{babel}%
+    {\newcommand*\keywordname{%
+      \iflanguage{swedish}{Nyckelord}{Keywords}}%
+    }%
+    {\newcommand*\keywordname{Keywords}}%
+}
+\AtBeginDocument{%
+  \@ifpackageloaded{babel}%
     {\newcommand*\approvalname{%
       \iflanguage{swedish}%
         {Godk\"and}%
@@ -114,6 +121,7 @@
   \setcounter{page}{3}%
   \renewcommand\thepage{\roman{page}}%
   \renewenvironment{abstract}{%
+    \newcommand\keywords{\paragraph{\keywordname:}}%
     \cleardoublepage%
     \section*{\@title}%
     \textsc{\prettylist{\@author}}\par%
