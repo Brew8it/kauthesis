@@ -42,7 +42,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{293}
+% \CheckSum{298}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -485,6 +485,16 @@
     \newcommand\keywords{\paragraph{\keywordname:}}%
 %    \end{macrocode}
 % \end{macro}
+% \begin{environment}{english}
+% It is common to append an English translation of the abstract, if the thesis or report is not written in English.
+%    \begin{macrocode}
+    \newenvironment{english}{%
+      \renewcommand\keywords{\paragraph{Keywords:}}%
+      \section*{Abstract}%
+    }{%
+    }
+%    \end{macrocode}
+% \end{environment}
 % The abstract starts by repeating the title, author, and the institue.
 %    \begin{macrocode}
     \cleardoublepage%

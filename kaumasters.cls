@@ -122,6 +122,11 @@
   \renewcommand\thepage{\roman{page}}%
   \renewenvironment{abstract}{%
     \newcommand\keywords{\paragraph{\keywordname:}}%
+    \newenvironment{english}{%
+      \renewcommand\keywords{\paragraph{Keywords:}}%
+      \section*{Abstract}%
+    }{%
+    }
     \cleardoublepage%
     \section*{\@title}%
     \textsc{\prettylist{\@author}}\par%
