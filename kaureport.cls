@@ -27,10 +27,10 @@
 %% This work consists of all files listed in manifest.txt.
 %% 
 %% kauthesis.dtx
-%% Copyright (c) 2011-2012 Stefan Berthold <stefan.berthold@kau.se>
+%% Copyright (c) 2011-2013 Stefan Berthold <stefan.berthold@kau.se>
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesClass{kaureport}
-    [2012/04/18 v1.8 Karlstad University thesis layout]
+    [2013/05/03 v1.9 Karlstad University thesis layout]
 \ProcessOptions\relax
 \LoadClass{article}
 \RequirePackage{kauclear}
