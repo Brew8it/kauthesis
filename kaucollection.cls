@@ -89,7 +89,7 @@
   \cleardoublepage%
   \section*{\acknowledgementname}%
 }{%
-  \par\bigskip\bigskip\bigskip\noindent\@place, \@date\hfill \@author%
+  \par\bigskip\bigskip\bigskip\noindent\@place, \@date\hfill \prettylist{\@author}%
   \cleardoublepage%
 }
 \let\kauths@tableofcontents\tableofcontents
