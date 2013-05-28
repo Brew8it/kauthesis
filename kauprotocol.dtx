@@ -1,6 +1,6 @@
 % \iffalse meta-comment
-%% kaumeeting.dtx
-%% Copyright (c) 2011-2012 Stefan Berthold <stefan.berthold@kau.se>
+%% kauprotocol.dtx
+%% Copyright (c) 2011-2013 Stefan Berthold <stefan.berthold@kau.se>
 %
 % This file is part of the kauthesis bundle.
 %
@@ -43,7 +43,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{124}
+% \CheckSum{140}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -215,7 +215,7 @@
 %
 % \subsection{Title page}
 %
-% \begin{macro}{\kaumet@maketitle}
+% \begin{macro}{\kauhed@maketitle}
 % \textsf{kauhead} redefines the macro and preserves the original definition in |\kauhed@maketitle|.
 %    \begin{macrocode}
 \let\kauhed@maketitle\maketitle
@@ -237,7 +237,7 @@
   \vspace{1.5cm}\\
   \mbox{}\hfill\kauhed@date\\
   \centering\Large\scshape\kauhed@title\\
-  \justifying\normalfont\bigskip\normalsize\noindent
+  \justifying\normalfont\bigskip\normalsize
 }
 %</head>
 %    \end{macrocode}
@@ -269,6 +269,36 @@
 % \begin{macro}{\metadata}
 %    \begin{macrocode}
 \newcommand\metadata[1]{\setkeys[kauhed]{general}{#1}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Title page}
+%
+% \begin{macro}{\kaunot@title}
+% \textsf{kaunote} redefines the macro |\title| and preserves the original definition in |\kaunot@title|.
+%    \begin{macrocode}
+\let\kaunot@title\title
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\title}
+%    \begin{macrocode}
+\renewcommand\title[1]{\setkeys[kauhed]{general}{title={#1}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\kaunot@maketitle}
+% \textsf{kaunote} redefines the macro |\maketitle| and preserves the original definition in |\kaunot@maketitle|.
+%    \begin{macrocode}
+\let\kaunot@maketitle\maketitle
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\maketitle}
+%    \begin{macrocode}
+\renewcommand\maketitle{%
+  \kaunot@maketitle\par\medskip\@afterindentfalse\@afterheading%
+}
 %</note>
 %    \end{macrocode}
 % \end{macro}
@@ -342,7 +372,7 @@
 %    \begin{macrocode}
 \renewcommand\maketitle{
   \kaumet@maketitle%
-  \small%
+  \noindent\small%
   \begin{tabularx}{\textwidth}{@{}>{\bfseries\vphantom{Xy}}rX}
     subject & \kaumet@meeting\\
     place & \kaumet@place\\

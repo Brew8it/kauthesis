@@ -26,8 +26,8 @@
 %% 
 %% This work consists of all files listed in manifest.txt.
 %% 
-%% kaumeeting.dtx
-%% Copyright (c) 2011-2012 Stefan Berthold <stefan.berthold@kau.se>
+%% kauprotocol.dtx
+%% Copyright (c) 2011-2013 Stefan Berthold <stefan.berthold@kau.se>
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesClass{kaunote}
     [2013/05/28 v1.10 Karlstad University protocol bundle]
@@ -35,6 +35,12 @@
 \LoadClass{article}
 \RequirePackage{kauhead}
 \newcommand\metadata[1]{\setkeys[kauhed]{general}{#1}}
+\let\kaunot@title\title
+\renewcommand\title[1]{\setkeys[kauhed]{general}{title={#1}}}
+\let\kaunot@maketitle\maketitle
+\renewcommand\maketitle{%
+  \kaunot@maketitle\par\medskip\@afterindentfalse\@afterheading%
+}
 \endinput
 %%
 %% End of file `kaunote.cls'.

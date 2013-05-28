@@ -26,8 +26,8 @@
 %% 
 %% This work consists of all files listed in manifest.txt.
 %% 
-%% kaumeeting.dtx
-%% Copyright (c) 2011-2012 Stefan Berthold <stefan.berthold@kau.se>
+%% kauprotocol.dtx
+%% Copyright (c) 2011-2013 Stefan Berthold <stefan.berthold@kau.se>
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesClass{kaumeeting}
     [2013/05/28 v1.10 Karlstad University protocol bundle]
@@ -63,7 +63,7 @@
 \let\kaumet@maketitle\maketitle
 \renewcommand\maketitle{
   \kaumet@maketitle%
-  \small%
+  \noindent\small%
   \begin{tabularx}{\textwidth}{@{}>{\bfseries\vphantom{Xy}}rX}
     subject & \kaumet@meeting\\
     place & \kaumet@place\\
