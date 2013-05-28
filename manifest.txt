@@ -5,17 +5,19 @@ manifest.txt
 
 kauthesis.ins
 
-kaumeeting.dtx
+kauprotocol.dtx
 kauthesis.dtx
 kautools.dtx
 
 kaucollection.cls
 kaumasters.cls
 kaumeeting.cls
+kaunote.cls
 kaureport.cls
 
 kauclear.sty
 kauenvironments.sty
+kauhead.sty
 kaulist.sty
 kaumeta.sty
 kaupaper.sty
@@ -31,6 +33,6 @@ kaumeetingtemplate.tex
 kaureporttemplate.tex
 
 kauguide.pdf
-kaumeeting.pdf
+kauprotocol.pdf
 kauthesis.pdf
 kautools.pdf

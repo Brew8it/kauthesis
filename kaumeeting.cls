@@ -4,7 +4,7 @@
 %%
 %% The original source files were:
 %%
-%% kaumeeting.dtx  (with options: `class')
+%% kauprotocol.dtx  (with options: `meeting')
 %% 
 %% This is a generated file.
 %% 
@@ -30,25 +30,27 @@
 %% Copyright (c) 2011-2012 Stefan Berthold <stefan.berthold@kau.se>
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesClass{kaumeeting}
-    [2011/11/18 v1.0 Karlstad University meeting record]
+    [2013/05/28 v1.10 Karlstad University protocol bundle]
 \ProcessOptions\relax
 \LoadClass{article}
-\RequirePackage[urw-garamond]{mathdesign}
-\RequirePackage[paper=a4,pagesize]{typearea}
-\RequirePackage{xkeyval}
-\RequirePackage{graphicx}
-\RequirePackage{tikz}
+\RequirePackage{kauhead}
 \RequirePackage{tabularx}
-\RequirePackage{ragged2e}
 \define@cmdkeys[kaumet]{general}[kaumet@]%
   { meeting, protocol, place%
-  , date, start, end%
+  , start, end%
   , participants, excused, missing%
   , distribution%
-  , faculty, department%
-  , logofile%
   }
+\define@cmdkey[kaumet]{general}[kaumet@]{date}%
+  {\setkeys[kauhed]{general}{date={#1}}}
+\define@cmdkey[kaumet]{general}[kaumet@]{faculty}%
+  {\setkeys[kauhed]{general}{faculty={#1}}}
+\define@cmdkey[kaumet]{general}[kaumet@]{department}%
+  {\setkeys[kauhed]{general}{department={#1}}}
+\define@cmdkey[kaumet]{general}[kaumet@]{logofile}%
+  {\setkeys[kauhed]{general}{logofile={#1}}}
 \newcommand\metadata[1]{\setkeys[kaumet]{general}{#1}}
+\setkeys[kauhed]{general}{title=Meeting record}%
 \setkeys[kaumet]{general}%
   { meeting=, protocol=, place=%
   , date=\today, start=, end=%
@@ -56,24 +58,12 @@
   , distribution=%
   , faculty={Faculty of Health, Science and Technology}%
   , department={Department of Mathematics and Computer Science}%
-  , logofile={kau-logo-tryck}
+  , logofile={kau_2012_cmyk_eps_14679}%
   }
 \let\kaumet@maketitle\maketitle
 \renewcommand\maketitle{
-  \thispagestyle{empty}
-  \begin{tikzpicture}[overlay,remember picture]
-    % top
-    \path (current page.north)
-      node[below=5mm, text centered, text width=\textwidth] (top)
-      {\includegraphics[width=33mm]{\kaumet@logofile}\\[3mm]%
-      \kaumet@faculty\\%
-      \kaumet@department}
-    ;
-  \end{tikzpicture}
-  \vspace{1.5cm}\\
-  \mbox{}\hfill\kaumet@date\\
-  \centering \Large\scshape Meeting Record\\
-  \justifying\normalfont\bigskip\small\noindent
+  \kaumet@maketitle%
+  \small%
   \begin{tabularx}{\textwidth}{@{}>{\bfseries\vphantom{Xy}}rX}
     subject & \kaumet@meeting\\
     place & \kaumet@place\\

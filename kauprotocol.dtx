@@ -23,11 +23,13 @@
 %<*driver>
 \ProvidesFile{\jobname.dtx}
 %</driver>
-%<class>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
-%<class>\ProvidesClass{kaumeeting}
-%<*class>
-    [2011/11/18 v1.0 Karlstad University meeting record]
-%</class>
+%<head|note|meeting>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
+%<head>\ProvidesPackage{kauhead}
+%<note>\ProvidesClass{kaunote}
+%<meeting>\ProvidesClass{kaumeeting}
+%<*head|note|meeting>
+    [2013/05/28 v1.10 Karlstad University protocol bundle]
+%</head|note|meeting>
 %
 %<*driver>
 \documentclass[a4paper]{ltxdoc}
@@ -41,7 +43,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{91}
+% \CheckSum{124}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -61,6 +63,7 @@
 %
 %
 % \changes{v1.0}{2012/12/14}{Initial public release}
+% \changes{v1.10}{2013/05/28}{Integration in the kauthesis bundle as protocol bundle with classes kaunote and kaumeeting}
 %
 % \GetFileInfo{\jobname.dtx}
 %
@@ -68,7 +71,7 @@
 %
 % \StopEventually{\PrintChanges\PrintIndex}
 %
-% \title{The \textsf{\jobname} class\thanks{This document
+% \title{The \textsf{\jobname} bundle\thanks{This document
 %   corresponds to \textsf{\jobname}~\fileversion, dated \filedate.}}
 % \author{Stefan Berthold \\ \texttt{stefan.berthold@kau.se}}
 %
@@ -76,33 +79,31 @@
 %
 % \section{Introduction}
 %
-% The \textsf{\jobname} class is part of the kauthesis package. The class provides macros for writing meeting records. The latest version can be obtained from
+% The \textsf{kauhead} package, the \textsf{kaunote} class, and the \textsf{kaumeeting} class are part of the kauthesis package. The classes provide macros for writing notes and meeting records. The latest version can be obtained from
 % \begin{quote}
 %   \texttt{http://github.com/ZjMNZHgG5jMXw/kauthesis}\quad.
 % \end{quote}
 %
 % \noindent
-% This class requires the {\small URW}~Garamond font. The latest version can be obtained from
+% This package and the classes require the {\small URW}~Garamond font. The latest version can be obtained from
 % \begin{quote}
 %   \texttt{http://www.ctan.org/pkg/urw-garamond}\quad.
 % \end{quote}
 %
 % \noindent
-% This class also requires the logo of Karlstad Univerity. The latest version can be obtained from
+% This package and the classes also require the logo of Karlstad Univerity. The latest version can be obtained from
 % \begin{quote}
 %   \texttt{http://www.kau.se/om-universitetet/pressinformation/ladda-hem\-logotyp}\quad.
 % \end{quote}
 %
 % \section{Usage}
-% \iffalse
-%<*template>
-% \fi
 %
 % The following example can be found in \texttt{kaumeetingtemplate.tex}.
 %
 % \noindent
 % After loading the class, complete the meta data with |\metadata|\marg{data}.
 %    \begin{macrocode}
+%<*meetingtemplate>
 \documentclass{kaumeeting}
 \metadata%
 %    \end{macrocode}
@@ -164,26 +165,18 @@
 % After |\maketitle|, content can be added like in a \LaTeX{} \textsf{article}.
 %    \begin{macrocode}
 \end{document}
+%</meetingtemplate>
 %    \end{macrocode}
-% \iffalse
-%</template>
-% \fi
 %
-% \section{Implementation}
-% \iffalse
-%<*class>
-% \fi\setcounter{CodelineNo}{0}
+% \section{\textsf{kauhead} package}
+% \setcounter{CodelineNo}{0}
 %
-% \subsection{Class options and dependencies}
+% \subsection{Package options and dependencies}
 %
-% Class options are neither parsed nor passed to the underlying \textsf{article} class.
+% Package options are neither parsed nor passed to the underlying \textsf{article} class.
 %    \begin{macrocode}
+%<*head>
 \ProcessOptions\relax
-%    \end{macrocode}
-%
-% \noindent \textsf{\jobname} derives all macros from the standard \textsf{article} class.
-%    \begin{macrocode}
-\LoadClass{article}
 %    \end{macrocode}
 %
 % \noindent Garamond is chosen as default font.
@@ -198,31 +191,24 @@
 \RequirePackage{xkeyval}
 \RequirePackage{graphicx}
 \RequirePackage{tikz}
-\RequirePackage{tabularx}
 \RequirePackage{ragged2e}
 %    \end{macrocode}
 %
 % \subsection{Meta data}
 %
-% \begin{macro}{\metadata}
+% \begin{macro}{\headdata}
 %    \begin{macrocode}
-\define@cmdkeys[kaumet]{general}[kaumet@]%
-  { meeting, protocol, place%
-  , date, start, end%
-  , participants, excused, missing%
-  , distribution%
+\define@cmdkeys[kauhed]{general}[kauhed@]%
+  { title, date%
   , faculty, department%
   , logofile%
   }
-\newcommand\metadata[1]{\setkeys[kaumet]{general}{#1}}
-\setkeys[kaumet]{general}%
-  { meeting=, protocol=, place=%
-  , date=\today, start=, end=%
-  , participants=, excused=, missing=%
-  , distribution=%
+\newcommand\headdata[1]{\setkeys[kauhed]{general}{#1}}
+\setkeys[kauhed]{general}%
+  { title=, date=\today%
   , faculty={Faculty of Health, Science and Technology}%
   , department={Department of Mathematics and Computer Science}%
-  , logofile={kau-logo-tryck}
+  , logofile={kau_2012_cmyk_eps_14679}%
   }
 %    \end{macrocode}
 % \end{macro}
@@ -230,9 +216,9 @@
 % \subsection{Title page}
 %
 % \begin{macro}{\kaumet@maketitle}
-% The definition of |\maketitle| in the \textsf{article} class creates a title without creating a separate page. \textsf{\jobname} redefines the macro and preserves the original definition in |\kaumas@maketitle|.
+% \textsf{kauhead} redefines the macro and preserves the original definition in |\kauhed@maketitle|.
 %    \begin{macrocode}
-\let\kaumet@maketitle\maketitle
+\let\kauhed@maketitle\maketitle
 %    \end{macrocode}
 % \end{macro}
 %
@@ -241,18 +227,122 @@
 \renewcommand\maketitle{
   \thispagestyle{empty}
   \begin{tikzpicture}[overlay,remember picture]
-    % top
     \path (current page.north)
       node[below=5mm, text centered, text width=\textwidth] (top)
-      {\includegraphics[width=33mm]{\kaumet@logofile}\\[3mm]%
-      \kaumet@faculty\\%
-      \kaumet@department}
+      {\includegraphics[width=33mm]{\kauhed@logofile}\\[3mm]%
+      \kauhed@faculty\\%
+      \kauhed@department}
     ;
   \end{tikzpicture}
   \vspace{1.5cm}\\
-  \mbox{}\hfill\kaumet@date\\
-  \centering \Large\scshape Meeting Record\\
-  \justifying\normalfont\bigskip\small\noindent
+  \mbox{}\hfill\kauhed@date\\
+  \centering\Large\scshape\kauhed@title\\
+  \justifying\normalfont\bigskip\normalsize\noindent
+}
+%</head>
+%    \end{macrocode}
+% \end{macro}
+%
+% \section{\textsf{kaunote} class}
+% \setcounter{CodelineNo}{0}
+%
+% \subsection{Class options and dependencies}
+%
+% Class options are neither parsed nor passed to the underlying \textsf{article} class.
+%    \begin{macrocode}
+%<*note>
+\ProcessOptions\relax
+%    \end{macrocode}
+%
+% \noindent \textsf{kaunote} derives all macros from the standard \textsf{article} class.
+%    \begin{macrocode}
+\LoadClass{article}
+%    \end{macrocode}
+%
+% \noindent \textsf{kauhead} package is loaded.
+%    \begin{macrocode}
+\RequirePackage{kauhead}
+%    \end{macrocode}
+%
+% \subsection{Meta data}
+%
+% \begin{macro}{\metadata}
+%    \begin{macrocode}
+\newcommand\metadata[1]{\setkeys[kauhed]{general}{#1}}
+%</note>
+%    \end{macrocode}
+% \end{macro}
+%
+% \section{\textsf{kaumeeting} class}
+% \setcounter{CodelineNo}{0}
+%
+% \subsection{Class options and dependencies}
+%
+% Class options are neither parsed nor passed to the underlying \textsf{article} class.
+%    \begin{macrocode}
+%<*meeting>
+\ProcessOptions\relax
+%    \end{macrocode}
+%
+% \noindent \textsf{kaumeeting} derives all macros from the standard \textsf{article} class.
+%    \begin{macrocode}
+\LoadClass{article}
+%    \end{macrocode}
+%
+% \noindent \textsf{kauhead} package is loaded.
+%    \begin{macrocode}
+\RequirePackage{kauhead}
+%    \end{macrocode}
+%    \begin{macrocode}
+\RequirePackage{tabularx}
+%    \end{macrocode}
+%
+% \subsection{Meta data}
+%
+% \begin{macro}{\metadata}
+%    \begin{macrocode}
+\define@cmdkeys[kaumet]{general}[kaumet@]%
+  { meeting, protocol, place%
+  , start, end%
+  , participants, excused, missing%
+  , distribution%
+  }
+\define@cmdkey[kaumet]{general}[kaumet@]{date}%
+  {\setkeys[kauhed]{general}{date={#1}}}
+\define@cmdkey[kaumet]{general}[kaumet@]{faculty}%
+  {\setkeys[kauhed]{general}{faculty={#1}}}
+\define@cmdkey[kaumet]{general}[kaumet@]{department}%
+  {\setkeys[kauhed]{general}{department={#1}}}
+\define@cmdkey[kaumet]{general}[kaumet@]{logofile}%
+  {\setkeys[kauhed]{general}{logofile={#1}}}
+\newcommand\metadata[1]{\setkeys[kaumet]{general}{#1}}
+\setkeys[kauhed]{general}{title=Meeting record}%
+\setkeys[kaumet]{general}%
+  { meeting=, protocol=, place=%
+  , date=\today, start=, end=%
+  , participants=, excused=, missing=%
+  , distribution=%
+  , faculty={Faculty of Health, Science and Technology}%
+  , department={Department of Mathematics and Computer Science}%
+  , logofile={kau_2012_cmyk_eps_14679}%
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Title page}
+%
+% \begin{macro}{\kaumet@maketitle}
+% \textsf{kaumeeting} redefines the macro and preserves the original definition in |\kaumet@maketitle|.
+%    \begin{macrocode}
+\let\kaumet@maketitle\maketitle
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\maketitle}
+%    \begin{macrocode}
+\renewcommand\maketitle{
+  \kaumet@maketitle%
+  \small%
   \begin{tabularx}{\textwidth}{@{}>{\bfseries\vphantom{Xy}}rX}
     subject & \kaumet@meeting\\
     place & \kaumet@place\\
@@ -266,12 +356,9 @@
   \end{tabularx}\smallskip
   \justifying\normalfont\normalsize
 }
+%</meeting>
 %    \end{macrocode}
 % \end{macro}
-% \iffalse
-%</class>
-% \fi
 %
 % \Finale
 \endinput
-

@@ -1,10 +1,10 @@
 %%
-%% This is file `kaumeetingtemplate.tex',
+%% This is file `kaunote.cls',
 %% generated with the docstrip utility.
 %%
 %% The original source files were:
 %%
-%% kauprotocol.dtx  (with options: `meetingtemplate')
+%% kauprotocol.dtx  (with options: `note')
 %% 
 %% This is a generated file.
 %% 
@@ -28,25 +28,13 @@
 %% 
 %% kaumeeting.dtx
 %% Copyright (c) 2011-2012 Stefan Berthold <stefan.berthold@kau.se>
-\documentclass{kaumeeting}
-\metadata%
-  { meeting={}
-  , protocol={}
-  , place={}
-  , date={}
-  , start={}
-  , end={}
-  , participants={}
-  , excused=none
-  , missing={}
-  , distribution={}
-  , faculty={Faculty of Health, Science and Technology}%
-  , department={Department of Mathematics and Computer Science}%
-  , logofile={kau_2012_cmyk_eps_14679}
-  }
-\begin{document}
-\maketitle
-\end{document}
+\NeedsTeXFormat{LaTeX2e}[1999/12/01]
+\ProvidesClass{kaunote}
+    [2013/05/28 v1.10 Karlstad University protocol bundle]
+\ProcessOptions\relax
+\LoadClass{article}
+\RequirePackage{kauhead}
+\newcommand\metadata[1]{\setkeys[kauhed]{general}{#1}}
 \endinput
 %%
-%% End of file `kaumeetingtemplate.tex'.
+%% End of file `kaunote.cls'.
