@@ -16,6 +16,7 @@ kaureport.cls
 
 kauclear.sty
 kauenvironments.sty
+kaulist.sty
 kaumeta.sty
 kaupaper.sty
 kauparts.sty
