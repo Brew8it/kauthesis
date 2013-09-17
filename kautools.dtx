@@ -32,10 +32,11 @@
 %<parts>\ProvidesPackage{kauparts}
 %<paper>\ProvidesPackage{kaupaper}
 %<studies>\ProvidesPackage{kaustudies}
+%<language>\ProvidesPackage{kaulanguage}
 %<crop>\ProvidesPackage{pgfcropmarks}
-%<*title|meta|list|clear|environments|parts|paper|studies|crop>
-    [2013/05/28 v1.10 Karlstad University kautools bundle]
-%</title|meta|list|clear|environments|parts|paper|studies|crop>
+%<*title|meta|list|clear|environments|parts|paper|studies|language|crop>
+    [2013/09/17 v1.11 Karlstad University kautools bundle]
+%</title|meta|list|clear|environments|parts|paper|studies|language|crop>
 %
 %<*driver>
 \documentclass[a4paper]{ltxdoc}
@@ -50,7 +51,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{660}
+% \CheckSum{664}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -80,6 +81,7 @@
 % \changes{v1.8}{2013/04/18}{Added macros pretty printing lists in kaulist}
 % \changes{v1.9}{2013/05/03}{Version bump without changes}
 % \changes{v1.10}{2013/05/28}{Version bump without changes}
+% \changes{v1.11}{2013/09/17}{Fixed missing file in babel support}
 %
 % \GetFileInfo{\jobname.dtx}
 %
@@ -157,6 +159,10 @@
 % This package sets the page dimensions so that your document does not need to be scaled for printing. It also chooses Garamond as the standard font.
 %
 % You can use the package option |tinyfontswitch=false| in order to avoid the switch to sans-serif fonts when using |\tiny|. The switch is recommended by Karlstad University Studies, though, it is rather debatable whether this is necessary when using \LaTeX{} and the correct page dimensions.
+%
+% \subsection{The \textsf{kaulanguage} package}
+%
+% This packages defines a macro for supporting names in English and Swedish depending on the chosen language in \textsf{babel}.
 %
 % \subsection{The \textsf{pgfcropmarks} package}
 %
@@ -335,6 +341,7 @@
 %    \begin{macrocode}
 %<*list>
 \ProcessOptions\relax
+\RequirePackage{kaulanguage}
 %    \end{macrocode}
 %
 % For |\prettylist|, the packages \textsf{pgffor}, \textsf{pgfmath}, and \textsf{pgfkeys} are required.
@@ -347,9 +354,7 @@
 % defines a comma (``,''), if one is to be used before ``and''.
 %    \begin{macrocode}
 \AtBeginDocument{%
-  \@ifpackageloaded{babel}
-    {\newcommand*\commasign{\iflanguage{swedish}{}{,}}}%
-    {\newcommand*\commasign{,}}%
+  \setname{commasign}{}{,}%
 }
 %    \end{macrocode}
 % \end{macro}
@@ -358,9 +363,7 @@
 % definses the word used as ``and''.
 %    \begin{macrocode}
 \AtBeginDocument{%
-  \@ifpackageloaded{babel}
-    {\newcommand*\andname{\iflanguage{swedish}{och}{and}}}%
-    {\newcommand*\andname{and}}%
+  \setname{andname}{and}{och}%
 }
 %    \end{macrocode}
 % \end{macro}
@@ -602,22 +605,13 @@
 \RequirePackage{ragged2e}
 \RequirePackage{hyphenat}
 
+\RequirePackage{kaulanguage}
+
 \AtBeginDocument{%
-  \@ifpackageloaded{babel}%
-    {\newcommand*\reprintedname{%
-      \iflanguage{swedish}{Ursprungligen publicertad i}{Reprinted from}}%
-     \newcommand*\appendedpapersname{%
-      \iflanguage{swedish}{Bifogade publiceringar}{List of Appended Papers}}%
-     \newcommand*\participationname{%
-      \iflanguage{swedish}{Kommentarer p\aa{} min medverka}{Comments on my Participation}}%
-     \newcommand*\papername{%
-      \iflanguage{swedish}{Publicering}{Paper}}%
-    }%
-    {\newcommand*\reprintedname{Reprinted from}%
-     \newcommand*\appendedpapersname{List of Appended Papers}%
-     \newcommand*\participationname{Comments on my Participation}%
-     \newcommand*\papername{Paper}%
-    }%
+  \setname{reprintedname}{Reprinted from}{Ursprungligen publicertad i}%
+  \setname{appendedpapersname}{List of Appended Papers}{Bifogade publiceringar}%
+  \setname{participationname}{Comments on my Participation}{Kommentarer p\aa{} min medverka}%
+  \setname{papername}{Paper}{Publicering}%
 }
 
 \newcounter{kua@section}
@@ -814,6 +808,35 @@
 \fi
 %</studies>
 %    \end{macrocode}
+%
+% \subsection{The \textsf{kaulanguage} package}
+%
+%    \begin{macrocode}
+%<*language>
+\ProcessOptions\relax
+\newif\ifbabel
+\babelfalse
+\AtBeginDocument{%
+  \@ifpackageloaded{babel}%
+    {\babeltrue}%
+    {\babelfalse}%
+}
+%    \end{macrocode}
+% \begin{macro}{\setname}\marg{macro name}\marg{english}\marg{swedish}
+%    \begin{macrocode}
+\newcommand\setname[3]{%
+  \IfFileExists{swedish.ldf}{%
+    \ifbabel%
+      \expandafter\edef\csname #1\endcsname{\noexpand\iflanguage{swedish}{#3}{#2}}%
+    \else%
+      \expandafter\edef\csname #1\endcsname{#2}%
+    \fi%
+  }%
+  {\expandafter\edef\csname #1\endcsname{#2}}%
+}
+%</language>
+%    \end{macrocode}
+% \end{macro}
 %
 % \subsection{The \textsf{pgfcropmarks} package}
 %

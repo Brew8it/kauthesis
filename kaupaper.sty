@@ -30,7 +30,7 @@
 %% Copyright (c) 2011-2012 Stefan Berthold <stefan.berthold@kau.se>
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesPackage{kaupaper}
-    [2013/05/28 v1.10 Karlstad University kautools bundle]
+    [2013/09/17 v1.11 Karlstad University kautools bundle]
 \RequirePackage{xkeyval}
 
 \define@cmdkeys[kua]{paper}[kua@]{author,title,subtitle,reference,email,refstr,vanity,subdelimiter,label,summary,limitations,participation}
@@ -45,22 +45,13 @@
 \RequirePackage{ragged2e}
 \RequirePackage{hyphenat}
 
+\RequirePackage{kaulanguage}
+
 \AtBeginDocument{%
-  \@ifpackageloaded{babel}%
-    {\newcommand*\reprintedname{%
-      \iflanguage{swedish}{Ursprungligen publicertad i}{Reprinted from}}%
-     \newcommand*\appendedpapersname{%
-      \iflanguage{swedish}{Bifogade publiceringar}{List of Appended Papers}}%
-     \newcommand*\participationname{%
-      \iflanguage{swedish}{Kommentarer p\aa{} min medverka}{Comments on my Participation}}%
-     \newcommand*\papername{%
-      \iflanguage{swedish}{Publicering}{Paper}}%
-    }%
-    {\newcommand*\reprintedname{Reprinted from}%
-     \newcommand*\appendedpapersname{List of Appended Papers}%
-     \newcommand*\participationname{Comments on my Participation}%
-     \newcommand*\papername{Paper}%
-    }%
+  \setname{reprintedname}{Reprinted from}{Ursprungligen publicertad i}%
+  \setname{appendedpapersname}{List of Appended Papers}{Bifogade publiceringar}%
+  \setname{participationname}{Comments on my Participation}{Kommentarer p\aa{} min medverka}%
+  \setname{papername}{Paper}{Publicering}%
 }
 
 \newcounter{kua@section}

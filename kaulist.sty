@@ -30,18 +30,15 @@
 %% Copyright (c) 2011-2012 Stefan Berthold <stefan.berthold@kau.se>
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesPackage{kaulist}
-    [2013/05/28 v1.10 Karlstad University kautools bundle]
+    [2013/09/17 v1.11 Karlstad University kautools bundle]
 \ProcessOptions\relax
+\RequirePackage{kaulanguage}
 \RequirePackage{tikz}
 \AtBeginDocument{%
-  \@ifpackageloaded{babel}
-    {\newcommand*\commasign{\iflanguage{swedish}{}{,}}}%
-    {\newcommand*\commasign{,}}%
+  \setname{commasign}{}{,}%
 }
 \AtBeginDocument{%
-  \@ifpackageloaded{babel}
-    {\newcommand*\andname{\iflanguage{swedish}{och}{and}}}%
-    {\newcommand*\andname{and}}%
+  \setname{andname}{and}{och}%
 }
 \newcommand\prettylist[1]{%
   \foreach[count=\xi] \x in #1 {}%

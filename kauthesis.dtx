@@ -28,7 +28,7 @@
 %<report>\ProvidesClass{kaureport}
 %<masters>\ProvidesClass{kaumasters}
 %<*collection|report|masters>
-    [2013/05/28 v1.10 Karlstad University thesis layout]
+    [2013/09/17 v1.11 Karlstad University thesis layout]
 %</collection|report|masters>
 %
 %<*driver>
@@ -42,7 +42,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{298}
+% \CheckSum{258}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -72,6 +72,7 @@
 % \changes{v1.8}{2013/04/18}{Improved author's signatures on the approval page of kaumasters}
 % \changes{v1.9}{2013/05/03}{Added keywords to kaumasters, added an environment for English abstracts}
 % \changes{v1.10}{2013/05/28}{Version bump without changes}
+% \changes{v1.11}{2013/09/17}{Fixed missing file in babel support}
 %
 % \GetFileInfo{\jobname.dtx}
 %
@@ -265,6 +266,7 @@
 \RequirePackage{kauclear}
 \RequirePackage{kaumeta}
 \RequirePackage{kaulist}
+\RequirePackage{kaulanguage}
 %    \end{macrocode}
 % \textsf{kaustudies} sets the page dimension to the format required by Karlstad University Studies,
 % \textsf{kauenvironments} defines environments such as |researchquestions| and |contributions|,
@@ -302,11 +304,7 @@
 % By default, the |acknowledgements| environment will create an unnumbered section with the title ``Acknowledgements'' (or ``Tacks\"agelser'', if Swedish is chosen as default language). The section headline can be changed to any other language by redefining the macro |\acknowledgementname|.
 %    \begin{macrocode}
 \AtBeginDocument{%
-  \@ifpackageloaded{babel}%
-    {\newcommand*\acknowledgementname{%
-      \iflanguage{swedish}{Tacks\"agelser}{Acknowledgements}}%
-    }%
-    {\newcommand*\acknowledgementname{Acknowledgements}}%
+  \setname{acknowledgementname}{Acknowledgements}{Tacks\"agelser}%
 }
 %    \end{macrocode}
 % \end{macro}
@@ -315,11 +313,7 @@
 % The abstract is followed by the list of keywords. By default, the list is introduced by the word ``Keywords'' (and ``Nyckelord'' if the default language is set to Swedish). The list introduction can be changed to any other language by redefining the macro |\keywordname|.
 %    \begin{macrocode}
 \AtBeginDocument{%
-  \@ifpackageloaded{babel}%
-    {\newcommand*\keywordname{%
-      \iflanguage{swedish}{Nyckelord}{Keywords}}%
-    }%
-    {\newcommand*\keywordname{Keywords}}%
+  \setname{keywordname}{Keywords}{Nyckelord}%
 }
 %    \end{macrocode}
 % \end{macro}
@@ -329,13 +323,7 @@
 %    \begin{macrocode}
 %<*collection>
 \AtBeginDocument{%
-  \@ifpackageloaded{babel}%
-    {\newcommand*\introname{%
-      \iflanguage{swedish}%
-        {Inledande sammanfattning}%
-        {Introductory Summary}}%
-    }%
-    {\newcommand*\introname{Introductory Summary}}%
+  \setname{introname}{Introductory Summary}{Inledande sammanfattning}%
 }
 %</collection>
 %    \end{macrocode}
@@ -350,13 +338,7 @@
 % This macro contains the word ``approved''.
 %    \begin{macrocode}
 \AtBeginDocument{%
-  \@ifpackageloaded{babel}%
-    {\newcommand*\approvalname{%
-      \iflanguage{swedish}%
-        {Godk\"and}%
-        {Approved}}%
-    }%
-    {\newcommand*\approvalname{Approved}}%
+  \setname{approvalname}{Approved}{Godk\"and}%
 }
 %    \end{macrocode}
 % \end{macro}
@@ -364,13 +346,7 @@
 % This macro contains the name of the examination.
 %    \begin{macrocode}
 \AtBeginDocument{%
-  \@ifpackageloaded{babel}%
-    {\newcommand*\examinationname{%
-      \iflanguage{swedish}%
-        {magisterexamen}%
-        {Master's degree}}%
-    }%
-    {\newcommand*\examinationname{Master's degree}}%
+  \setname{examinationname}{Master's degree}{magisterexamen}%
 }
 %    \end{macrocode}
 % \end{macro}
@@ -378,25 +354,17 @@
 % The approval text.
 %    \begin{macrocode}
 \AtBeginDocument{%
-  \@ifpackageloaded{babel}%
-    {\newcommand*\approvaltext{%
-      \iflanguage{swedish}%
-        {Denna uppsats \"ar skriven som en del av det arbete som kr\"avs %
-          f\"or att erh\aa lla en \examinationname{} i datavetenskap. Allt %
-          material i denna rapport, vilket inte \"ar mitt eget, har blivit %
-          tydligt identifierat och inget material \"ar inkluderat som %
-          tidigare anv\"ants f\"or erh\aa llande av annan examen.}%
-        {This thesis is submitted in partial fulfillment of the %
-          requirements for the \examinationname{} in Computer Science. %
-          All material in this thesis which is not my own work has been %
-          identified and no material is included for which a degree has %
-          previously been conferred.}}%
-    }%
-    {\newcommand*\approvaltext{This thesis is submitted in partial %
-      fulfillment of the requirements for the \examinationname{} in %
-      Computer Science. All material in this thesis which is not my own %
-      work has been identified and no material is included for which a %
-      degree has previously been conferred.}}%
+  \setname{approvaltext}%
+    {This thesis is submitted in partial fulfillment of the %
+      requirements for the \examinationname{} in Computer Science. %
+      All material in this thesis which is not my own work has been %
+      identified and no material is included for which a degree has %
+      previously been conferred.}%
+    {Denna uppsats \"ar skriven som en del av det arbete som kr\"avs %
+      f\"or att erh\aa lla en \examinationname{} i datavetenskap. Allt %
+      material i denna rapport, vilket inte \"ar mitt eget, har blivit %
+      tydligt identifierat och inget material \"ar inkluderat som %
+      tidigare anv\"ants f\"or erh\aa llande av annan examen.}%
 }
 %    \end{macrocode}
 % \end{macro}
@@ -404,13 +372,7 @@
 % This macro contains the word ``supervisor''.
 %    \begin{macrocode}
 \AtBeginDocument{%
-  \@ifpackageloaded{babel}%
-    {\newcommand*\supervisorname{%
-      \iflanguage{swedish}%
-        {Handledare}%
-        {Supervisor}}%
-    }%
-    {\newcommand*\supervisorname{Supervisor}}%
+  \setname{supervisorname}{Supervisor}{Handledare}%
 }
 %    \end{macrocode}
 % \end{macro}
@@ -418,13 +380,7 @@
 % This macro contains the word ``examiner''.
 %    \begin{macrocode}
 \AtBeginDocument{%
-  \@ifpackageloaded{babel}%
-    {\newcommand*\examinername{%
-      \iflanguage{swedish}%
-        {Examinator}%
-        {Examiner}}%
-    }%
-    {\newcommand*\examinername{Examiner}}%
+  \setname{examinername}{Examiner}{Examinator}%
 }
 %    \end{macrocode}
 % \end{macro}

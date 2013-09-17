@@ -1,10 +1,10 @@
 %%
-%% This is file `kauclear.sty',
+%% This is file `kaulanguage.sty',
 %% generated with the docstrip utility.
 %%
 %% The original source files were:
 %%
-%% kautools.dtx  (with options: `clear')
+%% kautools.dtx  (with options: `language')
 %% 
 %% This is a generated file.
 %% 
@@ -28,26 +28,26 @@
 %% 
 %% kautools.dtx
 %% Copyright (c) 2011-2012 Stefan Berthold <stefan.berthold@kau.se>
-\NeedsTeXFormat{LaTeX2e}[1999/12/01]
-\ProvidesPackage{kauclear}
+\ProvidesPackage{kaulanguage}
     [2013/09/17 v1.11 Karlstad University kautools bundle]
 \ProcessOptions\relax
-\newcommand\kuc@currentpagestyle{plain}
-\let\pagestyle@orig\pagestyle
-\renewcommand\pagestyle[1]{%
-  \renewcommand\kuc@currentpagestyle{#1}%
-  \pagestyle@orig{#1}%
+\newif\ifbabel
+\babelfalse
+\AtBeginDocument{%
+  \@ifpackageloaded{babel}%
+    {\babeltrue}%
+    {\babelfalse}%
 }
-\newcommand\kuc@restorepagestyle{%
-  \pagestyle@orig{\kuc@currentpagestyle}%
-}
-\let\cleardoubpage@orig\cleardoublepage
-\renewcommand\cleardoublepage{%
-  \clearpage%
-  \pagestyle@orig{empty}%
-  \cleardoubpage@orig%
-  \kuc@restorepagestyle%
+\newcommand\setname[3]{%
+  \IfFileExists{swedish.ldf}{%
+    \ifbabel%
+      \expandafter\edef\csname #1\endcsname{\noexpand\iflanguage{swedish}{#3}{#2}}%
+    \else%
+      \expandafter\edef\csname #1\endcsname{#2}%
+    \fi%
+  }%
+  {\expandafter\edef\csname #1\endcsname{#2}}%
 }
 \endinput
 %%
-%% End of file `kauclear.sty'.
+%% End of file `kaulanguage.sty'.

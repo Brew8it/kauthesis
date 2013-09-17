@@ -30,29 +30,22 @@
 %% Copyright (c) 2011-2013 Stefan Berthold <stefan.berthold@kau.se>
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesClass{kaureport}
-    [2013/05/28 v1.10 Karlstad University thesis layout]
+    [2013/09/17 v1.11 Karlstad University thesis layout]
 \ProcessOptions\relax
 \LoadClass{article}
 \RequirePackage{kauclear}
 \RequirePackage{kaumeta}
 \RequirePackage{kaulist}
+\RequirePackage{kaulanguage}
 \RequirePackage{kaustudies}
 \RequirePackage{kauenvironments}
 \RequirePackage{tikz}
 \RequirePackage{kauparts}
 \AtBeginDocument{%
-  \@ifpackageloaded{babel}%
-    {\newcommand*\acknowledgementname{%
-      \iflanguage{swedish}{Tacks\"agelser}{Acknowledgements}}%
-    }%
-    {\newcommand*\acknowledgementname{Acknowledgements}}%
+  \setname{acknowledgementname}{Acknowledgements}{Tacks\"agelser}%
 }
 \AtBeginDocument{%
-  \@ifpackageloaded{babel}%
-    {\newcommand*\keywordname{%
-      \iflanguage{swedish}{Nyckelord}{Keywords}}%
-    }%
-    {\newcommand*\keywordname{Keywords}}%
+  \setname{keywordname}{Keywords}{Nyckelord}%
 }
 \let\kauths@maketitle\maketitle
 \renewcommand\maketitle{%

@@ -30,7 +30,7 @@
 %% Copyright (c) 2011-2013 Stefan Berthold <stefan.berthold@kau.se>
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesClass{kaunote}
-    [2013/05/28 v1.10 Karlstad University protocol bundle]
+    [2013/09/11 v1.11 Karlstad University protocol bundle]
 \ProcessOptions\relax
 \LoadClass{article}
 \RequirePackage{kauhead}

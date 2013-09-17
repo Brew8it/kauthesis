@@ -30,84 +30,45 @@
 %% Copyright (c) 2011-2013 Stefan Berthold <stefan.berthold@kau.se>
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesClass{kaumasters}
-    [2013/05/28 v1.10 Karlstad University thesis layout]
+    [2013/09/17 v1.11 Karlstad University thesis layout]
 \ProcessOptions\relax
 \LoadClass{article}
 \RequirePackage{kauclear}
 \RequirePackage{kaumeta}
 \RequirePackage{kaulist}
+\RequirePackage{kaulanguage}
 \RequirePackage[urw-garamond]{mathdesign}
 \RequirePackage[paper=a4,pagesize,twoside=semi]{typearea}
 \AtBeginDocument{%
-  \@ifpackageloaded{babel}%
-    {\newcommand*\acknowledgementname{%
-      \iflanguage{swedish}{Tacks\"agelser}{Acknowledgements}}%
-    }%
-    {\newcommand*\acknowledgementname{Acknowledgements}}%
+  \setname{acknowledgementname}{Acknowledgements}{Tacks\"agelser}%
 }
 \AtBeginDocument{%
-  \@ifpackageloaded{babel}%
-    {\newcommand*\keywordname{%
-      \iflanguage{swedish}{Nyckelord}{Keywords}}%
-    }%
-    {\newcommand*\keywordname{Keywords}}%
+  \setname{keywordname}{Keywords}{Nyckelord}%
 }
 \AtBeginDocument{%
-  \@ifpackageloaded{babel}%
-    {\newcommand*\approvalname{%
-      \iflanguage{swedish}%
-        {Godk\"and}%
-        {Approved}}%
-    }%
-    {\newcommand*\approvalname{Approved}}%
+  \setname{approvalname}{Approved}{Godk\"and}%
 }
 \AtBeginDocument{%
-  \@ifpackageloaded{babel}%
-    {\newcommand*\examinationname{%
-      \iflanguage{swedish}%
-        {magisterexamen}%
-        {Master's degree}}%
-    }%
-    {\newcommand*\examinationname{Master's degree}}%
+  \setname{examinationname}{Master's degree}{magisterexamen}%
 }
 \AtBeginDocument{%
-  \@ifpackageloaded{babel}%
-    {\newcommand*\approvaltext{%
-      \iflanguage{swedish}%
-        {Denna uppsats \"ar skriven som en del av det arbete som kr\"avs %
-          f\"or att erh\aa lla en \examinationname{} i datavetenskap. Allt %
-          material i denna rapport, vilket inte \"ar mitt eget, har blivit %
-          tydligt identifierat och inget material \"ar inkluderat som %
-          tidigare anv\"ants f\"or erh\aa llande av annan examen.}%
-        {This thesis is submitted in partial fulfillment of the %
-          requirements for the \examinationname{} in Computer Science. %
-          All material in this thesis which is not my own work has been %
-          identified and no material is included for which a degree has %
-          previously been conferred.}}%
-    }%
-    {\newcommand*\approvaltext{This thesis is submitted in partial %
-      fulfillment of the requirements for the \examinationname{} in %
-      Computer Science. All material in this thesis which is not my own %
-      work has been identified and no material is included for which a %
-      degree has previously been conferred.}}%
+  \setname{approvaltext}%
+    {This thesis is submitted in partial fulfillment of the %
+      requirements for the \examinationname{} in Computer Science. %
+      All material in this thesis which is not my own work has been %
+      identified and no material is included for which a degree has %
+      previously been conferred.}%
+    {Denna uppsats \"ar skriven som en del av det arbete som kr\"avs %
+      f\"or att erh\aa lla en \examinationname{} i datavetenskap. Allt %
+      material i denna rapport, vilket inte \"ar mitt eget, har blivit %
+      tydligt identifierat och inget material \"ar inkluderat som %
+      tidigare anv\"ants f\"or erh\aa llande av annan examen.}%
 }
 \AtBeginDocument{%
-  \@ifpackageloaded{babel}%
-    {\newcommand*\supervisorname{%
-      \iflanguage{swedish}%
-        {Handledare}%
-        {Supervisor}}%
-    }%
-    {\newcommand*\supervisorname{Supervisor}}%
+  \setname{supervisorname}{Supervisor}{Handledare}%
 }
 \AtBeginDocument{%
-  \@ifpackageloaded{babel}%
-    {\newcommand*\examinername{%
-      \iflanguage{swedish}%
-        {Examinator}%
-        {Examiner}}%
-    }%
-    {\newcommand*\examinername{Examiner}}%
+  \setname{examinername}{Examiner}{Examinator}%
 }
 \let\kauths@maketitle\maketitle
 \renewcommand\maketitle{%
