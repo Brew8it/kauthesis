@@ -1,0 +1,48 @@
+#! /bin/bash
+
+TEXMF=`kpsexpand -n latex '$TEXMFHOME'`
+CURRENT=$PWD
+
+GARAMONDX=YES
+URWGARAMOND=YES
+kpsewhich garamondx.sty || GARAMONDX=NO
+kpsewhich ugmm8a.pfb    || URWGARAMOND=NO
+
+if [[ $GARAMONDX = "NO" ]]
+then
+  TMP=`mktemp -d`
+  cd $TMP                                           || exit 1
+  wget http://mirrors.ctan.org/fonts/garamondx.zip  || exit 1
+  unzip garamondx.zip                               || exit 1
+  cd garamondx                                      || exit 1
+  mv afm          $TEXMF/fonts/afm/garamondx        || exit 1
+  mv doc          $TEXMF/doc/latex/garamondx        || exit 1
+  mv enc          $TEXMF/fonts/enc/garamondx        || exit 1
+  mv map/zgm.map  $TEXMF/fonts/map/                 || exit 1
+  mv tex          $TEXMF/tex/latex/garamondx        || exit 1
+  mv tfm          $TEXMF/fonts/tfm/garamondx        || exit 1
+  mv type1        $TEXMF/fonts/type1/garamondx      || exit 1
+  mv vf           $TEXMF/fonts/vf/garamondx         || exit 1
+  updmap --enable zgm.map                           || exit 1
+  cd $CURRENT                                       || exit 1
+  rm -r $TMP                                        || exit 1
+fi
+
+if [[ $URWGARAMOND = "NO" ]]
+then
+  TMP=`mktemp -d`
+  cd $TMP                                                                             || exit 1
+  wget http://mirrors.ctan.org/fonts/urw/garamond.zip                                 || exit 1
+  unzip garamond.zip                                                                  || exit 1
+  cd garamond                                                                         || exit 1
+  test -d   $TEXMF/fonts/afm/urw-garamond   || mkdir $TEXMF/fonts/afm/urw-garamond    || exit 1
+  mv *.afm  $TEXMF/fonts/afm/urw-garamond                                             || exit 1
+  test -d   $TEXMF/fonts/type1/urw-garamond || mkdir $TEXMF/fonts/type1/urw-garamond  || exit 1
+  mv *.pfb  $TEXMF/fonts/type1/urw-garamond                                           || exit 1
+  test -d   $TEXMF/fonts/tfm/urw-garamond   || mkdir $TEXMF/fonts/tfm/urw-garamond    || exit 1
+  mv *.tfm  $TEXMF/fonts/tfm/urw-garamond                                             || exit 1
+  cd $CURRENT                                                                         || exit 1
+  rm -r $TMP                                                                          || exit 1
+fi
+
+# vim: sw=2:sts=2:et:nu
