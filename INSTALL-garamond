@@ -16,20 +16,21 @@ then
   unzip garamondx.zip                               || exit 1
   cd garamondx                                      || exit 1
   mkdir -p        $TEXMF/fonts/afm/garamondx        || exit 1
-  mv afm          $TEXMF/fonts/afm/garamondx        || exit 1
+  mv afm/*        $TEXMF/fonts/afm/garamondx        || exit 1
   mkdir -p        $TEXMF/doc/latex/garamondx        || exit 1
-  mv doc          $TEXMF/doc/latex/garamondx        || exit 1
+  mv doc/*        $TEXMF/doc/latex/garamondx        || exit 1
   mkdir -p        $TEXMF/fonts/enc/garamondx        || exit 1
-  mv enc          $TEXMF/fonts/enc/garamondx        || exit 1
+  mv enc/*        $TEXMF/fonts/enc/garamondx        || exit 1
+  mkdir -p        $TEXMF/fonts/map		    || exit 1
   mv map/zgm.map  $TEXMF/fonts/map/                 || exit 1
   mkdir -p        $TEXMF/tex/latex/garamondx        || exit 1
-  mv tex          $TEXMF/tex/latex/garamondx        || exit 1
+  mv tex/*        $TEXMF/tex/latex/garamondx        || exit 1
   mkdir -p        $TEXMF/fonts/tfm/garamondx        || exit 1
-  mv tfm          $TEXMF/fonts/tfm/garamondx        || exit 1
+  mv tfm/*        $TEXMF/fonts/tfm/garamondx        || exit 1
   mkdir -p        $TEXMF/fonts/type1/garamondx      || exit 1
-  mv type1        $TEXMF/fonts/type1/garamondx      || exit 1
+  mv type1/*      $TEXMF/fonts/type1/garamondx      || exit 1
   mkdir -p        $TEXMF/fonts/vf/garamondx         || exit 1
-  mv vf           $TEXMF/fonts/vf/garamondx         || exit 1
+  mv vf/*         $TEXMF/fonts/vf/garamondx         || exit 1
   updmap --enable zgm.map                           || exit 1
   cd $CURRENT                                       || exit 1
   rm -r $TMP                                        || exit 1
@@ -46,8 +47,6 @@ then
   mv *.afm  $TEXMF/fonts/afm/urw-garamond             || exit 1
   mkdir -p  $TEXMF/fonts/type1/urw-garamond           || exit 1
   mv *.pfb  $TEXMF/fonts/type1/urw-garamond           || exit 1
-  mkdir -p  $TEXMF/fonts/tfm/urw-garamond             || exit 1
-  mv *.tfm  $TEXMF/fonts/tfm/urw-garamond             || exit 1
   cd $CURRENT                                         || exit 1
   rm -r $TMP                                          || exit 1
 fi
