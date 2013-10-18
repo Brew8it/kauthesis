@@ -72,7 +72,9 @@
   \stepcounter{kup@part}%
   \setkeys[kup]{part}{body=\relax,label=,tocentry=true,#1}%
   \ifkup@tocentry%
-  \addcontentsline{toc}{part}{\numberline{\Roman{kup@part}}\textsc{#2}}%
+    \providecommand\phantomsection{}%
+    \phantomsection%
+    \addcontentsline{toc}{part}{\numberline{\Roman{kup@part}}\textsc{#2}}%
   \fi%
   \renewcommand\@currentlabel{\Roman{kup@part}}%
   \ifthenelse{\equal{\kup@label}{}}{}{\label{\kup@label}}%
