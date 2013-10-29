@@ -51,7 +51,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{668}
+% \CheckSum{671}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -576,6 +576,8 @@
   \thispagestyle{plain}%
   \setkeys[kup]{part}{body=\relax,tocentry=true,#1}%
   \ifkup@tocentry%
+    \providecommand\phantomsection{}%
+    \phantomsection%
     \addcontentsline{toc}{part}{\textsc{#2}}%
   \fi%
   \begin{tikzpicture}[remember picture,overlay,yscale=-1]%
