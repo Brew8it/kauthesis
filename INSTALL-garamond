@@ -8,11 +8,22 @@ URWGARAMOND=YES
 kpsewhich garamondx.sty || GARAMONDX=NO
 kpsewhich ugmm8a.pfb    || URWGARAMOND=NO
 
+FETCH=`which wget`
+if [[ $? != 0 ]]
+then FETCH=`which fetch`
+  if [[ $? != 0 ]]
+  then FETCH=`which curl`
+    if [[ $? != 0 ]]
+    then exit 1
+    fi
+  fi
+fi
+
 if [[ $GARAMONDX = "NO" ]]
 then
   TMP=`mktemp -d`
   cd $TMP                                           || exit 1
-  wget http://mirrors.ctan.org/fonts/garamondx.zip  || exit 1
+  $FETCH http://mirrors.ctan.org/fonts/garamondx.zip  || exit 1
   unzip garamondx.zip                               || exit 1
   cd garamondx                                      || exit 1
   mkdir -p        $TEXMF/fonts/afm/garamondx        || exit 1
@@ -40,7 +51,7 @@ if [[ $URWGARAMOND = "NO" ]]
 then
   TMP=`mktemp -d`
   cd $TMP                                             || exit 1
-  wget http://mirrors.ctan.org/fonts/urw/garamond.zip || exit 1
+  $FETCH http://mirrors.ctan.org/fonts/urw/garamond.zip || exit 1
   unzip garamond.zip                                  || exit 1
   cd garamond                                         || exit 1
   mkdir -p  $TEXMF/fonts/afm/urw-garamond             || exit 1
