@@ -177,9 +177,9 @@
   \setkeys[kua]{paper}{subtitle=,vanity=,subdelimiter={---},label=,summary={\string\textcolor{red}{Use the \string\texttt{summary} key in the \string\texttt{kaupaper} environment to add a summary.}},participation={\string\textcolor{red}{Use the \string\texttt{participation} key in the \string\texttt{kaupaper} environment to add a comment.}},limitations={},#1}%
   \setcounter{kua@paper}{\value{kup@part}}\stepcounter{kua@paper}%
   \ifthenelse{\equal{\kua@subtitle}{}}%
-    {\addcontentsline{pap}{paper}{\kua@author. \kua@title. In \kua@reference}%
+    {\addcontentsline{pap}{paper}{\kua@author. \kua@title. \kua@reference}%
      \addcontentsline{toc}{part}{\textsc{\papername} \Roman{kua@paper}\\\kua@title}}%
-    {\addcontentsline{pap}{paper}{\kua@author. \kua@title\kua@subdelimiter\kua@subtitle. In \kua@reference}%
+    {\addcontentsline{pap}{paper}{\kua@author. \kua@title\kua@subdelimiter\kua@subtitle. \kua@reference}%
      \addcontentsline{toc}{part}{\textsc{\papername} \Roman{kua@paper}\\\kua@title\kua@subdelimiter\kua@subtitle}}%
   \addcontentsline{sum}{summary}{\string\subsubsection*{\papername~\Roman{kua@paper} -- \kua@title}\kua@summary}%
   \ifthenelse{\equal{\kua@limitations}{}}{}{%
