@@ -35,7 +35,7 @@
 %<language>\ProvidesPackage{kaulanguage}
 %<crop>\ProvidesPackage{pgfcropmarks}
 %<*title|meta|list|clear|environments|parts|paper|studies|language|crop>
-    [2014/10/08 v1.13 Karlstad University kautools bundle]
+    [2014/10/20 v1.14 Karlstad University kautools bundle]
 %</title|meta|list|clear|environments|parts|paper|studies|language|crop>
 %
 %<*driver>
@@ -51,7 +51,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{670}
+% \CheckSum{699}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -82,6 +82,7 @@
 % \changes{v1.9}{2013/05/03}{Version bump without changes}
 % \changes{v1.10}{2013/05/28}{Version bump without changes}
 % \changes{v1.11}{2013/09/17}{Fixed missing file in babel support}
+% \changes{v1.14}{2014/10/20}{Added refnote}
 %
 % \GetFileInfo{\jobname.dtx}
 %
@@ -597,7 +598,7 @@
 %<*paper>
 \RequirePackage{xkeyval}
 
-\define@cmdkeys[kua]{paper}[kua@]{author,title,subtitle,reference,email,refstr,vanity,subdelimiter,label,summary,limitations,participation}
+\define@cmdkeys[kua]{paper}[kua@]{author,title,subtitle,reference,refnote,email,refstr,vanity,subdelimiter,label,summary,limitations,participation}
 \setkeys[kua]{paper}{refstr=\reprintedname}
 
 \ProcessOptionsX[kua]<paper>
@@ -730,7 +731,7 @@
         , text width=\textwidth%
         , text centered%
         , font=\large%
-        ] {\nohyphens{\kua@reference}}%
+        ] {\nohyphens{\kua@reference}\\\medskip\nohyphens{\kua@refnote}}%
     ;%
   \end{tikzpicture}%
 }
@@ -744,12 +745,16 @@
   \setcounter{equation}{0}%
   \setcounter{figure}{0}%
   \setcounter{table}{0}%
-  \setkeys[kua]{paper}{subtitle=,vanity=,subdelimiter={---},label=,summary={\string\textcolor{red}{Use the \string\texttt{summary} key in the \string\texttt{kaupaper} environment to add a summary.}},participation={\string\textcolor{red}{Use the \string\texttt{participation} key in the \string\texttt{kaupaper} environment to add a comment.}},limitations={},#1}%
+  \setkeys[kua]{paper}{subtitle=,vanity=,subdelimiter={---},refnote=,label=,summary={\string\textcolor{red}{Use the \string\texttt{summary} key in the \string\texttt{kaupaper} environment to add a summary.}},participation={\string\textcolor{red}{Use the \string\texttt{participation} key in the \string\texttt{kaupaper} environment to add a comment.}},limitations={},#1}%
   \setcounter{kua@paper}{\value{kup@part}}\stepcounter{kua@paper}%
   \ifthenelse{\equal{\kua@subtitle}{}}%
-    {\addcontentsline{pap}{paper}{\kua@author. \kua@title. \kua@reference}%
+    {\ifthenelse{\equal{\kua@refnote}{}}%
+      {\addcontentsline{pap}{paper}{\kua@author. \kua@title. \kua@reference}}%
+      {\addcontentsline{pap}{paper}{\kua@author. \kua@title. \kua@reference\smallskip\\\kua@refnote}}%
      \addcontentsline{toc}{part}{\textsc{\papername} \Roman{kua@paper}\\\kua@title}}%
-    {\addcontentsline{pap}{paper}{\kua@author. \kua@title\kua@subdelimiter\kua@subtitle. \kua@reference}%
+    {\ifthenelse{\equal{\kua@refnote}{}}%
+      {\addcontentsline{pap}{paper}{\kua@author. \kua@title\kua@subdelimiter\kua@subtitle. \kua@reference}}%
+      {\addcontentsline{pap}{paper}{\kua@author. \kua@title\kua@subdelimiter\kua@subtitle. \kua@reference\smallskip\\\kua@refnote}}%
      \addcontentsline{toc}{part}{\textsc{\papername} \Roman{kua@paper}\\\kua@title\kua@subdelimiter\kua@subtitle}}%
   \addcontentsline{sum}{summary}{\string\subsubsection*{\papername~\Roman{kua@paper} -- \kua@title}\kua@summary}%
   \ifthenelse{\equal{\kua@limitations}{}}{}{%
