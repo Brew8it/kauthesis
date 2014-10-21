@@ -88,7 +88,7 @@
 }
 \newcommand\mainmatter[1][]{%
   \cleardoublepage%
-  \renewenvironment{abstract}{\kauths@abstract}{\kauths@endabstract}
+  \renewenvironment{abstract}{\kauths@abstract}{\kauths@endabstract}%
   \setcounter{page}{1}%
   \pagenumbering{arabic}%
 }
