@@ -1,6 +1,6 @@
 % \iffalse meta-comment
 %% kauthesis.dtx
-%% Copyright (c) 2011-2013 Stefan Berthold <stefan.berthold@kau.se>
+%% Copyright (c) 2011-2014 Stefan Berthold <stefan.berthold@kau.se>
 %
 % This file is part of the kauthesis bundle.
 %
@@ -28,7 +28,7 @@
 %<report>\ProvidesClass{kaureport}
 %<masters>\ProvidesClass{kaumasters}
 %<*collection|report|masters>
-    [2013/09/17 v1.11 Karlstad University thesis layout]
+    [2014/12/04 v1.16 Karlstad University thesis layout]
 %</collection|report|masters>
 %
 %<*driver>
@@ -42,7 +42,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{258}
+% \CheckSum{266}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -73,6 +73,7 @@
 % \changes{v1.9}{2013/05/03}{Added keywords to kaumasters, added an environment for English abstracts}
 % \changes{v1.10}{2013/05/28}{Version bump without changes}
 % \changes{v1.11}{2013/09/17}{Fixed missing file in babel support}
+% \changes{v1.16}{2014/12/04}{Added font option to kaumasters}
 %
 % \GetFileInfo{\jobname.dtx}
 %
@@ -102,7 +103,7 @@
 % The \textsf{kaumasters} class is quite similar to \LaTeX's \textsf{article} class. After loading the class, title, author, and institute have to be declared. Different authors in author lists can be separated by commata (``,''). The formatting will be done by \LaTeX.
 %    \begin{macrocode}
 %<*masterstemplate>
-\documentclass{kaumasters}
+\documentclass{kaumasters} % available class options: garamond
 \title{Title}
 \author{Author}
 \supervisor{Super}
@@ -256,7 +257,6 @@
 % Class options are neither parsed nor passed to the underlying \textsf{article} class. All macros are derived from the standard \textsf{article} class.
 %    \begin{macrocode}
 %<*collection|report|masters>
-\ProcessOptions\relax
 \LoadClass{article}
 %    \end{macrocode}
 %
@@ -290,10 +290,18 @@
 \RequirePackage{kauparts}
 %</report>
 %    \end{macrocode}
-% Garamond becomes the default font on A4 page layout.
+% Garamond becomes the default font on A4 page layout, if the |nofont| option was not given.
 %    \begin{macrocode}
 %<*masters>
-\RequirePackage[urw-garamond]{mathdesign}
+\newif\if@kaufont\@kaufontfalse
+\DeclareOption{garamond}{\@kaufonttrue}
+%</masters>
+\ProcessOptions\relax
+%<*masters>
+\if@kaufont
+\RequirePackage{garamondx}
+\RequirePackage[garamondx,cmbraces]{newtxmath}
+\fi
 \RequirePackage[paper=a4,pagesize,twoside=semi]{typearea}
 %</masters>
 %    \end{macrocode}

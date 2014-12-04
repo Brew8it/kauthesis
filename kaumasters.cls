@@ -27,17 +27,22 @@
 %% This work consists of all files listed in manifest.txt.
 %% 
 %% kauthesis.dtx
-%% Copyright (c) 2011-2013 Stefan Berthold <stefan.berthold@kau.se>
+%% Copyright (c) 2011-2014 Stefan Berthold <stefan.berthold@kau.se>
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesClass{kaumasters}
-    [2013/09/17 v1.11 Karlstad University thesis layout]
-\ProcessOptions\relax
+    [2014/12/04 v1.16 Karlstad University thesis layout]
 \LoadClass{article}
 \RequirePackage{kauclear}
 \RequirePackage{kaumeta}
 \RequirePackage{kaulist}
 \RequirePackage{kaulanguage}
-\RequirePackage[urw-garamond]{mathdesign}
+\newif\if@kaufont\@kaufontfalse
+\DeclareOption{garamond}{\@kaufonttrue}
+\ProcessOptions\relax
+\if@kaufont
+\RequirePackage{garamondx}
+\RequirePackage[garamondx,cmbraces]{newtxmath}
+\fi
 \RequirePackage[paper=a4,pagesize,twoside=semi]{typearea}
 \AtBeginDocument{%
   \setname{acknowledgementname}{Acknowledgements}{Tacks\"agelser}%
