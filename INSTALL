@@ -13,7 +13,7 @@
 #
 # -OR-
 #
-# Just run this INSTALL file through /bin/bash.
+# Run this INSTALL file through /bin/bash.
 
 latex kauthesis.ins || exit 1
 rm -f kauthesis.log
