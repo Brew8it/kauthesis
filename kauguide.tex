@@ -296,6 +296,13 @@ You will need independent bibliographies for your introductory summary and for e
  
 The package \textsf{babel} provides hyphenation patterns for many languages, use them! When part of your text is written in a different language than the rest, make sure that you switch the language accordingly, e.\,g., by using the macro |\foreignlanguage| of \textsf{babel}.
 
+\subsection{Hyperlinks}
+
+If you're using the \textsf{hyperref} package to get interactive links in the PDF
+version of your thesis, you will need to pass the option |hypertexnames=false|
+to the package. Otherwise, hyperlink targets will repeat between subsequent
+papers, causing links to break.
+
 \section{Polishing the Thesis}
 
 Use the modifications proposed in this section for improving the electronic and the printout appearance of your thesis.
