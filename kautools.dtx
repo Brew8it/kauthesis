@@ -753,11 +753,11 @@
     {\ifthenelse{\equal{\kua@refnote}{}}%
       {\addcontentsline{pap}{paper}{\kua@author. \kua@title. \kua@refprefix\kua@reference}}%
       {\addcontentsline{pap}{paper}{\kua@author. \kua@title. \kua@refprefix\kua@reference\smallskip\\\kua@refnote}}%
-     \addcontentsline{toc}{part}{\textsc{\papername} \Roman{kua@paper}\\\kua@title}}%
+     \addcontentsline{toc}{part}{\textsc{\papername} \Roman{kua@paper}: \\\kua@title}}%
     {\ifthenelse{\equal{\kua@refnote}{}}%
       {\addcontentsline{pap}{paper}{\kua@author. \kua@title\kua@subdelimiter\kua@subtitle. \kua@refprefix\kua@reference}}%
       {\addcontentsline{pap}{paper}{\kua@author. \kua@title\kua@subdelimiter\kua@subtitle. \kua@refprefix\kua@reference\smallskip\\\kua@refnote}}%
-     \addcontentsline{toc}{part}{\textsc{\papername} \Roman{kua@paper}\\\kua@title\kua@subdelimiter\kua@subtitle}}%
+     \addcontentsline{toc}{part}{\textsc{\papername} \Roman{kua@paper}: \\\kua@title\kua@subdelimiter\kua@subtitle}}%
   \addcontentsline{sum}{summary}{\string\subsubsection*{\papername~\Roman{kua@paper} -- \kua@title}\kua@summary}%
   \ifthenelse{\equal{\kua@limitations}{}}{}{%
     \addcontentsline{sum}{limit}{\kua@limitations}}%
