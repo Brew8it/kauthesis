@@ -555,9 +555,9 @@
   \thispagestyle{plain}%
   \stepcounter{kup@part}%
   \setkeys[kup]{part}{body=\relax,label=,tocentry=true,#1}%
+  \providecommand\phantomsection{}%
+  \phantomsection%
   \ifkup@tocentry%
-    \providecommand\phantomsection{}%
-    \phantomsection%
     \addcontentsline{toc}{part}{\numberline{\Roman{kup@part}}\textsc{#2}}%
   \fi%
   \renewcommand\@currentlabel{\Roman{kup@part}}%
@@ -577,9 +577,9 @@
   \cleardoublepage%
   \thispagestyle{plain}%
   \setkeys[kup]{part}{body=\relax,tocentry=true,#1}%
+  \providecommand\phantomsection{}%
+  \phantomsection%
   \ifkup@tocentry%
-    \providecommand\phantomsection{}%
-    \phantomsection%
     \addcontentsline{toc}{part}{\textsc{#2}}%
   \fi%
   \begin{tikzpicture}[remember picture,overlay,yscale=-1]%
@@ -748,6 +748,7 @@
   \setcounter{table}{0}%
   \setkeys[kua]{paper}{subtitle=,vanity=,subdelimiter={---},refprefix=,refnote=,label=,summary={\string\textcolor{red}{Use the \string\texttt{summary} key in the \string\texttt{kaupaper} environment to add a summary.}},participation={\string\textcolor{red}{Use the \string\texttt{participation} key in the \string\texttt{kaupaper} environment to add a comment.}},limitations={},#1}%
   \setcounter{kua@paper}{\value{kup@part}}\stepcounter{kua@paper}%
+  \kaupart[tocentry=false,label=\kua@label,body=\papercover\kua@vanity]{\papername}%
   \ifthenelse{\equal{\kua@subtitle}{}}%
     {\ifthenelse{\equal{\kua@refnote}{}}%
       {\addcontentsline{pap}{paper}{\kua@author. \kua@title. \kua@refprefix\kua@reference}}%
@@ -761,7 +762,6 @@
   \ifthenelse{\equal{\kua@limitations}{}}{}{%
     \addcontentsline{sum}{limit}{\kua@limitations}}%
   \addcontentsline{pcp}{participation}{\string\paragraph{\papername~\Roman{kua@paper}}\kua@participation}%
-  \kaupart[tocentry=false,label=\kua@label,body=\papercover\kua@vanity]{\papername}%
   \renewcommand*\thepaper{\papername~\Roman{kua@paper}}%
   \renewcommand*\thepapertitle{\kua@title}%
   \renewcommand\maketitle{%
