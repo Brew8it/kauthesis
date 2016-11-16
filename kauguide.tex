@@ -198,7 +198,16 @@ Use |\begin{acknowledgements}| and |\end{acknowledgements}| to typeset your ackn
   \defmacro{listofpapers}
 \end{decl}
 
-Use \usemacro{listofpapers} to add the list of appended papers. The content will automatically be created when you append papers by means of the \usething{kaupaper} environment. The list should be followed by a (self-written) list of other publications, for instance:
+Use \usemacro{listofpapers} to add the list of appended papers. The content will
+automatically be created when you append papers by means of the
+\usething{kaupaper} environment. The macro takes two optional arguments,
+|tocline| and |printparticipation| which both default to yes, but can be used
+prevent the macro from adding itself to the global table of contents, and to
+turn off the collected participation information from the defined papers, respectively.
+
+The list should be followed by a (self-written) list of other publications, for
+instance:
+
 \begin{quote}\begin{verbatim}\listofpapers
 \subsection*{Other Publications}
 \begin{itemize}

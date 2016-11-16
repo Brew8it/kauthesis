@@ -600,6 +600,7 @@
 \RequirePackage{xkeyval}
 
 \define@cmdkeys[kua]{paper}[kua@]{author,title,subtitle,refprefix,reference,refnote,email,refstr,vanity,subdelimiter,label,summary,limitations,participation}
+\define@cmdkeys[kua]{paperlist}[kua@]{printparticipation,tocline}
 \setkeys[kua]{paper}{refstr=\reprintedname}
 
 \ProcessOptionsX[kua]<paper>
@@ -659,15 +660,20 @@
 %    \end{macrocode}
 % \begin{macro}{\listofpapers}
 %    \begin{macrocode}
-\newcommand\listofpapers{%
+\newcommand\listofpapers[1]{%
+  \setkeys[kua]{paperlist}{printparticipation=yes,tocline=yes,#1}
   \section*{\appendedpapersname}%
-  \addcontentsline{toc}{section}{\appendedpapersname}%
+  \ifthenelse{\equal{\kua@tocline}{yes}}{%
+    \addcontentsline{toc}{section}{\appendedpapersname}%
+  }{}%
   \kua@listof{pap}{appended papers}{%
     \begin{enumerate}%
     \renewcommand\theenumi{\textbf{\Roman{enumi}}}%
   }{\end{enumerate}}%
-  \subsection*{\participationname}%
-  \kua@listof{pcp}{participation in appended papers}{}{}%
+  \ifthenelse{\equal{\kua@printparticipation}{yes}}{%
+    \subsection*{\participationname}%
+    \kua@listof{pcp}{participation in appended papers}{}{}%
+  }{}%
 }
 %    \end{macrocode}
 % \end{macro}
