@@ -532,6 +532,9 @@
 \newcounter{kup@vertical}
 \setcounter{kup@vertical}{0}
 
+\newcommand*\@titlepagestyle{empty}
+\newcommand\titlepagestyle[1]{\renewcommand*\@titlepagestyle{#1}}
+
 \newcommand\kup@partheadline[2]{%
   \path[node distance=1ex] (current page.north east) +(3pt,\kup@vshift+\kup@vstep*\arabic{kup@vertical}) %
     node%
@@ -552,7 +555,7 @@
 %    \begin{macrocode}
 \newcommand\kaupart[2][]{%
   \cleardoublepage%
-  \thispagestyle{plain}%
+  \thispagestyle{\@titlepagestyle}%
   \stepcounter{kup@part}%
   \setkeys[kup]{part}{body=\relax,label=,tocentry=true,#1}%
   \providecommand\phantomsection{}%
@@ -575,7 +578,7 @@
 %    \begin{macrocode}
 \WithSuffix\newcommand\kaupart*[2][]{%
   \cleardoublepage%
-  \thispagestyle{plain}%
+  \thispagestyle{\@titlepagestyle}%
   \setkeys[kup]{part}{body=\relax,tocentry=true,#1}%
   \providecommand\phantomsection{}%
   \phantomsection%
